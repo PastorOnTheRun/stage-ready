@@ -1,0 +1,48 @@
+{
+  "updatedAt": "September 23, 2026",
+  "prompts": [
+    {
+      "title": "Upcoming at Family Church Students",
+      "setup": "Lead these current ministry announcements with warmth and clarity. State only the details shown; do not guess a price or registration detail.",
+      "events": [
+        {
+          "name": "SLT Meeting",
+          "when": "Wednesday, September 23, 2026 · 5:30 PM",
+          "where": "Family Church Students",
+          "detail": "Student Leadership Team, our meeting starts at 5:30 PM.",
+          "action": "SLT members: be ready to begin at 5:30 PM.",
+          "endDate": "2026-09-23"
+        },
+        {
+          "name": "Church Prayer Night",
+          "when": "Wednesday, October 7, 2026 · be at church by 5:45 PM",
+          "where": "Meet at Family Church Windermere for the bus to Lakeside",
+          "detail": "We are going to the church prayer night at Lakeside. The bus is expected back at Windermere around 8:30 PM. Jake will be in Israel that week and will not be on the bus.",
+          "action": "Arrive at Windermere by 5:45 PM to ride the bus.",
+          "endDate": "2026-10-07"
+        },
+        {
+          "name": "Middle School Sundays",
+          "when": "Sundays · 9:45–10:45 AM",
+          "where": "Building 4 · Windermere",
+          "detail": "Middle school students gather for teaching and connection, with worship service options at 8:30 or 11:00 AM.",
+          "action": "Invite a middle school friend this Sunday and connect with a leader at check-in."
+        },
+        {
+          "name": "Join our BAND app",
+          "when": "Ongoing · get the current ministry updates",
+          "where": "Family Church Students",
+          "detail": "BAND is where our student ministry shares announcements and keeps families connected across the week.",
+          "action": "Ask a student ministry leader for the BAND invitation and join the group."
+        },
+        {
+          "name": "Student Be Class and Baptism Interest",
+          "when": "Ongoing next step · Ask for the next class date",
+          "where": "Family Church Students",
+          "detail": "Students who want to learn about following Jesus, baptism, and belonging at Family Church can ask about Be Class.",
+          "action": "Talk with a student pastor or visit the Student Ministry page for current details."
+        }
+      ]
+    }
+  ]
+}

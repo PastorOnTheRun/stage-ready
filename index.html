@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#b05421">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Opening encouragements and current announcements for the Family Church Students team.">
+  <title>Student Ministry Announcements Team | Stage Ready</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23b05421'/%3E%3Cpath d='M18 44h28M24 37l8-20 8 20-8-5z' fill='none' stroke='%23ffce56' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-phase="choose">
+  <div class="app">
+    <header class="brand-bar" aria-label="Family Church Students">
+      <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
+      <div class="brand-text">
+        <strong>Stage Ready</strong>
+        <span>Students · Windermere</span>
+      </div>
+      <p class="mission">Believe<br>Belong<br>Beyond</p>
+    </header>
+
+    <section class="screen active" id="chooser" aria-labelledby="chooser-title">
+      <p class="eyebrow">Announcements team</p>
+      <h1 id="chooser-title" class="sr-only">Announcements team</h1>
+      <p class="home-intro">Prepare an opening encouragement or lead this week’s announcements. One minute to prepare; green when it is time to speak; red if you go over.</p>
+      <div class="mode-grid">
+        <button class="mode-card" type="button" data-mode="opening">
+          <span class="tag">1 minute</span>
+          <span class="mode-title">Opening Charge</span>
+          <span class="mode-desc">Welcome students and invite their attention to God.</span>
+        </button>
+        <button class="mode-card" type="button" data-mode="worship">
+          <span class="tag">1 minute</span>
+          <span class="mode-title">Worship Lean-In</span>
+          <span class="mode-desc">One Scripture invitation as worship begins.</span>
+        </button>
+        <button class="mode-card" type="button" data-mode="announcements" id="announcements-mode" disabled>
+          <span class="tag">3 minutes</span>
+          <span class="mode-title">Practice Announcements</span>
+          <span class="mode-desc" id="announcement-description">Loading this week's announcements…</span>
+        </button>
+        <button class="mode-card live-card" type="button" data-mode="live-announcements" id="live-announcements-mode" disabled>
+          <span class="tag">Use each week</span>
+          <span class="mode-title">Live Announcements</span>
+          <span class="mode-desc" id="live-description">Loading this week's announcements…</span>
+        </button>
+      </div>
+      <div class="home-announcements" aria-labelledby="home-ann-title">
+        <div class="head">
+          <h2 id="home-ann-title">This week</h2>
+          <span id="home-ann-meta">Loading…</span>
+        </div>
+        <div class="ann-list" id="home-ann-list"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="workspace" aria-labelledby="status-title">
+      <div class="status-strip" id="status-strip">
+        <div>
+          <p class="phase-label"><span class="phase-dot" aria-hidden="true"></span><span id="phase-label">Preparation</span></p>
+          <h1 class="status-title" id="status-title">Get ready to lead</h1>
+          <p class="status-help" id="status-help">Read the flow and prepare your opening.</p>
+        </div>
+        <div class="clock" id="clock" role="timer" aria-label="60 seconds remaining">1:00</div>
+      </div>
+
+      <div class="actionbar" id="review-actions">
+        <button class="btn primary" type="button" id="skip-review">Start delivery now</button>
+        <button class="btn ghost" type="button" data-home>Back</button>
+      </div>
+      <div class="actionbar" id="live-actions" hidden>
+        <button class="btn danger" type="button" id="finish-early">End round</button>
+        <button class="btn ghost" type="button" data-home>Back</button>
+      </div>
+
+      <div class="work-body">
+        <article class="prompt-card" id="prompt-card"></article>
+        <div class="secondary-bar">
+          <button class="btn small ghost" type="button" id="open-pacing">Suggested pacing</button>
+          <button class="btn small ghost" type="button" id="open-coaching" hidden>Coaching tips</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="finish" aria-labelledby="finish-title">
+      <div class="finish-card">
+        <div class="finish-badge" aria-hidden="true">✓</div>
+        <p class="eyebrow">Time</p>
+        <h2 id="finish-title">Round complete.</h2>
+        <p class="copy" id="finish-copy">Take a moment to reflect on clarity, warmth, and invitation.</p>
+        <div class="actionbar">
+          <button class="btn primary" type="button" id="same-mode">Lead it again</button>
+          <button class="btn ghost" type="button" data-home>Back to team home</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+  <aside class="sheet" id="pacing-sheet" aria-labelledby="run-title" hidden>
+    <h3 id="run-title">Suggested pacing</h3>
+    <p class="sub">Use this as a guide, not a script.</p>
+    <ol class="run-list" id="run-list"></ol>
+    <button class="btn primary" type="button" id="close-pacing" style="width:100%;margin-top:10px">Close</button>
+  </aside>
+
+  <aside class="sheet" id="coaching-sheet" aria-labelledby="coach-title" hidden>
+    <h3 id="coach-title">Announcement leadership</h3>
+    <p class="sub">Always begin here before the details.</p>
+    <ol class="beats" id="coach-beats" style="list-style:none;padding:0;margin:0 0 10px">
+      <li class="beat"><span class="beat-index">1</span><span><strong>Introduce yourself</strong><span class="beat-copy">Tell the room your name before sharing any details.</span></span></li>
+      <li class="beat"><span class="beat-index">2</span><span><strong>Explain the why</strong><span class="beat-copy">Say what we are doing and briefly explain why it matters.</span></span></li>
+      <li class="beat"><span class="beat-index">3</span><span><strong>Share the vision</strong><span class="beat-copy">Connect at least one announcement to our vision: Believe in Jesus, Belong in community, and live Beyond ourselves.</span></span></li>
+    </ol>
+    <button class="btn primary" type="button" id="close-coaching" style="width:100%">Close</button>
+  </aside>
+
+  <p class="sr-only" id="announcer" aria-live="polite"></p>
+  <script src="app.js"></script>
+</body>
+</html>
