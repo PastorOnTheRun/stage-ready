@@ -55,7 +55,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   max-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: 6px 10px 8px;
+  padding: calc(6px + var(--safe-t)) 10px calc(8px + var(--safe-b));
   gap: 6px;
   overflow: hidden;
 }
@@ -242,7 +242,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .ann-list {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -408,7 +411,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   display: flex;
   flex-direction: column;
   gap: 6px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .prompt-card {
   flex: 1 1 auto;
@@ -419,7 +425,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(25,27,34,.87);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .prompt-kicker {
   flex: 0 0 auto;
@@ -499,7 +508,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   display: flex;
   flex-direction: column;
   gap: 4px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .event {
   flex: 1 1 0;
