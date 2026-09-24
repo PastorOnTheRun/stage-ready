@@ -94,9 +94,9 @@ Live Announcements uses the same content mode as Practice but `isLiveUse` change
 - Weekly data: `/workspace/stage-ready/announcements.json` (and embedded copy inside `stage-ready-standalone.html`).
 
 
-## Sunday AM vs Live lists (added Sep 24, 2026)
+## Sunday AM vs Live lists (services field)
 
-At Jake’s request, **Practice Announcements was replaced by Sunday AM Announcements**.
+**Practice Announcements was replaced by Sunday AM Announcements** at Jake’s request.
 
 Optional per-event field in `announcements.json`:
 
@@ -104,13 +104,13 @@ Optional per-event field in `announcements.json`:
 "services": ["sunday"]
 ```
 
-or `["live"]`, or both. Filtering rules:
+or `["live"]`, or both.
 
-- **Sunday AM mode** shows events tagged `sunday`
-- **Live mode** shows events tagged `live`
-- Events **without** a `services` field appear in **both** modes
+- **Sunday AM** — midweek / church-life items (point students to the week ahead and Family Church life). Tag with `"sunday"`.
+- **Live (Wednesday)** — Wednesday student ministry items. Tag with `"live"`.
+- **Untagged items** appear in **both** modes.
 
-Finish copy for Sunday AM is written for a real Sunday morning delivery (not a practice reflection).
+Weekly updates should set `services` deliberately so Sunday and Wednesday lists stay distinct. Home “This week” shows a small **Sun** / **Wed** tag on each item.
 
 ## Home mode cards (compact, Sep 24, 2026)
 

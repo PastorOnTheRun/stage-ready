@@ -622,3 +622,42 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
     transition-duration: .01ms !important;
   }
 }
+
+
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: start;
+  justify-self: end;
+}
+.svc-tag {
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.svc-tag.sunday {
+  background: rgba(114,168,255,.18);
+  color: var(--blue);
+  border: 1px solid rgba(114,168,255,.35);
+}
+.svc-tag.wed {
+  background: rgba(122,230,162,.16);
+  color: var(--green);
+  border: 1px solid rgba(122,230,162,.35);
+}
+.sunday-coach-note {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,206,86,.35);
+  background: rgba(255,206,86,.08);
+  color: var(--yellow);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  line-height: 1.35;
+}

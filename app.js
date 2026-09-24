@@ -94,6 +94,14 @@
     if (name === "finish") finish.classList.add("active");
   }
 
+  function serviceTags(event) {
+    const services = event.services && event.services.length ? event.services : ["sunday", "live"];
+    const labels = [];
+    if (services.includes("sunday")) labels.push(`<span class="svc-tag sunday">Sun</span>`);
+    if (services.includes("live")) labels.push(`<span class="svc-tag wed">Wed</span>`);
+    return labels.join("");
+  }
+
   function renderHomeAnnouncements(events) {
     const list = $("#home-ann-list");
     if (!events.length) {
@@ -103,7 +111,7 @@
     list.innerHTML = events.map(event => `
       <article class="ann-row">
         <h3>${esc(event.name)}</h3>
-        ${event.cost ? `<span class="cost">${esc(event.cost)}</span>` : ""}
+        <span class="svc-tags">${serviceTags(event)}${event.cost ? `<span class="cost">${esc(event.cost)}</span>` : ""}</span>
         <p class="meta">${esc(event.when)} · ${esc(event.where)}</p>
         <p class="action">Next step: ${esc(event.action)}</p>
       </article>
@@ -194,14 +202,19 @@
     const type = isEncouragement
       ? "Opening encouragement"
       : state.isLiveUse
-      ? "Live announcements"
-      : "Sunday AM announcements";
+      ? "Wednesday Live"
+      : "Sunday AM";
     const duration = isEncouragement ? "1-minute message" : "3-minute announcements";
     const setup = state.isLiveUse
-      ? "Lead these current announcements for the room. Use the facts below, speak naturally, and end when you are finished."
+      ? "Lead these Wednesday student ministry announcements for the room. Use the facts below, speak naturally, and end when you are finished."
       : state.isSundayUse
-      ? "Lead these Sunday morning announcements for the room. Use the facts below, speak naturally, and end when you are finished."
+      ? "Point students to the week ahead—Wednesday nights, midweek events, and wider Family Church life. Use only the facts below; speak warmly and clearly."
       : state.prompt.setup;
+    if (state.isSundayUse && state.prompt) {
+      state.prompt = { ...state.prompt, title: "This week at Family Church" };
+    } else if (state.isLiveUse && state.prompt) {
+      state.prompt = { ...state.prompt, title: "Student ministry this week" };
+    }
 
     let body = `<div class="prompt-kicker"><span class="chip accent">${type}</span><span class="chip">${duration}</span>${state.mode === "announcements" ? `<span class="chip">Reviewed ${esc(announcementUpdatedAt)}</span>` : ""}</div><h2>${esc(state.prompt.title)}</h2><p class="prompt-setup">${esc(setup)}</p>`;
 
@@ -326,9 +339,9 @@
     showScreen("finish");
     $("#finish-title").textContent = (state.isLiveUse || state.isSundayUse) ? "Announcements complete." : "Round complete.";
     $("#finish-copy").textContent = state.isLiveUse
-      ? "Thanks for leading. The next weekly refresh will bring in the latest confirmed announcements."
+      ? "Thanks for leading Wednesday. Clear details help students show up to student ministry this week."
       : state.isSundayUse
-      ? "Thanks for leading Sunday morning. Clear details and a warm invitation help students take the next step."
+      ? "Thanks for leading Sunday morning. You pointed students toward the week ahead and the life of the church."
       : "Was the Scripture clear and the invitation natural?";
     $("#same-mode").textContent = state.isLiveUse
       ? "Lead announcements again"
@@ -380,7 +393,11 @@
     startReview();
   });
   $("#open-pacing").addEventListener("click", () => openSheet("#pacing-sheet"));
-  $("#open-coaching").addEventListener("click", () => openSheet("#coaching-sheet"));
+  $("#open-coaching").addEventListener("click", () => {
+    const note = $("#sunday-coach-note");
+    if (note) note.hidden = !state.isSundayUse;
+    openSheet("#coaching-sheet");
+  });
   $("#close-pacing").addEventListener("click", closeSheets);
   $("#close-coaching").addEventListener("click", closeSheets);
   $("#sheet-backdrop").addEventListener("click", closeSheets);
