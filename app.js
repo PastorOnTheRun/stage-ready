@@ -138,15 +138,15 @@
       const liveCount = eventsForService("live").length;
       sundayButton.disabled = sundayCount === 0;
       liveButton.disabled = liveCount === 0;
-      $("#sunday-description").textContent = sundayCount ? `${sundayCount} Sunday items` : "No Sunday items this week";
-      $("#live-description").textContent = liveCount ? `Lead live · ${liveCount} items` : "No live items this week";
+      $("#sunday-description").textContent = sundayCount ? `${sundayCount} items` : "None";
+      $("#live-description").textContent = liveCount ? `${liveCount} items` : "None";
       $("#home-ann-meta").textContent = `Reviewed ${announcementUpdatedAt}`;
       renderHomeAnnouncements(announcementPrompts[0].events);
     } catch (error) {
       sundayButton.disabled = true;
       liveButton.disabled = true;
-      $("#sunday-description").textContent = "Announcements are unavailable right now. Please check back soon.";
-      $("#live-description").textContent = "Announcements are unavailable right now. Please check back soon.";
+      $("#sunday-description").textContent = "Unavailable";
+      $("#live-description").textContent = "Unavailable";
       $("#home-ann-meta").textContent = "Unavailable";
       renderHomeAnnouncements([]);
     }
@@ -172,6 +172,18 @@
     state.mode = (state.isLiveUse || state.isSundayUse) ? "announcements" : mode;
     if (state.mode === "announcements" && !eventsForService(state.serviceFilter).length) return;
     selectContent();
+    const chrome = $("#mode-chrome-label");
+    if (chrome) {
+      chrome.textContent = state.isLiveUse
+        ? "Live Announcements"
+        : state.isSundayUse
+        ? "Sunday AM Announcements"
+        : state.mode === "opening"
+        ? "Opening Charge"
+        : state.mode === "worship"
+        ? "Worship Lean-In"
+        : "Stage Ready";
+    }
     showScreen("workspace");
     startReview();
   }

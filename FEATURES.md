@@ -111,3 +111,11 @@ or `["live"]`, or both. Filtering rules:
 - Events **without** a `services` field appear in **both** modes
 
 Finish copy for Sunday AM is written for a real Sunday morning delivery (not a practice reflection).
+
+## Home mode cards (compact, Sep 24, 2026)
+
+Home-screen mode cards are a compact 2×2 grid (≥64px tall) with a small duration pill beside the title. **Descriptions no longer appear on the home cards**; coaching and setup copy still appear after tapping into a mode. Sunday/Live cards may show a tiny item-count line only.
+
+## Mode screens vs home chooser
+
+The Family Church banner and 2×2 mode chooser appear **only on the home screen**. After tapping a mode, those go away and the selected mode gets a full screen with a slim Back chrome, timer, and content. No mode screen shows the four choice boxes or the big banner.

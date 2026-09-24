@@ -17,38 +17,31 @@
 </head>
 <body data-phase="choose">
   <div class="app">
-    <header class="brand-bar" aria-label="Family Church Students">
-      <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
-      <div class="brand-text">
-        <strong>Stage Ready</strong>
-        <span>Students · Windermere</span>
-      </div>
-      <p class="mission">Believe<br>Belong<br>Beyond</p>
-    </header>
-
     <section class="screen active" id="chooser" aria-labelledby="chooser-title">
+      <header class="brand-bar" aria-label="Family Church Students">
+        <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
+        <div class="brand-text">
+          <strong>Stage Ready</strong>
+          <span>Students · Windermere</span>
+        </div>
+        <p class="mission">Believe<br>Belong<br>Beyond</p>
+      </header>
       <p class="eyebrow">Announcements team</p>
       <h1 id="chooser-title" class="sr-only">Announcements team</h1>
       <div class="mode-grid">
         <button class="mode-card" type="button" data-mode="opening">
-          <span class="tag">1 minute</span>
-          <span class="mode-title">Opening Charge</span>
-          <span class="mode-desc">Welcome the room. Invite attention to God.</span>
+          <span class="mode-top"><span class="tag">1 min</span><span class="mode-title">Opening Charge</span></span>
         </button>
         <button class="mode-card" type="button" data-mode="worship">
-          <span class="tag">1 minute</span>
-          <span class="mode-title">Worship Lean-In</span>
-          <span class="mode-desc">One Scripture invitation into worship.</span>
+          <span class="mode-top"><span class="tag">1 min</span><span class="mode-title">Worship Lean-In</span></span>
         </button>
         <button class="mode-card" type="button" data-mode="sunday-announcements" id="sunday-announcements-mode" disabled>
-          <span class="tag">3 minutes</span>
-          <span class="mode-title">Sunday AM Announcements</span>
-          <span class="mode-desc" id="sunday-description">Loading this week's announcements…</span>
+          <span class="mode-top"><span class="tag">3 min</span><span class="mode-title">Sunday AM</span></span>
+          <span class="mode-count" id="sunday-description">…</span>
         </button>
         <button class="mode-card live-card" type="button" data-mode="live-announcements" id="live-announcements-mode" disabled>
-          <span class="tag">Use each week</span>
-          <span class="mode-title">Live Announcements</span>
-          <span class="mode-desc" id="live-description">Loading this week's announcements…</span>
+          <span class="mode-top"><span class="tag">Live</span><span class="mode-title">Live Announcements</span></span>
+          <span class="mode-count" id="live-description">…</span>
         </button>
       </div>
       <div class="home-announcements" aria-labelledby="home-ann-title">
@@ -61,6 +54,10 @@
     </section>
 
     <section class="screen" id="workspace" aria-labelledby="status-title">
+      <div class="mode-chrome">
+        <button class="btn ghost small" type="button" data-home>← Back</button>
+        <p class="mode-chrome-label" id="mode-chrome-label">Stage Ready</p>
+      </div>
       <div class="status-strip" id="status-strip">
         <div>
           <p class="phase-label"><span class="phase-dot" aria-hidden="true"></span><span id="phase-label">Preparation</span></p>
@@ -72,11 +69,9 @@
 
       <div class="actionbar" id="review-actions">
         <button class="btn primary" type="button" id="skip-review">Start delivery now</button>
-        <button class="btn ghost" type="button" data-home>Back</button>
       </div>
       <div class="actionbar" id="live-actions" hidden>
         <button class="btn danger" type="button" id="finish-early">End round</button>
-        <button class="btn ghost" type="button" data-home>Back</button>
       </div>
 
       <div class="work-body">
@@ -89,6 +84,10 @@
     </section>
 
     <section class="screen" id="finish" aria-labelledby="finish-title">
+      <div class="mode-chrome">
+        <button class="btn ghost small" type="button" data-home>← Back</button>
+        <p class="mode-chrome-label">Stage Ready</p>
+      </div>
       <div class="finish-card">
         <div class="finish-badge" aria-hidden="true">✓</div>
         <p class="eyebrow">Time</p>

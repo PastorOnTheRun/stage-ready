@@ -25,10 +25,13 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 html, body {
-  height: 100%;
   margin: 0;
-  overflow: hidden;
+  min-height: 100%;
   background: var(--night);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -38,7 +41,8 @@ html, body {
 }
 body {
   transition: background-color .3s ease;
-  padding: var(--safe-t) 0 var(--safe-b);
+  min-height: 100dvh;
+  padding: 0;
 }
 body[data-phase="review"] { background: #123d80; }
 body[data-phase="live"] { background: #145c3c; }
@@ -50,14 +54,11 @@ button { font: inherit; color: inherit; }
 button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 
 .app {
-  height: 100dvh;
-  height: 100vh;
-  max-height: 100dvh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   padding: calc(6px + var(--safe-t)) 10px calc(8px + var(--safe-b));
   gap: 6px;
-  overflow: hidden;
 }
 
 /* —— Brand header —— */
@@ -113,7 +114,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   text-transform: uppercase;
   color: rgba(255,255,255,.9);
   font-weight: 750;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .mission {
   margin: 0;
@@ -128,14 +129,34 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   text-shadow: 0 1px 2px rgba(0,0,0,.25);
 }
 
+
+/* —— Slim chrome on mode screens (no big banner) —— */
+.mode-chrome {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+.mode-chrome .btn.small {
+  min-height: 36px;
+  padding: 6px 10px;
+}
+.mode-chrome-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
 /* —— Screens —— */
 .screen {
   flex: 1 1 auto;
-  min-height: 0;
   display: none;
   flex-direction: column;
   gap: 8px;
-  overflow: hidden;
 }
 .screen.active { display: flex; }
 
@@ -164,29 +185,36 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   gap: 6px;
 }
 .mode-card {
-  min-height: 0;
-  padding: 7px 9px;
+  min-height: 64px;
+  padding: 8px 10px;
   text-align: left;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 12px;
   background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 3px;
+  justify-content: center;
+  gap: 2px;
 }
 .mode-card:disabled { opacity: .55; cursor: wait; }
+.mode-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
 .mode-card .tag {
-  align-self: start;
-  padding: 1px 6px;
+  flex: 0 0 auto;
+  padding: 2px 7px;
   border-radius: 999px;
   background: var(--yellow);
   color: var(--yellow-ink);
-  font-size: var(--fs-xs);
+  font-size: 0.72rem;
   font-weight: 850;
   text-transform: uppercase;
-  letter-spacing: .06em;
+  letter-spacing: .05em;
+  line-height: 1.2;
 }
 .mode-card.live-card {
   border-color: rgba(122,230,162,.5);
@@ -194,30 +222,26 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 }
 .mode-card.live-card .tag { background: var(--green); color: #102015; }
 .mode-title {
-  font-size: var(--fs-lg);
+  font-size: 1rem; /* 18px @ 18 root */
   font-weight: 800;
   letter-spacing: -.03em;
-  line-height: 1.1;
+  line-height: 1.15;
 }
-.mode-desc {
+.mode-count {
   color: var(--muted);
-  font-size: var(--fs-xs);
-  line-height: 1.3;
-  display: block;
-  overflow: visible;
-  overflow-wrap: anywhere;
-  word-break: normal;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  font-weight: 650;
 }
+.mode-desc { display: none; }
 
 .home-announcements {
   flex: 1 1 auto;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(26,20,16,.92);
-  overflow: hidden;
 }
 .home-announcements .head {
   flex: 0 0 auto;
@@ -237,15 +261,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .home-announcements .head span {
   color: var(--muted);
   font-size: var(--fs-xs);
-  white-space: nowrap;
 }
 .ann-list {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -278,9 +295,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   color: var(--muted);
   font-size: var(--fs-xs);
   line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .ann-row .action {
   grid-column: 1 / -1;
@@ -353,10 +369,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   color: var(--muted);
   font-size: var(--fs-xs);
   line-height: 1.25;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow-wrap: anywhere;
 }
 .clock {
   min-width: 4.6rem;
@@ -407,28 +420,18 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 
 .work-body {
   flex: 1 1 auto;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
 }
 .prompt-card {
   flex: 1 1 auto;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(25,27,34,.87);
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
 }
 .prompt-kicker {
   flex: 0 0 auto;
@@ -460,10 +463,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   color: var(--muted);
   font-size: var(--fs-xs);
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow-wrap: anywhere;
 }
 .beats {
   flex: 0 0 auto;
@@ -496,40 +496,29 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .beat strong { display: block; font-size: var(--fs-sm); line-height: 1.2; }
 .beat span { color: var(--muted); font-size: var(--fs-xs); line-height: 1.3; }
 .beat .beat-copy {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
+  overflow-wrap: anywhere;
 }
 
 .events {
-  flex: 1 1 auto;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
 }
 .event {
-  flex: 1 1 0;
-  min-height: 0;
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 1px 8px;
-  align-content: center;
-  padding: 5px 8px;
+  gap: 2px 8px;
+  align-content: start;
+  padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: rgba(255,255,255,.025);
-  overflow: hidden;
 }
-.event h3 { margin: 0; font-size: var(--fs-sm); line-height: 1.15; letter-spacing: -.02em; }
-.event p { margin: 0; color: var(--muted); font-size: var(--fs-xs); line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.event-detail { grid-column: 1 / -1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.event-action { grid-column: 1 / -1; color: var(--blue) !important; font-weight: 760; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.event h3 { margin: 0; font-size: var(--fs-sm); line-height: 1.2; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.event p { margin: 0; color: var(--muted); font-size: var(--fs-xs); line-height: 1.3; overflow-wrap: anywhere; white-space: normal; }
+.event-detail { grid-column: 1 / -1; }
+.event-action { grid-column: 1 / -1; color: var(--blue) !important; font-weight: 760; white-space: normal; overflow-wrap: anywhere; }
 .cost {
   align-self: start;
   padding: 2px 6px;
