@@ -16,11 +16,11 @@
   --radius: 14px;
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
-  --fs-xs: 0.875rem;   /* 14px @ 16 */
-  --fs-sm: 0.9375rem;  /* 15px */
-  --fs-md: 1rem;       /* 16px */
-  --fs-lg: 1.0625rem;  /* 17px */
-  --fs-xl: 1.125rem;   /* 18px */
+  --fs-xs: 0.889rem;   /* ~16px @ 18 */
+  --fs-sm: 0.944rem;   /* ~17px */
+  --fs-md: 1rem;       /* 18px */
+  --fs-lg: 1.111rem;   /* ~20px */
+  --fs-xl: 1.222rem;   /* ~22px */
 }
 
 * { box-sizing: border-box; }
@@ -32,7 +32,7 @@ html, body {
   background: var(--night);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.35;
   -webkit-tap-highlight-color: transparent;
 }
@@ -55,8 +55,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   max-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding: 8px 10px 10px;
-  gap: 8px;
+  padding: 6px 10px 8px;
+  gap: 6px;
   overflow: hidden;
 }
 
@@ -67,8 +67,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   grid-template-columns: auto 1fr auto;
   gap: 8px;
   align-items: center;
-  min-height: 48px;
-  padding: 6px 8px;
+  min-height: 40px;
+  padding: 4px 8px;
   border-radius: var(--radius);
   background: linear-gradient(105deg, var(--terracotta) 0%, var(--terracotta-deep) 78%, #6e3212 100%);
   border: 1px solid rgba(255,255,255,.14);
@@ -88,8 +88,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 }
 .brand-bar > * { position: relative; z-index: 1; }
 .brand-logo {
-  width: 44px;
-  height: 54px;
+  width: 36px;
+  height: 44px;
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
@@ -100,7 +100,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .brand-text { min-width: 0; }
 .brand-text strong {
   display: block;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   letter-spacing: -.03em;
   font-weight: 850;
   line-height: 1.05;
@@ -109,24 +109,22 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .brand-text span {
   display: block;
   font-size: var(--fs-xs);
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   color: rgba(255,255,255,.9);
   font-weight: 750;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .mission {
   margin: 0;
-  font-size: var(--fs-xs);
+  font-size: 0.78rem; /* keep stack compact; not body copy */
   font-weight: 800;
-  letter-spacing: .06em;
+  letter-spacing: .04em;
   text-transform: uppercase;
   text-align: right;
   color: #fff;
-  line-height: 1.25;
-  max-width: 7.5rem;
+  line-height: 1.2;
+  max-width: 5.6rem;
   text-shadow: 0 1px 2px rgba(0,0,0,.25);
 }
 
@@ -142,33 +140,32 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .screen.active { display: flex; }
 
 .eyebrow {
+  flex: 0 0 auto;
   margin: 0;
   color: var(--yellow);
   font-size: var(--fs-xs);
   font-weight: 850;
-  letter-spacing: .14em;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
 
 .home-intro {
+  flex: 0 0 auto;
   margin: 0;
   color: var(--muted);
   font-size: var(--fs-sm);
   line-height: 1.25;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .mode-grid {
   flex: 0 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 .mode-card {
   min-height: 0;
-  padding: 8px 10px;
+  padding: 7px 9px;
   text-align: left;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -182,7 +179,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .mode-card:disabled { opacity: .55; cursor: wait; }
 .mode-card .tag {
   align-self: start;
-  padding: 2px 7px;
+  padding: 1px 6px;
   border-radius: 999px;
   background: var(--yellow);
   color: var(--yellow-ink);
@@ -228,7 +225,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   justify-content: space-between;
   align-items: baseline;
   gap: 8px;
-  padding: 7px 10px;
+  padding: 6px 9px;
   border-bottom: 1px solid var(--line);
   background: rgba(255,255,255,.03);
 }
@@ -249,8 +246,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 5px 6px 6px;
-  gap: 4px;
+  padding: 4px 6px 5px;
+  gap: 3px;
 }
 .ann-row {
   flex: 0 0 auto;
@@ -259,7 +256,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 2px 8px;
   align-content: start;
-  padding: 6px 8px 7px;
+  padding: 5px 8px 6px;
   border-radius: 10px;
   background: rgba(255,255,255,.035);
   border: 1px solid rgba(255,255,255,.04);
@@ -610,35 +607,6 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-}
-
-/* —— SE / short screens: slightly tighter type, still no scroll —— */
-@media (max-height: 700px) {
-  html, body { font-size: 15px; }
-  :root {
-    --fs-xs: 0.8rem;     /* 12px @ 15 */
-    --fs-sm: 0.8667rem;  /* 13px */
-    --fs-md: 0.9333rem;  /* 14px */
-    --fs-lg: 1rem;       /* 15px */
-    --fs-xl: 1.0667rem;  /* 16px */
-  }
-  .app { padding: 5px 7px 6px; gap: 5px; }
-  .brand-bar { min-height: 42px; padding: 4px 7px; }
-  .brand-logo { width: 34px; height: 42px; }
-  .brand-text strong { font-size: .95rem; }
-  .mission { max-width: 6.2rem; line-height: 1.15; }
-  .eyebrow { letter-spacing: .1em; }
-  .mode-card { min-height: 0; padding: 5px 7px; gap: 2px; }
-  .mode-grid { gap: 5px; }
-  .home-intro { display: none; }
-  .ann-row { padding: 4px 6px 5px; gap: 1px 6px; }
-  .ann-list { gap: 3px; padding: 3px 4px 4px; }
-  .home-announcements .head { padding: 4px 7px; }
-  .clock { font-size: 1.6rem; min-width: 3.4rem; }
-  .btn { min-height: 38px; }
-  .beats .beat:nth-child(n+4) .beat-copy { -webkit-line-clamp: 1; }
-  .beat { padding: 4px 6px; }
-  .prompt-card { padding: 6px 8px; }
 }
 
 @media (max-width: 380px) {

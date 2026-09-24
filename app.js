@@ -51,12 +51,32 @@
   const state = {
     mode: null,
     isLiveUse: false,
+    isSundayUse: false,
+    serviceFilter: null,
     phase: "choose",
     prompt: null,
     timer: null,
     duration: 60,
     endAt: 0
   };
+
+  function matchesService(event, service) {
+    if (!service) return true;
+    if (!event.services || !event.services.length) return true;
+    return event.services.includes(service);
+  }
+
+  function eventsForService(service) {
+    const base = announcementPrompts[0];
+    if (!base) return [];
+    return (base.events || []).filter(event => matchesService(event, service));
+  }
+
+  function promptForService(service) {
+    const base = announcementPrompts[0];
+    if (!base) return null;
+    return { ...base, events: eventsForService(service) };
+  }
 
   const $ = (selector) => document.querySelector(selector);
   const chooser = $("#chooser");
@@ -91,12 +111,17 @@
   }
 
   async function loadAnnouncements() {
-    const button = $("#announcements-mode");
+    const sundayButton = $("#sunday-announcements-mode");
     const liveButton = $("#live-announcements-mode");
     try {
-      const response = await fetch(`./announcements.json?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error("Announcement data unavailable");
-      const data = await response.json();
+      let data;
+      if (typeof EMBEDDED_ANNOUNCEMENTS !== "undefined" && EMBEDDED_ANNOUNCEMENTS) {
+        data = EMBEDDED_ANNOUNCEMENTS;
+      } else {
+        const response = await fetch(`./announcements.json?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error("Announcement data unavailable");
+        data = await response.json();
+      }
       const dateParts = Object.fromEntries(
         new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" })
           .formatToParts(new Date())
@@ -109,17 +134,18 @@
       })).filter(prompt => prompt.events.length > 0);
       announcementUpdatedAt = data.updatedAt || "";
       if (!announcementPrompts.length) throw new Error("No current announcements");
-      button.disabled = false;
-      liveButton.disabled = false;
-      const count = announcementPrompts[0].events.length;
-      $("#announcement-description").textContent = `${count} current items`;
-      $("#live-description").textContent = `Lead live · ${count} items`;
+      const sundayCount = eventsForService("sunday").length;
+      const liveCount = eventsForService("live").length;
+      sundayButton.disabled = sundayCount === 0;
+      liveButton.disabled = liveCount === 0;
+      $("#sunday-description").textContent = sundayCount ? `${sundayCount} Sunday items` : "No Sunday items this week";
+      $("#live-description").textContent = liveCount ? `Lead live · ${liveCount} items` : "No live items this week";
       $("#home-ann-meta").textContent = `Reviewed ${announcementUpdatedAt}`;
       renderHomeAnnouncements(announcementPrompts[0].events);
     } catch (error) {
-      button.disabled = true;
+      sundayButton.disabled = true;
       liveButton.disabled = true;
-      $("#announcement-description").textContent = "Announcements are unavailable right now. Please check back soon.";
+      $("#sunday-description").textContent = "Announcements are unavailable right now. Please check back soon.";
       $("#live-description").textContent = "Announcements are unavailable right now. Please check back soon.";
       $("#home-ann-meta").textContent = "Unavailable";
       renderHomeAnnouncements([]);
@@ -127,16 +153,24 @@
   }
 
   function selectContent() {
-    state.prompt = state.mode === "announcements" ? announcementPrompts[0] : encouragementMessages[state.mode];
+    if (state.mode === "announcements") {
+      state.prompt = promptForService(state.serviceFilter);
+    } else {
+      state.prompt = encouragementMessages[state.mode];
+    }
     renderPrompt();
   }
 
   function selectMode(mode) {
-    if (["announcements", "live-announcements"].includes(mode) && !announcementPrompts.length) return;
+    const announcementModes = ["sunday-announcements", "live-announcements", "announcements"];
+    if (announcementModes.includes(mode) && !announcementPrompts.length) return;
     clearTimer();
     closeSheets();
     state.isLiveUse = mode === "live-announcements";
-    state.mode = state.isLiveUse ? "announcements" : mode;
+    state.isSundayUse = mode === "sunday-announcements" || mode === "announcements";
+    state.serviceFilter = state.isLiveUse ? "live" : state.isSundayUse ? "sunday" : null;
+    state.mode = (state.isLiveUse || state.isSundayUse) ? "announcements" : mode;
+    if (state.mode === "announcements" && !eventsForService(state.serviceFilter).length) return;
     selectContent();
     showScreen("workspace");
     startReview();
@@ -145,10 +179,16 @@
   function renderPrompt() {
     const card = $("#prompt-card");
     const isEncouragement = state.mode !== "announcements";
-    const type = isEncouragement ? "Opening encouragement" : state.isLiveUse ? "Live announcements" : "Announcements";
+    const type = isEncouragement
+      ? "Opening encouragement"
+      : state.isLiveUse
+      ? "Live announcements"
+      : "Sunday AM announcements";
     const duration = isEncouragement ? "1-minute message" : "3-minute announcements";
     const setup = state.isLiveUse
       ? "Lead these current announcements for the room. Use the facts below, speak naturally, and end when you are finished."
+      : state.isSundayUse
+      ? "Lead these Sunday morning announcements for the room. Use the facts below, speak naturally, and end when you are finished."
       : state.prompt.setup;
 
     let body = `<div class="prompt-kicker"><span class="chip accent">${type}</span><span class="chip">${duration}</span>${state.mode === "announcements" ? `<span class="chip">Reviewed ${esc(announcementUpdatedAt)}</span>` : ""}</div><h2>${esc(state.prompt.title)}</h2><p class="prompt-setup">${esc(setup)}</p>`;
@@ -195,7 +235,7 @@
     state.phase = "live";
     document.body.dataset.phase = "live";
     signal(620, .16);
-    $("#phase-label").textContent = state.isLiveUse ? "On stage" : "Presenting";
+    $("#phase-label").textContent = state.isLiveUse ? "On stage" : state.isSundayUse ? "Sunday AM" : "Presenting";
     $("#status-title").textContent = state.mode === "announcements" ? "Lead the announcements" : "Lead the encouragement";
     $("#status-help").textContent = "Eyes up. Speak clearly. Finish with confidence. End the round when you finish.";
     $("#review-actions").hidden = true;
@@ -272,13 +312,17 @@
     document.body.dataset.phase = "done";
     signal(760, .25);
     showScreen("finish");
-    $("#finish-title").textContent = state.isLiveUse ? "Announcements complete." : "Round complete.";
+    $("#finish-title").textContent = (state.isLiveUse || state.isSundayUse) ? "Announcements complete." : "Round complete.";
     $("#finish-copy").textContent = state.isLiveUse
       ? "Thanks for leading. The next weekly refresh will bring in the latest confirmed announcements."
-      : state.mode === "announcements"
-      ? "Were the details clear, the tone warm, and the next steps easy to follow?"
+      : state.isSundayUse
+      ? "Thanks for leading Sunday morning. Clear details and a warm invitation help students take the next step."
       : "Was the Scripture clear and the invitation natural?";
-    $("#same-mode").textContent = state.isLiveUse ? "Lead announcements again" : "Lead it again";
+    $("#same-mode").textContent = state.isLiveUse
+      ? "Lead announcements again"
+      : state.isSundayUse
+      ? "Lead Sunday announcements again"
+      : "Lead it again";
     announcer.textContent = "Time. Round complete.";
   }
 
@@ -344,22 +388,22 @@
       Promise.resolve(document.modelContext.registerTool({
         name: "start_ministry_segment",
         title: "Start ministry segment",
-        description: "Start an opening charge, worship lean-in, announcement rehearsal, or weekly live announcements, beginning with a 60-second preparation period.",
+        description: "Start an opening charge, worship lean-in, Sunday AM announcements, or weekly live announcements, beginning with a 60-second preparation period.",
         inputSchema: {
           type: "object",
-          properties: { mode: { type: "string", enum: ["opening", "worship", "announcements", "live-announcements"] } },
+          properties: { mode: { type: "string", enum: ["opening", "worship", "sunday-announcements", "live-announcements"] } },
           required: ["mode"],
           additionalProperties: false
         },
         annotations: { readOnlyHint: false, untrustedContentHint: false },
         execute(input) {
-          if (!input || !["opening", "worship", "announcements", "live-announcements"].includes(input.mode)) throw new Error("Choose opening, worship, announcements, or live-announcements.");
-          if (["announcements", "live-announcements"].includes(input.mode) && !announcementPrompts.length) throw new Error("Announcements are not available yet.");
+          if (!input || !["opening", "worship", "sunday-announcements", "live-announcements"].includes(input.mode)) throw new Error("Choose opening, worship, sunday-announcements, or live-announcements.");
+          if (["sunday-announcements", "live-announcements"].includes(input.mode) && !announcementPrompts.length) throw new Error("Announcements are not available yet.");
           selectMode(input.mode);
           return { mode: input.mode, phase: state.phase, reviewSeconds: 60 };
         }
       })).catch(() => {});
-    } catch (error) { /* Practice remains available through buttons. */ }
+    } catch (error) { /* Modes remain available through buttons. */ }
   }
 
   // Expose for node-less browser checks
