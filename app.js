@@ -112,8 +112,8 @@
       button.disabled = false;
       liveButton.disabled = false;
       const count = announcementPrompts[0].events.length;
-      $("#announcement-description").textContent = `${count} current items · ${announcementUpdatedAt}`;
-      $("#live-description").textContent = `Lead live · ${count} items · ${announcementUpdatedAt}`;
+      $("#announcement-description").textContent = `${count} current items`;
+      $("#live-description").textContent = `Lead live · ${count} items`;
       $("#home-ann-meta").textContent = `Reviewed ${announcementUpdatedAt}`;
       renderHomeAnnouncements(announcementPrompts[0].events);
     } catch (error) {

@@ -65,10 +65,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   flex: 0 0 auto;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
-  min-height: 56px;
-  padding: 8px 10px;
+  min-height: 48px;
+  padding: 6px 8px;
   border-radius: var(--radius);
   background: linear-gradient(105deg, var(--terracotta) 0%, var(--terracotta-deep) 78%, #6e3212 100%);
   border: 1px solid rgba(255,255,255,.14);
@@ -88,19 +88,19 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 }
 .brand-bar > * { position: relative; z-index: 1; }
 .brand-logo {
-  width: 58px;
-  height: 72px;
+  width: 44px;
+  height: 54px;
   object-fit: contain;
   object-position: center;
-  border-radius: 10px;
+  border-radius: 8px;
   background: rgba(0,0,0,.22);
   border: 1px solid rgba(255,255,255,.22);
-  padding: 3px;
+  padding: 2px;
 }
 .brand-text { min-width: 0; }
 .brand-text strong {
   display: block;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   letter-spacing: -.03em;
   font-weight: 850;
   line-height: 1.05;
@@ -109,10 +109,13 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .brand-text span {
   display: block;
   font-size: var(--fs-xs);
-  letter-spacing: .12em;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: rgba(255,255,255,.9);
   font-weight: 750;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mission {
   margin: 0;
@@ -151,7 +154,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   margin: 0;
   color: var(--muted);
   font-size: var(--fs-sm);
-  line-height: 1.35;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mode-grid {
@@ -161,7 +167,7 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   gap: 8px;
 }
 .mode-card {
-  min-height: 64px;
+  min-height: 0;
   padding: 8px 10px;
   text-align: left;
   border: 1px solid var(--line);
@@ -200,10 +206,8 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   color: var(--muted);
   font-size: var(--fs-xs);
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: block;
+  overflow: visible;
   overflow-wrap: anywhere;
   word-break: normal;
 }
@@ -245,26 +249,28 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 6px 7px 8px;
-  gap: 5px;
+  padding: 5px 6px 6px;
+  gap: 4px;
 }
 .ann-row {
-  flex: 0 1 auto;
-  min-height: 0;
+  flex: 0 0 auto;
+  min-height: auto;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 2px 8px;
   align-content: start;
-  padding: 7px 9px;
+  padding: 6px 8px 7px;
   border-radius: 10px;
   background: rgba(255,255,255,.035);
   border: 1px solid rgba(255,255,255,.04);
+  overflow: visible;
 }
 .ann-row h3 {
   margin: 0;
   font-size: var(--fs-sm);
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: -.02em;
+  overflow-wrap: anywhere;
 }
 .ann-row .meta {
   grid-column: 1 / -1;
@@ -272,11 +278,9 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   color: var(--muted);
   font-size: var(--fs-xs);
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
-  white-space: normal;
+  text-overflow: ellipsis;
 }
 .ann-row .action {
   grid-column: 1 / -1;
@@ -284,12 +288,10 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   color: var(--blue);
   font-size: var(--fs-xs);
   font-weight: 750;
-  line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: 1.35;
   white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
 }
 .ann-row .cost {
   padding: 2px 6px;
@@ -620,17 +622,20 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
     --fs-lg: 1rem;       /* 15px */
     --fs-xl: 1.0667rem;  /* 16px */
   }
-  .app { padding: 6px 8px 8px; gap: 6px; }
-  .brand-bar { min-height: 48px; padding: 6px 8px; }
-  .brand-logo { width: 44px; height: 56px; }
-  .brand-text strong { font-size: 1rem; }
-  .mission { max-width: 6.5rem; }
-  .mode-card { min-height: 48px; padding: 6px 8px; }
+  .app { padding: 5px 7px 6px; gap: 5px; }
+  .brand-bar { min-height: 42px; padding: 4px 7px; }
+  .brand-logo { width: 34px; height: 42px; }
+  .brand-text strong { font-size: .95rem; }
+  .mission { max-width: 6.2rem; line-height: 1.15; }
+  .eyebrow { letter-spacing: .1em; }
+  .mode-card { min-height: 0; padding: 5px 7px; gap: 2px; }
+  .mode-grid { gap: 5px; }
   .home-intro { display: none; }
-  .ann-row { padding: 4px 7px; }
-  .ann-list { gap: 3px; padding: 3px 5px 5px; }
-  .clock { font-size: 1.7rem; min-width: 3.6rem; }
-  .btn { min-height: 40px; }
+  .ann-row { padding: 4px 6px 5px; gap: 1px 6px; }
+  .ann-list { gap: 3px; padding: 3px 4px 4px; }
+  .home-announcements .head { padding: 4px 7px; }
+  .clock { font-size: 1.6rem; min-width: 3.4rem; }
+  .btn { min-height: 38px; }
   .beats .beat:nth-child(n+4) .beat-copy { -webkit-line-clamp: 1; }
   .beat { padding: 4px 6px; }
   .prompt-card { padding: 6px 8px; }
