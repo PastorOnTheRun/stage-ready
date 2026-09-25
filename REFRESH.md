@@ -4,7 +4,7 @@ This is for the scheduled refresh that runs every **Monday and Thursday at about
 The live site is https://pastorontherun.github.io/stage-ready/ (GitHub Pages, repo `PastorOnTheRun/stage-ready`, branch `main`).
 Publish from the local clone at `/workspace/stage-ready-site`. Mirror the same files to `/workspace/stage-ready` (the dev copy).
 
-**Only `announcements.json` changes in a normal refresh.** Do not touch `index.html`, `app.js`, `styles.css`, or the layout.
+**Only `announcements.json` changes in a normal refresh.** Do not touch `index.html`, `app.js`, `tabs.js`, `styles.css`, `sw.js`, `manifest.webmanifest`, the layout, or the four leader-tab files (`guides.json`, `service.json`, `calendar.json`, `resources.json`) unless Jake asks for it. Section 7 covers those four files.
 
 ## 1. Which service each refresh focuses on
 
@@ -119,3 +119,95 @@ If `LIVE_MATCH` doesn't print, wait 30 seconds and check again. Pages can lag fo
 ## 6. Run report
 
 Report these items: the Notion pages read (with IDs), the final items per campus and service, what was added or removed, the commit hash, whether the live JSON matches, and any gaps (for example, missing times or rooms, conflicts, or a campus with no items).
+
+## 7. Leader tabs: `guides.json`, `service.json`, `calendar.json`, `resources.json`
+
+The app has a fixed bottom tab bar with five tabs, in this order: **Guides** (Small Group Leader Guides), **Stage** (Announcements & Stage Stuff: Opening Charge, Worship Lean-In and the Windermere and Lakeside dashboards, driven by `announcements.json`), **Service** (Order of Service), **Calendar**, and **Resources**. Tabs 1, 3, 4 and 5 each read one JSON file (fetched with `cache: "no-store"`), so editing a JSON file and pushing is enough to update a tab.
+
+**A normal Mon/Thu refresh still changes only `announcements.json`.** Edit these four files only when Jake asks, or when Jake has asked for a leader-tab update as part of a refresh.
+
+### Content rules (same as announcements, plus)
+- Every item must be traceable to Jake's Notion (read-only via `user-Notion-xai`). **Never invent** events, dates, times, rooms, costs, links, curriculum, or guide content.
+- Leave out anything Notion marks **Planned / tentative**, **Verify**, **Needs confirmation**, "proposed", or "target". The Sunday rollout milestones, SLT cadence, the Oct 7/14 student training, the Oct 18 leader regroup, the Israel trip, and curriculum names (YM360 The Thread, Reframe Youth: "verify") were left out for this reason as of Sep 25, 2026.
+- Links must be real `https://` URLs that appear in Notion and open **without sign-in**. Don't link private Google Docs or Drive files (for example the rollout doc, preaching calendar, or Spiritual Health Assessment) unless Jake says a file is public and safe to share.
+- **No personal info:** no student or minor names, rosters, contact details, check-in or attendance data, or health or survey data. Adult staff names only in a role context and only if Notion has them; when unsure, leave names out. The weekly Sunday team names in the Sunday Checklist are **not** published.
+- The audience is leaders and the stage team. Don't add student-facing copy or "sign in" or "private version" placeholders.
+- If a section has nothing sourced, leave `items` empty. The app shows the section's `emptyMessage` (e.g. "Nothing posted here yet.").
+- Bump `updatedAt` (e.g. `"October 1, 2026"`) whenever you edit a file. Keep the `sources` list (Notion page name + ID) current. The app doesn't show it; it's there for traceability.
+- Validate JSON before pushing: `for f in guides service calendar resources; do python3 -m json.tool $f.json >/dev/null && echo ok $f; done`.
+
+### Notion sources for the leader tabs
+| File | Notion pages (IDs) |
+|---|---|
+| `guides.json` | Middle School Sunday Morning Flow `3e57b1f0f0cb815a8439edd178677965` (MS Sunday table devotionals); Ministry Memory & AI Context `3e57b1f0f0cb81b6ae49d8caca7bd65f` (leader-guide practices, section 4); Ministry Tasks item "Confirm Paka follow-through and leader-practice training" `3d97b1f0f0cb81dcbc0cc88756b3db68` (September practice focus) |
+| `service.json` | Student Ministry Dashboard `3d97b1f0f0cb817f841cd44dc71b077f` (Midweek and Sunday playbooks); Middle School Sunday Announcements Log `3e57b1f0f0cb81139d35fbe869dad60d` (Wed 6–8, dinner at 5, $1 pizza); Luke's Lakeside Growth Reflection `3e57b1f0f0cb81bb875be4f317f106fc` (Lakeside Wednesday order, Building 5); Middle School Sunday Morning Flow `3e57b1f0f0cb815a8439edd178677965` |
+| `calendar.json` | Ministry Tasks `collection://a7a03f04-12d5-498c-8bad-642f31f4dfda` (Olympia FCA every Tuesday from Sep 22; Be Class Oct 18); Announcements Log `3e57b1f0f0cb81139d35fbe869dad60d` and Announcements Team App `3e57b1f0f0cb81e6a34df4bc976c7fb2` (Oct 7 prayer night); Lakeside Campus `3e57b1f0f0cb81dd81cad4721f7be30d` (Sep 23 Survivor Night); Ministry Memory `3e57b1f0f0cb81b6ae49d8caca7bd65f` (Be Class); Sunday Morning Flow and Dashboard (Sunday 9:45–10:45, Building 4) |
+| `resources.json` | Announcements Log and Announcements Team App (BAND); Middle School Sunday Morning Flow (Sidekick, Download Youth Ministry, Canva) |
+
+### `guides.json` schema (two separate guides: Middle School and High School)
+```json
+{
+  "updatedAt": "September 25, 2026",
+  "title": "Small Group Leader Guides",
+  "intro": "One or two sentences shown under the page title.",
+  "guides": [
+    {
+      "level": "middle",
+      "label": "Middle School",
+      "title": "Middle School Small Group Leader Guide",
+      "sections": [
+        { "title": "This week's guide", "items": [], "emptyMessage": "No middle school guide posted for this week yet." },
+        { "title": "Curriculum", "items": [], "emptyMessage": "No middle school curriculum posted yet." }
+      ]
+    },
+    { "level": "high", "label": "High School", "title": "High School Small Group Leader Guide", "sections": [ ... ] }
+  ],
+  "shared": { "title": "For every small group leader", "items": [ { "title": "...", "bullets": ["..."], "source": "Ministry Memory & AI Context" } ] },
+  "sources": [ { "name": "Notion page name", "id": "Notion page ID" } ]
+}
+```
+- `guides`: exactly two entries, `level` `"middle"` then `"high"`. The tab shows a large Middle School / High School switch at the top, and only the chosen guide's sections appear. The phone remembers the last choice.
+- Each guide keeps its own **This week's guide** and **Curriculum** sections (plus any other sourced sections), each with its own `emptyMessage`.
+- Item fields: `title` (required), `body` (optional paragraph), `bullets` (optional list of strings), `source` (Notion page name, shown in small type). Add a `"url"` only if the app is later extended to render links; today, put links in `resources.json`.
+- **Level rule:** put an item under `middle` or `high` only when Notion says which level it's for (e.g. the Sunday Morning Flow is middle school only). Items Notion doesn't tie to a level go in `shared` (shown under both guides). Never copy a guide to the other level unless Notion says the message is the same.
+
+### `service.json` schema
+```json
+{ "updatedAt": "...", "title": "Order of Service", "intro": "...",
+  "services": [ {
+    "title": "Wednesday Night · Windermere", "when": "Wednesdays · 6:00–8:00 PM", "where": "Family Church Windermere",
+    "items": [ { "time": "5:00 PM", "title": "Early dinner", "detail": "Pizza is $1 every week." } ],
+    "roles": ["Tech"], "checklist": ["..."], "note": "optional factual note", "source": "Notion page name(s)" } ],
+  "sources": [ { "name": "...", "id": "..." } ] }
+```
+`time`, `detail`, `roles`, `checklist` and `note` are optional. Leave out `time` when Notion gives the order but not the clock time. If `services` is empty, the tab shows "No order of service has been posted yet."
+
+### `calendar.json` schema
+```json
+{ "updatedAt": "...", "title": "Calendar",
+  "term": { "name": "Fall 2026", "start": "2026-08-01", "end": "2026-12-31" },
+  "weekly": [ { "day": "Tuesday", "title": "FCA at Olympia High", "detail": "...", "source": "Ministry Tasks" } ],
+  "events": [ { "date": "2026-10-07", "title": "...", "campus": "Both campuses", "time": "...", "detail": "...", "source": "..." } ],
+  "sources": [ { "name": "...", "id": "..." } ] }
+```
+- `term` sets which months appear (Month grid or List view, with a jump chip for each month). A month with no events shows "Nothing posted for this month yet."
+- `events[].date` is `YYYY-MM-DD` (ET). `campus`, `time` and `detail` are optional. Past events stay on the calendar, dimmed. Only add events Notion states as scheduled or confirmed.
+
+### `resources.json` schema
+```json
+{ "updatedAt": "...", "title": "Resources", "intro": "...",
+  "groups": [ { "title": "BAND invite, sign-up forms & PDFs", "items": [
+      { "title": "BAND invite", "type": "link", "url": "https://...", "note": "..." } ],
+    "emptyMessage": "Nothing posted here yet." } ],
+  "sources": [ { "name": "...", "id": "..." } ] }
+```
+`type` is `"link"`, `"form"`, `"pdf"` or `"tool"`. `url` must be an `https://` URL found in Notion. Items without a URL are shown as plain cards (for example, tools the team uses).
+
+### Publishing app or leader-tab changes
+When `index.html`, `app.js`, `tabs.js`, `styles.css` or `sw.js` change: bump the `?v=` cache-busters in `index.html` for the changed assets and bump `CACHE_VERSION` in `sw.js`. The service worker is network-first for every same-origin GET (HTML, JSON, JS, CSS and icons), uses the cache only as an offline fallback, deletes old caches on activate, and calls `skipWaiting()` + `clients.claim()`, so a new deploy shows up without anyone clearing their cache. JSON-only edits don't need a version bump.
+Full render check (every tab, both guides, both campus dashboards, timers, service worker, manifest) at 402x874:
+```bash
+python3 -m http.server 18427 --bind 127.0.0.1 --directory /workspace/stage-ready-site &
+node /workspace/stage-ready/check-all.mjs http://localhost:18427/ /workspace/shots/local-<date> 2
+# expect: "errors": [], overflowX false, clipped [], hiddenBehindBar false, timers ticking, serviceWorker activated + controlledAfterReload true
+```

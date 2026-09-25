@@ -1,0 +1,26 @@
+{
+  "updatedAt": "September 25, 2026",
+  "title": "Resources",
+  "intro": "Links, forms, PDFs, and the tools the team uses.",
+  "groups": [
+    {
+      "title": "BAND invite, sign-up forms & PDFs",
+      "items": [],
+      "emptyMessage": "Nothing posted here yet."
+    },
+    {
+      "title": "Tools the team uses",
+      "items": [
+        { "title": "BAND", "type": "tool", "note": "Where the student ministry shares weekly updates and sign-ups (for example, the Oct 7 prayer-night bus). Students get the invite from a leader." },
+        { "title": "Sidekick", "type": "tool", "note": "Runs the Sunday game on the room computer." },
+        { "title": "Download Youth Ministry", "type": "tool", "note": "Source of the Sunday games." },
+        { "title": "Canva", "type": "tool", "note": "Hosts the Sunday table devotionals." }
+      ]
+    }
+  ],
+  "sources": [
+    { "name": "Middle School Sunday Announcements Log", "id": "3e57b1f0f0cb81139d35fbe869dad60d" },
+    { "name": "Student Ministry Announcements Team App", "id": "3e57b1f0f0cb81e6a34df4bc976c7fb2" },
+    { "name": "Middle School Sunday Morning Flow (Sunday Checklist)", "id": "3e57b1f0f0cb815a8439edd178677965" }
+  ]
+}

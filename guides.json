@@ -1,0 +1,69 @@
+{
+  "updatedAt": "September 25, 2026",
+  "title": "Small Group Leader Guides",
+  "intro": "Pick your group. Middle school and high school messages are sometimes different, so each has its own guide.",
+  "guides": [
+    {
+      "level": "middle",
+      "label": "Middle School",
+      "title": "Middle School Small Group Leader Guide",
+      "sections": [
+        { "title": "This week's guide", "items": [], "emptyMessage": "No middle school guide posted for this week yet." },
+        { "title": "Curriculum", "items": [], "emptyMessage": "No middle school curriculum posted yet." },
+        {
+          "title": "Sunday table devotionals",
+          "items": [
+            {
+              "title": "25 minutes around the tables",
+              "body": "On Sunday mornings the devotionals run 25 minutes around the tables and follow the same structure as the 5–7 minute message. They're hosted on Canva and usually prepared for the month ahead.",
+              "source": "Middle School Sunday Morning Flow"
+            }
+          ],
+          "emptyMessage": "Nothing posted here yet."
+        }
+      ]
+    },
+    {
+      "level": "high",
+      "label": "High School",
+      "title": "High School Small Group Leader Guide",
+      "sections": [
+        { "title": "This week's guide", "items": [], "emptyMessage": "No high school guide posted for this week yet." },
+        { "title": "Curriculum", "items": [], "emptyMessage": "No high school curriculum posted yet." }
+      ]
+    }
+  ],
+  "shared": {
+    "title": "For every small group leader",
+    "items": [
+      {
+        "title": "What a good guide includes",
+        "bullets": [
+          "The Scripture reference, the purpose, and one clear big idea.",
+          "Enough context for the group to locate the passage.",
+          "A response and a prayer, kept in proportion to the time you have."
+        ],
+        "source": "Ministry Memory & AI Context"
+      },
+      {
+        "title": "Asking questions",
+        "bullets": [
+          "Move from observation, to meaning, to application.",
+          "Go further than “What did you think?”",
+          "Let application come from what the text says, not from a list of tips."
+        ],
+        "source": "Ministry Memory & AI Context"
+      },
+      {
+        "title": "September leader-practice focus",
+        "body": "Modeling engagement and praying with students.",
+        "source": "Ministry Memory & AI Context · Ministry Tasks"
+      }
+    ]
+  },
+  "sources": [
+    { "name": "Middle School Sunday Morning Flow (Sunday Checklist)", "id": "3e57b1f0f0cb815a8439edd178677965" },
+    { "name": "Ministry Memory & AI Context", "id": "3e57b1f0f0cb81b6ae49d8caca7bd65f" },
+    { "name": "Ministry Tasks: Confirm Paka follow-through and leader-practice training", "id": "3d97b1f0f0cb81dcbc0cc88756b3db68" }
+  ]
+}

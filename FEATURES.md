@@ -7,7 +7,7 @@ Live artifact: single self-contained `index.html` (CSS + JS inlined). Weekly dat
 ## Screens / views
 
 1. **Chooser (landing / team home)**
-   - Brand: “Stage Ready” mark (▲) + campus note “Family Church Students · Windermere”
+   - Brand: “Stage Ready” mark (▲) + campus-neutral note “Family Church Students” (changed from “Family Church Students · Windermere” on Sep 25, 2026; the header is the same on every tab)
    - Eyebrow + H1 “Announcements team”
    - Intro copy about prepare / green speak / red overtime
    - Four mode cards in 2×2 grid

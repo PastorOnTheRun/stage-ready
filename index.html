@@ -9,28 +9,26 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Stage Ready">
   <meta name="application-name" content="Stage Ready">
-  <meta name="description" content="Opening encouragements and current announcements for the Family Church Students team.">
+  <meta name="description" content="Leader and stage team hub for Family Church Students: guides, announcements, order of service, calendar and resources.">
   <title>Stage Ready</title>
   <link rel="manifest" href="manifest.webmanifest?v=20260925c">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png?v=20260925c">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=20260925c">
   <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=20260925c">
   <link rel="shortcut icon" href="icons/favicon.ico?v=20260925c">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260925g">
 </head>
 <body data-phase="choose">
-  <div class="app">
+  <main class="app tab-panel active" id="tab-announcements" data-tab="announcements" aria-label="Announcements &amp; Stage Stuff">
     <section class="screen active" id="chooser" aria-labelledby="chooser-title">
       <header class="brand-bar" aria-label="Family Church Students">
         <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
         <div class="brand-text">
           <strong>Stage Ready</strong>
-          <span>Students · Windermere</span>
+          <span>Family Church Students</span>
         </div>
-        <p class="mission">Believe<br>Belong<br>Beyond</p>
       </header>
-      <p class="eyebrow">Announcements team</p>
-      <h1 id="chooser-title" class="sr-only">Announcements team</h1>
+      <h1 id="chooser-title" class="page-title">Announcements &amp; Stage Stuff</h1>
       <div class="mode-grid">
         <button class="mode-card" type="button" data-mode="opening">
           <span class="mode-top"><span class="tag">1 min</span><span class="mode-title">Opening Charge</span></span>
@@ -96,7 +94,61 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
+
+  <main class="app tab-panel" id="tab-guides" data-tab="guides" aria-label="Small Group Leader Guides" hidden>
+    <header class="brand-bar" aria-label="Family Church Students">
+      <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
+      <div class="brand-text">
+        <strong>Stage Ready</strong>
+        <span>Family Church Students</span>
+      </div>
+    </header>
+    <h1 class="page-title">Small Group Leader Guides</h1>
+    <div class="tab-body" id="guides-body"><p class="tab-loading">Loading…</p></div>
+  </main>
+  <main class="app tab-panel" id="tab-service" data-tab="service" aria-label="Order of Service" hidden>
+    <header class="brand-bar" aria-label="Family Church Students">
+      <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
+      <div class="brand-text">
+        <strong>Stage Ready</strong>
+        <span>Family Church Students</span>
+      </div>
+    </header>
+    <h1 class="page-title">Order of Service</h1>
+    <div class="tab-body" id="service-body"><p class="tab-loading">Loading…</p></div>
+  </main>
+  <main class="app tab-panel" id="tab-calendar" data-tab="calendar" aria-label="Calendar" hidden>
+    <header class="brand-bar" aria-label="Family Church Students">
+      <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
+      <div class="brand-text">
+        <strong>Stage Ready</strong>
+        <span>Family Church Students</span>
+      </div>
+    </header>
+    <h1 class="page-title">Calendar</h1>
+    <div class="tab-body" id="calendar-body"><p class="tab-loading">Loading…</p></div>
+  </main>
+  <main class="app tab-panel" id="tab-resources" data-tab="resources" aria-label="Resources" hidden>
+    <header class="brand-bar" aria-label="Family Church Students">
+      <img class="brand-logo" src="assets/fc-logo-clean.png" alt="Family Church" width="64" height="40">
+      <div class="brand-text">
+        <strong>Stage Ready</strong>
+        <span>Family Church Students</span>
+      </div>
+    </header>
+    <h1 class="page-title">Resources</h1>
+    <div class="tab-body" id="resources-body"><p class="tab-loading">Loading…</p></div>
+  </main>
+
+  <nav class="tabbar" id="tabbar" aria-label="Sections">
+    <button type="button" class="tab" data-tab="guides" aria-label="Small Group Leader Guides"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M8 7h8M8 11h6"/></svg><span>Guides</span></button>
+    <button type="button" class="tab" data-tab="announcements" aria-label="Announcements &amp; Stage Stuff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 5V4L7 9H4a1 1 0 0 0-1 1z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/></svg><span>Stage</span></button>
+    <button type="button" class="tab" data-tab="service" aria-label="Order of Service"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.5"/><circle cx="4.5" cy="12" r="1.5"/><circle cx="4.5" cy="18" r="1.5"/></svg><span>Service</span></button>
+    <button type="button" class="tab" data-tab="calendar" aria-label="Calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Calendar</span></button>
+    <button type="button" class="tab" data-tab="resources" aria-label="Resources"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg><span>Resources</span></button>
+  </nav>
+
 
   <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
   <aside class="sheet" id="pacing-sheet" aria-labelledby="run-title" hidden>
@@ -119,6 +171,7 @@
   </aside>
 
   <p class="sr-only" id="announcer" aria-live="polite"></p>
-  <script src="app.js"></script>
+  <script src="app.js?v=20260925g"></script>
+  <script src="tabs.js?v=20260925g"></script>
 </body>
 </html>
