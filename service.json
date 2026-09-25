@@ -6,13 +6,43 @@
     {
       "title": "Wednesday Night · Windermere",
       "when": "Wednesdays · 6:00–8:00 PM",
-      "where": "Family Church Windermere",
+      "where": "Family Church Windermere · Chapel (high school) · Annex (middle school)",
       "items": [
-        { "time": "5:00 PM", "title": "Early dinner", "detail": "Pizza is $1 every week." },
-        { "time": "6:00 PM", "title": "Leader huddle and hangout", "detail": "Hangout runs 6:00–6:30. Assign huddle coverage so arriving students are still welcomed." },
-        { "time": "6:30 PM", "title": "Service begins" },
-        { "title": "Small groups", "detail": "After the service." },
-        { "time": "8:00 PM", "title": "Dismissal", "detail": "Pickup runs through 8:15 PM." }
+        {
+          "time": "5:00 PM",
+          "title": "Early dinner",
+          "detail": "Pizza is $1 every week."
+        },
+        {
+          "time": "5:45 PM",
+          "title": "Guest teacher arrives",
+          "detail": "Check in with Jake or the service lead."
+        },
+        {
+          "time": "6:00 PM",
+          "title": "Leader huddle and hangout",
+          "detail": "Hangout runs 6:00–6:30. Assign huddle coverage so arriving students are still welcomed."
+        },
+        {
+          "time": "6:30 PM",
+          "title": "Service begins"
+        },
+        {
+          "title": "Message",
+          "detail": "22–25 minute teaching window."
+        },
+        {
+          "title": "Response and prayer",
+          "detail": "As directed, then students dismiss to small groups."
+        },
+        {
+          "title": "Small groups"
+        },
+        {
+          "time": "8:00 PM",
+          "title": "Dismissal",
+          "detail": "Pickup runs through 8:15 PM."
+        }
       ],
       "checklist": [
         "Confirm the run of show, message, worship, games, and small-group guide.",
@@ -21,18 +51,31 @@
         "Confirm pickup supervision.",
         "Capture attendance, first-time guests, wins, and follow-ups."
       ],
-      "source": "Student Ministry Dashboard · Middle School Sunday Announcements Log"
+      "source": "Student Ministry Dashboard · Middle School Sunday Announcements Log · Fall 2026 Preaching Calendar (Guest Teacher Guide)"
     },
     {
       "title": "Wednesday Night · Lakeside",
       "when": "Wednesdays",
       "where": "Building 5 · Family Church Lakeside",
       "items": [
-        { "title": "Hangout", "detail": "Music and the soda bar." },
-        { "title": "Worship" },
-        { "title": "Large-group game" },
-        { "title": "Teaching", "detail": "About 15 minutes." },
-        { "title": "Small-group discussion", "detail": "45–60 minutes." }
+        {
+          "title": "Hangout",
+          "detail": "Music and the soda bar."
+        },
+        {
+          "title": "Worship"
+        },
+        {
+          "title": "Large-group game"
+        },
+        {
+          "title": "Teaching",
+          "detail": "About 15 minutes."
+        },
+        {
+          "title": "Small-group discussion",
+          "detail": "45–60 minutes."
+        }
       ],
       "note": "Clock times for Lakeside aren't posted yet.",
       "source": "Lakeside Growth Reflection (Sep 2026)"
@@ -42,33 +85,111 @@
       "when": "Sundays · 9:45–10:45 AM",
       "where": "Building 4 · Family Church Windermere",
       "items": [
-        { "time": "8:55 AM", "title": "Sunday lead arrives" },
-        { "time": "9:00 AM", "title": "Tech call", "detail": "Test the room, sound, slides, and check-in." },
-        { "time": "9:05 AM", "title": "Welcome captain call" },
-        { "time": "9:10 AM", "title": "Welcome team call", "detail": "Review guest handoffs." },
-        { "time": "9:15 AM", "title": "Table leader call", "detail": "Review table assignments." },
-        { "time": "9:20 AM", "title": "Five-minute team huddle", "detail": "Keep an entry greeter in position." },
-        { "time": "9:25 AM", "title": "Welcome and check-in ready", "detail": "Guest Experience sets up the iPads and tables. Connect every arrival to a person." },
-        { "time": "9:30 AM", "title": "Arrival window" },
-        { "time": "9:45 AM", "title": "Begin on time", "detail": "Keep late-arrival coverage through 10:05." },
-        { "title": "Game", "detail": "From Download Youth Ministry, run in Sidekick. Tables answer together on whiteboards." },
-        { "title": "Message", "detail": "About 5–7 minutes." },
-        { "title": "Table devotionals", "detail": "25 minutes, same structure as the message." },
-        { "title": "Closer" },
-        { "time": "10:45 AM", "title": "Transition", "detail": "Help students transition per parent arrangements and church policy; offer connection to 11:00 worship." },
-        { "time": "10:45–10:55", "title": "Reset and five-minute debrief", "detail": "One win · Anyone we missed? · One issue to fix · Assign an owner and follow-up date · Pray." },
-        { "time": "11:00 AM", "title": "Team release" }
+        {
+          "time": "8:55 AM",
+          "title": "Sunday lead arrives"
+        },
+        {
+          "time": "9:00 AM",
+          "title": "Tech call",
+          "detail": "Test the room, sound, slides, and check-in."
+        },
+        {
+          "time": "9:05 AM",
+          "title": "Welcome captain call"
+        },
+        {
+          "time": "9:10 AM",
+          "title": "Welcome team call",
+          "detail": "Review guest handoffs."
+        },
+        {
+          "time": "9:15 AM",
+          "title": "Table leader call",
+          "detail": "Review table assignments."
+        },
+        {
+          "time": "9:20 AM",
+          "title": "Five-minute team huddle",
+          "detail": "Keep an entry greeter in position."
+        },
+        {
+          "time": "9:25 AM",
+          "title": "Welcome and check-in ready",
+          "detail": "Guest Experience sets up the iPads and tables. Connect every arrival to a person."
+        },
+        {
+          "time": "9:30 AM",
+          "title": "Arrival window"
+        },
+        {
+          "time": "9:45 AM",
+          "title": "Begin on time",
+          "detail": "Keep late-arrival coverage through 10:05."
+        },
+        {
+          "title": "Game",
+          "detail": "From Download Youth Ministry, run in Sidekick. Tables answer together on whiteboards."
+        },
+        {
+          "title": "Message",
+          "detail": "About 5–7 minutes."
+        },
+        {
+          "title": "Table devotionals",
+          "detail": "25 minutes, same structure as the message."
+        },
+        {
+          "title": "Closer"
+        },
+        {
+          "time": "10:45 AM",
+          "title": "Transition",
+          "detail": "Help students transition per parent arrangements and church policy; offer connection to 11:00 worship."
+        },
+        {
+          "time": "10:45–10:55",
+          "title": "Reset and five-minute debrief",
+          "detail": "One win · Anyone we missed? · One issue to fix · Assign an owner and follow-up date · Pray."
+        },
+        {
+          "time": "11:00 AM",
+          "title": "Team release"
+        }
       ],
-      "roles": ["Tech", "Guest Experience", "Teacher", "Closer"],
-      "checklist": ["By Thursday: confirm the Sunday lead, welcome and check-in, tech, table leaders, and backups."],
+      "roles": [
+        "Tech",
+        "Guest Experience",
+        "Teacher",
+        "Closer"
+      ],
+      "checklist": [
+        "By Thursday: confirm the Sunday lead, welcome and check-in, tech, table leaders, and backups."
+      ],
       "note": "No worship set in the middle school room on Sunday mornings.",
       "source": "Middle School Sunday Morning Flow · Student Ministry Dashboard"
     }
   ],
   "sources": [
-    { "name": "Student Ministry Dashboard (Midweek and Sunday playbooks)", "id": "3d97b1f0f0cb817f841cd44dc71b077f" },
-    { "name": "Middle School Sunday Announcements Log", "id": "3e57b1f0f0cb81139d35fbe869dad60d" },
-    { "name": "Luke Sareyka — Lakeside Growth Reflection (Sep 2026)", "id": "3e57b1f0f0cb81bb875be4f317f106fc" },
-    { "name": "Middle School Sunday Morning Flow (Sunday Checklist)", "id": "3e57b1f0f0cb815a8439edd178677965" }
+    {
+      "name": "Google Sheet: Fall 2026 Student Ministry Preaching Calendar (Guest Teacher Guide tab)",
+      "id": "sheet:1EEksbhWHBH8OtjqFYooc5IplLnqX_5uo9hnb49rdJFI"
+    },
+    {
+      "name": "Student Ministry Dashboard (Midweek and Sunday playbooks)",
+      "id": "3d97b1f0f0cb817f841cd44dc71b077f"
+    },
+    {
+      "name": "Middle School Sunday Announcements Log",
+      "id": "3e57b1f0f0cb81139d35fbe869dad60d"
+    },
+    {
+      "name": "Luke Sareyka — Lakeside Growth Reflection (Sep 2026)",
+      "id": "3e57b1f0f0cb81bb875be4f317f106fc"
+    },
+    {
+      "name": "Middle School Sunday Morning Flow (Sunday Checklist)",
+      "id": "3e57b1f0f0cb815a8439edd178677965"
+    }
   ]
 }

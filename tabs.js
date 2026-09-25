@@ -30,6 +30,19 @@
   let guidesData = null;
   let guideLevel = (() => { try { return localStorage.getItem(LEVEL_KEY) || "middle"; } catch { return "middle"; } })();
 
+  const SENS = { yellow: "Yellow · extra care", red: "Red · parents contacted first" };
+  const sensPill = (w) => (SENS[w.sensitivity] ? `<em class="pill sens-${esc(w.sensitivity)}">${esc(SENS[w.sensitivity])}</em>` : "");
+  function weekCard(w, big) {
+    const meta = [w.series === w.title ? "" : w.series, w.week].filter(Boolean).join(" · ");
+    return `<article class="info-card week-card ${big ? "is-this-week" : ""} ${w.noService ? "no-service" : ""}">
+      <p class="week-date">${esc(fmtDay(w.date))}${meta ? ` · ${esc(meta)}` : ""}</p>
+      <h3>${esc(w.title)}</h3>${sensPill(w)}
+      ${w.scripture ? `<p class="week-ref">${esc(w.scripture)}</p>` : ""}
+      ${w.bigIdea ? `<p class="week-big"><strong>Big idea:</strong> ${esc(w.bigIdea)}</p>` : ""}
+      ${w.note ? `<p class="note">${esc(w.note)}</p>` : ""}
+    </article>`;
+  }
+
   function renderGuides(d, level) {
     const guides = d.guides || [];
     const current = guides.find(g => g.level === level) || guides[0];
@@ -38,6 +51,20 @@
     html += `<div class="level-switch" role="tablist" aria-label="Choose a guide">${guides.map(g =>
       `<button type="button" role="tab" class="level-btn" data-level="${esc(g.level)}" aria-selected="${g.level === current.level}" aria-controls="guide-panel">${esc(g.label)}</button>`).join("")}</div>`;
     html += `<div id="guide-panel" class="guide-panel" role="tabpanel" data-level="${esc(current.level)}"><h2 class="guide-title">${esc(current.title)}</h2>`;
+    if (current.room) html += `<p class="svc-meta">Wednesday room: ${esc(current.room)}</p>`;
+    const today = todayET();
+    const weeks = [...(current.weeks || [])].sort((a, b) => a.date.localeCompare(b.date));
+    const next = weeks.find(w => w.date >= today);
+    html += `<section class="tab-section"><h2>This week's guide</h2>${next ? weekCard(next, true) : empty(current.thisWeekEmpty)}${next && current.weeksSource ? source(current.weeksSource) : ""}</section>`;
+    html += `<section class="tab-section"><h2>Fall 2026 teaching calendar</h2>`;
+    if (weeks.length) {
+      const upcoming = weeks.filter(w => w.date >= today && (!next || w.date !== next.date));
+      const past = weeks.filter(w => w.date < today);
+      html += upcoming.length ? `<h3 class="sub-h">Coming up</h3><ol class="week-list">${upcoming.map(w => `<li>${weekCard(w, false)}</li>`).join("")}</ol>` : `<p class="muted">No more weeks posted this semester.</p>`;
+      if (past.length) html += `<details class="past-weeks"><summary>Earlier weeks (${past.length})</summary><ol class="week-list">${past.map(w => `<li class="is-past">${weekCard(w, false)}</li>`).join("")}</ol></details>`;
+      html += source(current.weeksSource);
+    } else html += empty(current.weeksEmpty);
+    html += `</section>`;
     (current.sections || []).forEach(sec => {
       html += `<section class="tab-section"><h2>${esc(sec.title)}</h2>`;
       html += sec.items?.length ? sec.items.map(card).join("") : empty(sec.emptyMessage);

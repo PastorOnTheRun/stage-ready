@@ -127,7 +127,7 @@ The app has a fixed bottom tab bar with five tabs, in this order: **Guides** (Sm
 **A normal Mon/Thu refresh still changes only `announcements.json`.** Edit these four files only when Jake asks, or when Jake has asked for a leader-tab update as part of a refresh.
 
 ### Content rules (same as announcements, plus)
-- Every item must be traceable to Jake's Notion (read-only via `user-Notion-xai`). **Never invent** events, dates, times, rooms, costs, links, curriculum, or guide content.
+- Every item must be traceable to Jake's Notion (read-only via `user-Notion-xai`) or to the Fall 2026 Preaching Calendar sheet (read-only). **Never invent** events, dates, times, rooms, costs, links, curriculum, or guide content.
 - Leave out anything Notion marks **Planned / tentative**, **Verify**, **Needs confirmation**, "proposed", or "target". The Sunday rollout milestones, SLT cadence, the Oct 7/14 student training, the Oct 18 leader regroup, the Israel trip, and curriculum names (YM360 The Thread, Reframe Youth: "verify") were left out for this reason as of Sep 25, 2026.
 - Links must be real `https://` URLs that appear in Notion and open **without sign-in**. Don't link private Google Docs or Drive files (for example the rollout doc, preaching calendar, or Spiritual Health Assessment) unless Jake says a file is public and safe to share.
 - **No personal info:** no student or minor names, rosters, contact details, check-in or attendance data, or health or survey data. Adult staff names only in a role context and only if Notion has them; when unsure, leave names out. The weekly Sunday team names in the Sunday Checklist are **not** published.
@@ -139,10 +139,10 @@ The app has a fixed bottom tab bar with five tabs, in this order: **Guides** (Sm
 ### Notion sources for the leader tabs
 | File | Notion pages (IDs) |
 |---|---|
-| `guides.json` | Middle School Sunday Morning Flow `3e57b1f0f0cb815a8439edd178677965` (MS Sunday table devotionals); Ministry Memory & AI Context `3e57b1f0f0cb81b6ae49d8caca7bd65f` (leader-guide practices, section 4); Ministry Tasks item "Confirm Paka follow-through and leader-practice training" `3d97b1f0f0cb81dcbc0cc88756b3db68` (September practice focus) |
-| `service.json` | Student Ministry Dashboard `3d97b1f0f0cb817f841cd44dc71b077f` (Midweek and Sunday playbooks); Middle School Sunday Announcements Log `3e57b1f0f0cb81139d35fbe869dad60d` (Wed 6–8, dinner at 5, $1 pizza); Luke's Lakeside Growth Reflection `3e57b1f0f0cb81bb875be4f317f106fc` (Lakeside Wednesday order, Building 5); Middle School Sunday Morning Flow `3e57b1f0f0cb815a8439edd178677965` |
-| `calendar.json` | Ministry Tasks `collection://a7a03f04-12d5-498c-8bad-642f31f4dfda` (Olympia FCA every Tuesday from Sep 22; Be Class Oct 18); Announcements Log `3e57b1f0f0cb81139d35fbe869dad60d` and Announcements Team App `3e57b1f0f0cb81e6a34df4bc976c7fb2` (Oct 7 prayer night); Lakeside Campus `3e57b1f0f0cb81dd81cad4721f7be30d` (Sep 23 Survivor Night); Ministry Memory `3e57b1f0f0cb81b6ae49d8caca7bd65f` (Be Class); Sunday Morning Flow and Dashboard (Sunday 9:45–10:45, Building 4) |
-| `resources.json` | Announcements Log and Announcements Team App (BAND); Middle School Sunday Morning Flow (Sidekick, Download Youth Ministry, Canva) |
+| `guides.json` | Google Sheet Fall 2026 Student Ministry Preaching Calendar `1EEksbhWHBH8OtjqFYooc5IplLnqX_5uo9hnb49rdJFI` (weekly MS/HS messages; Guest Teacher Guide tab for Know your room, sensitivity, safety); Middle School Sunday Morning Flow `3e57b1f0f0cb815a8439edd178677965` (MS Sunday table devotionals); Ministry Memory & AI Context `3e57b1f0f0cb81b6ae49d8caca7bd65f` (leader-guide practices and leader-practice focus, sections 3–4) |
+| `service.json` | Preaching Calendar sheet, Guest Teacher Guide tab (5:45 guest arrival, 22–25 min teaching window, response then small groups; Chapel = HS, Annex = MS); Student Ministry Dashboard `3d97b1f0f0cb817f841cd44dc71b077f` (Midweek and Sunday playbooks); Middle School Sunday Announcements Log `3e57b1f0f0cb81139d35fbe869dad60d` (Wed 6–8, dinner at 5, $1 pizza); Luke's Lakeside Growth Reflection `3e57b1f0f0cb81bb875be4f317f106fc` (Lakeside Wednesday order, Building 5); Middle School Sunday Morning Flow `3e57b1f0f0cb815a8439edd178677965` |
+| `calendar.json` | Preaching Calendar sheet (Wednesday series starts, Pastor's Choice week, no Midweek Nov 25); Ministry Tasks `collection://a7a03f04-12d5-498c-8bad-642f31f4dfda` (Olympia FCA every Tuesday from Sep 22; Be Class Oct 18); Announcements Log `3e57b1f0f0cb81139d35fbe869dad60d` and Announcements Team App `3e57b1f0f0cb81e6a34df4bc976c7fb2` (Oct 7 prayer night; Lakeside on-site comes from Jake's Sep 25 standing rule in section 3, not Notion); Lakeside Campus `3e57b1f0f0cb81dd81cad4721f7be30d` (Sep 23 Survivor Night); Ministry Memory `3e57b1f0f0cb81b6ae49d8caca7bd65f` (Be Class); Sunday Morning Flow and Dashboard (Sunday 9:45–10:45, Building 4) |
+| `resources.json` | Announcements Log and Announcements Team App (BAND); Middle School Sunday Morning Flow (Sidekick, Download Youth Ministry, Canva). The two official-site links (ourfamily.church home and Windermere campus page) are not in Notion; Jake's team approved keeping them on Sep 25, 2026. |
 
 ### `guides.json` schema (two separate guides: Middle School and High School)
 ```json
@@ -155,21 +155,29 @@ The app has a fixed bottom tab bar with five tabs, in this order: **Guides** (Sm
       "level": "middle",
       "label": "Middle School",
       "title": "Middle School Small Group Leader Guide",
-      "sections": [
-        { "title": "This week's guide", "items": [], "emptyMessage": "No middle school guide posted for this week yet." },
-        { "title": "Curriculum", "items": [], "emptyMessage": "No middle school curriculum posted yet." }
-      ]
+      "room": "Annex (middle school)",
+      "thisWeekEmpty": "No middle school guide posted for this week yet.",
+      "weeks": [
+        { "date": "2026-10-14", "series": "Prayer & Worship", "week": "Week 2", "title": "Relationship",
+          "scripture": "Mark 1:35; Luke 5:16; ...", "bigIdea": "Jesus modeled the importance of prayer, ...", "sensitivity": "green" },
+        { "date": "2026-11-25", "series": "No Midweek", "week": "Thanksgiving week", "title": "No Midweek", "noService": true, "note": "Thanksgiving week. No student Midweek." }
+      ],
+      "weeksEmpty": "No middle school curriculum posted yet.",
+      "weeksSource": "Fall 2026 Student Ministry Preaching Calendar (Annex / JH)",
+      "sections": [ { "title": "Know your room", "items": [ { "title": "...", "body": "...", "source": "..." } ], "emptyMessage": "Nothing posted here yet." } ]
     },
-    { "level": "high", "label": "High School", "title": "High School Small Group Leader Guide", "sections": [ ... ] }
+    { "level": "high", "label": "High School", "title": "High School Small Group Leader Guide", "room": "Chapel (high school)", "...": "same fields" }
   ],
-  "shared": { "title": "For every small group leader", "items": [ { "title": "...", "bullets": ["..."], "source": "Ministry Memory & AI Context" } ] },
-  "sources": [ { "name": "Notion page name", "id": "Notion page ID" } ]
+  "shared": { "title": "For every small group leader", "items": [ { "title": "...", "bullets": ["..."], "source": "..." } ] },
+  "sources": [ { "name": "Notion page or Sheet name", "id": "Notion page ID or sheet:<id>" } ]
 }
 ```
-- `guides`: exactly two entries, `level` `"middle"` then `"high"`. The tab shows a large Middle School / High School switch at the top, and only the chosen guide's sections appear. The phone remembers the last choice.
-- Each guide keeps its own **This week's guide** and **Curriculum** sections (plus any other sourced sections), each with its own `emptyMessage`.
-- Item fields: `title` (required), `body` (optional paragraph), `bullets` (optional list of strings), `source` (Notion page name, shown in small type). Add a `"url"` only if the app is later extended to render links; today, put links in `resources.json`.
-- **Level rule:** put an item under `middle` or `high` only when Notion says which level it's for (e.g. the Sunday Morning Flow is middle school only). Items Notion doesn't tie to a level go in `shared` (shown under both guides). Never copy a guide to the other level unless Notion says the message is the same.
+- `guides`: exactly two entries, `level` `"middle"` then `"high"`. The tab shows a large Middle School / High School switch at the top, and only the chosen guide appears. The phone remembers the last choice.
+- **This week's guide** is picked automatically: the first entry in `weeks` whose `date` is today or later (ET). If there isn't one, the app shows `thisWeekEmpty`. **Fall 2026 teaching calendar** lists the remaining upcoming weeks, with past weeks folded under "Earlier weeks". If `weeks` is empty, it shows `weeksEmpty`.
+- Week fields: `date` (`YYYY-MM-DD`, the Wednesday), `series`, `week`, `title` (required); `scripture`, `bigIdea`, `note` (optional); `sensitivity` `"green" | "yellow" | "red"` (Yellow and Red show a tag); `noService: true` for weeks with no Midweek.
+- **Source for `weeks`:** the Google Sheet **Fall 2026 Student Ministry Preaching Calendar** (`1EEksbhWHBH8OtjqFYooc5IplLnqX_5uo9hnb49rdJFI`, tab "Preaching Calendar", read-only via `user-Google-sheets` `read_range`; linked from the Student Ministry Dashboard). **Room 1 = Chapel (HS) feeds `high`; Room 2 = Annex (JH) feeds `middle`.** Copy series, week, message title, Scripture, big idea and sensitivity exactly. Do **not** publish preacher names, prep status, or the linked lesson docs (Drive files that may need sign-in; not checked). "Pastor's Choice" weeks have no Scripture or big idea until Jake sets them, so use a `note` instead.
+- `sections` items: `title` (required), `body`, `bullets`, `source`. "Know your room" comes from the sheet's "Guest Teacher Guide" tab (High School 9th–12th / Junior High 6th–8th rows). MS Sunday table devotionals come from the Sunday Morning Flow page.
+- **Level rule:** put an item under `middle` or `high` only when the source says which level it's for. Items the source doesn't tie to a level go in `shared` (shown under both guides). Never copy one level's message to the other unless the sheet lists the same message for both rooms.
 
 ### `service.json` schema
 ```json

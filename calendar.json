@@ -1,27 +1,147 @@
 {
   "updatedAt": "September 25, 2026",
   "title": "Calendar",
-  "term": { "name": "Fall 2026", "start": "2026-08-01", "end": "2026-12-31" },
+  "term": {
+    "name": "Fall 2026",
+    "start": "2026-08-01",
+    "end": "2026-12-31"
+  },
   "weekly": [
-    { "day": "Tuesday", "title": "FCA at Olympia High", "detail": "Every Tuesday, starting September 22.", "source": "Ministry Tasks" },
-    { "day": "Wednesday", "title": "Wednesday Night · Windermere", "detail": "6:00–8:00 PM · early dinner at 5:00 PM ($1 pizza).", "source": "Middle School Sunday Announcements Log" },
-    { "day": "Wednesday", "title": "Wednesday Night · Lakeside", "detail": "Building 5 · Family Church Lakeside.", "source": "Lakeside Growth Reflection" },
-    { "day": "Sunday", "title": "Middle School Sunday · Windermere", "detail": "9:45–10:45 AM · Building 4.", "source": "Middle School Sunday Morning Flow · Student Ministry Dashboard" }
+    {
+      "day": "Tuesday",
+      "title": "FCA at Olympia High",
+      "detail": "Every Tuesday, starting September 22.",
+      "source": "Ministry Tasks"
+    },
+    {
+      "day": "Wednesday",
+      "title": "Wednesday Night · Windermere",
+      "detail": "6:00–8:00 PM · early dinner at 5:00 PM ($1 pizza). High school in the Chapel, middle school in the Annex.",
+      "source": "Middle School Sunday Announcements Log · Fall 2026 Preaching Calendar"
+    },
+    {
+      "day": "Wednesday",
+      "title": "Wednesday Night · Lakeside",
+      "detail": "Building 5 · Family Church Lakeside.",
+      "source": "Lakeside Growth Reflection"
+    },
+    {
+      "day": "Sunday",
+      "title": "Middle School Sunday · Windermere",
+      "detail": "9:45–10:45 AM · Building 4.",
+      "source": "Middle School Sunday Morning Flow · Student Ministry Dashboard"
+    }
   ],
   "events": [
-    { "date": "2026-09-22", "title": "FCA at Olympia High begins", "detail": "Then every Tuesday.", "source": "Ministry Tasks" },
-    { "date": "2026-09-23", "campus": "Lakeside", "title": "Survivor Night at Lakeside", "source": "Lakeside Campus" },
-    { "date": "2026-10-07", "campus": "Both campuses", "title": "Church-wide Prayer Night at Lakeside", "time": "Windermere bus leaves 5:45 PM · back around 8:30 PM", "detail": "Free. Windermere bus sign-ups are on BAND. Lakeside students attend on-site.", "source": "Middle School Sunday Announcements Log · Announcements Team App" },
-    { "date": "2026-10-18", "title": "Be Class", "detail": "Membership and baptism next step. Time and room aren't posted yet.", "source": "Ministry Memory & AI Context · Ministry Tasks" }
+    {
+      "date": "2026-08-19",
+      "title": "Unapologetic series · weeks 3–4",
+      "detail": "Wednesday teaching series (weeks 3 and 4 on Aug 19 and 26).",
+      "source": "Fall 2026 Preaching Calendar"
+    },
+    {
+      "date": "2026-09-02",
+      "title": "Telos series begins",
+      "detail": "Wednesday teaching series, 4 weeks (Sep 2–23).",
+      "source": "Fall 2026 Preaching Calendar"
+    },
+    {
+      "date": "2026-09-22",
+      "title": "FCA at Olympia High begins",
+      "detail": "Then every Tuesday.",
+      "source": "Ministry Tasks"
+    },
+    {
+      "date": "2026-09-23",
+      "campus": "Lakeside",
+      "title": "Survivor Night at Lakeside",
+      "source": "Lakeside Campus"
+    },
+    {
+      "date": "2026-09-30",
+      "title": "Pastor's Choice · open week",
+      "detail": "Wednesday message chosen by the preacher and set with Jake before Monday.",
+      "source": "Fall 2026 Preaching Calendar"
+    },
+    {
+      "date": "2026-10-07",
+      "campus": "Both campuses",
+      "title": "Church-wide Prayer Night at Lakeside",
+      "time": "Windermere bus leaves 5:45 PM · back around 8:30 PM",
+      "detail": "Free. Windermere bus sign-ups are on BAND. Lakeside students attend on-site.",
+      "source": "Middle School Sunday Announcements Log · Announcements Team App · Lakeside on-site per Jake's Sep 25 rule (REFRESH.md)"
+    },
+    {
+      "date": "2026-10-07",
+      "title": "Prayer & Worship series begins",
+      "detail": "Wednesday teaching series, 4 weeks (Oct 7–28).",
+      "source": "Fall 2026 Preaching Calendar"
+    },
+    {
+      "date": "2026-10-18",
+      "title": "Be Class",
+      "detail": "Membership and baptism next step. Time and room aren't posted yet.",
+      "source": "Ministry Memory & AI Context · Ministry Tasks"
+    },
+    {
+      "date": "2026-11-04",
+      "title": "The Gospel (Mental Health) series begins",
+      "detail": "Wednesday teaching series, 3 weeks (Nov 4–18). Topics are marked Yellow or Red for sensitivity.",
+      "source": "Fall 2026 Preaching Calendar"
+    },
+    {
+      "date": "2026-11-25",
+      "title": "No student Midweek",
+      "detail": "Thanksgiving week.",
+      "source": "Fall 2026 Preaching Calendar"
+    },
+    {
+      "date": "2026-12-02",
+      "title": "The King Is Here series begins",
+      "detail": "Wednesday teaching series, 3 weeks (Dec 2–16).",
+      "source": "Fall 2026 Preaching Calendar"
+    }
   ],
   "sources": [
-    { "name": "Ministry Tasks (Olympia FCA rhythm; Be Class)", "id": "collection://a7a03f04-12d5-498c-8bad-642f31f4dfda" },
-    { "name": "Middle School Sunday Announcements Log", "id": "3e57b1f0f0cb81139d35fbe869dad60d" },
-    { "name": "Student Ministry Announcements Team App", "id": "3e57b1f0f0cb81e6a34df4bc976c7fb2" },
-    { "name": "Lakeside Campus", "id": "3e57b1f0f0cb81dd81cad4721f7be30d" },
-    { "name": "Luke Sareyka — Lakeside Growth Reflection (Sep 2026)", "id": "3e57b1f0f0cb81bb875be4f317f106fc" },
-    { "name": "Ministry Memory & AI Context", "id": "3e57b1f0f0cb81b6ae49d8caca7bd65f" },
-    { "name": "Middle School Sunday Morning Flow (Sunday Checklist)", "id": "3e57b1f0f0cb815a8439edd178677965" },
-    { "name": "Student Ministry Dashboard", "id": "3d97b1f0f0cb817f841cd44dc71b077f" }
+    {
+      "name": "Google Sheet: Fall 2026 Student Ministry Preaching Calendar",
+      "id": "sheet:1EEksbhWHBH8OtjqFYooc5IplLnqX_5uo9hnb49rdJFI"
+    },
+    {
+      "name": "Ministry Tasks (Olympia FCA rhythm; Be Class)",
+      "id": "collection://a7a03f04-12d5-498c-8bad-642f31f4dfda"
+    },
+    {
+      "name": "Middle School Sunday Announcements Log",
+      "id": "3e57b1f0f0cb81139d35fbe869dad60d"
+    },
+    {
+      "name": "Student Ministry Announcements Team App",
+      "id": "3e57b1f0f0cb81e6a34df4bc976c7fb2"
+    },
+    {
+      "name": "Lakeside Campus",
+      "id": "3e57b1f0f0cb81dd81cad4721f7be30d"
+    },
+    {
+      "name": "Luke Sareyka — Lakeside Growth Reflection (Sep 2026)",
+      "id": "3e57b1f0f0cb81bb875be4f317f106fc"
+    },
+    {
+      "name": "Ministry Memory & AI Context",
+      "id": "3e57b1f0f0cb81b6ae49d8caca7bd65f"
+    },
+    {
+      "name": "Middle School Sunday Morning Flow (Sunday Checklist)",
+      "id": "3e57b1f0f0cb815a8439edd178677965"
+    },
+    {
+      "name": "Student Ministry Dashboard",
+      "id": "3d97b1f0f0cb817f841cd44dc71b077f"
+    },
+    {
+      "name": "REFRESH.md standing rule (Jake, Sep 25, 2026): Lakeside prayer night is on-site",
+      "id": "REFRESH.md"
+    }
   ]
 }

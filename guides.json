@@ -7,9 +7,183 @@
       "level": "middle",
       "label": "Middle School",
       "title": "Middle School Small Group Leader Guide",
+      "room": "Annex (middle school)",
+      "thisWeekEmpty": "No middle school guide posted for this week yet.",
+      "weeks": [
+        {
+          "date": "2026-08-19",
+          "series": "Unapologetic",
+          "week": "Week 3",
+          "title": "JW & Jesus",
+          "scripture": "John 1:1-18; John 10",
+          "bigIdea": "Just because you believe you know the Father doesn’t mean you understand the Son.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-08-26",
+          "series": "Unapologetic",
+          "week": "Week 4",
+          "title": "Hebrew Israelites & Jesus",
+          "scripture": "Matthew 15:21-28; Matthew 8:1-13; Luke 19:1-10",
+          "bigIdea": "Sometimes people want Jesus to be more like them than for them to become more like Jesus.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-09-02",
+          "series": "Telos",
+          "week": "Week 1",
+          "title": "Design",
+          "scripture": "Genesis 1:26-28",
+          "bigIdea": "You are designed with purpose and responsibility, given to you by God.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-09",
+          "series": "Telos",
+          "week": "Week 2",
+          "title": "Purpose",
+          "scripture": "Matthew 5:13-16",
+          "bigIdea": "Our purpose is to know and follow Jesus while sharing Him with others.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-16",
+          "series": "Telos",
+          "week": "Week 3",
+          "title": "Direction",
+          "scripture": "Genesis 3:1-7",
+          "bigIdea": "God created everything with a purpose; sin is using what He made in ways He did not design.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-23",
+          "series": "Telos",
+          "week": "Week 4",
+          "title": "Responsibility",
+          "scripture": "Matthew 25:14-30",
+          "bigIdea": "God has created us to take on responsibility, and in doing so, we find meaning and purpose.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-30",
+          "series": "Pastor's Choice",
+          "week": "Open week",
+          "title": "Pastor's Choice",
+          "note": "Open week. Scripture and big idea are set with Jake before Monday and aren't posted yet.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-10-07",
+          "series": "Prayer & Worship",
+          "week": "Week 1",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        },
+        {
+          "date": "2026-10-14",
+          "series": "Prayer & Worship",
+          "week": "Week 2",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        },
+        {
+          "date": "2026-10-21",
+          "series": "Prayer & Worship",
+          "week": "Week 3",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        },
+        {
+          "date": "2026-10-28",
+          "series": "Prayer & Worship",
+          "week": "Week 4",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        },
+        {
+          "date": "2026-11-04",
+          "series": "The Gospel (Mental Health)",
+          "week": "Week 1",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        },
+        {
+          "date": "2026-11-11",
+          "series": "The Gospel (Mental Health)",
+          "week": "Week 2",
+          "title": "Depression",
+          "scripture": "Psalm 42:6-11",
+          "bigIdea": "We can trust God while experiencing depression and ask Him to turn our despair into hope.",
+          "sensitivity": "red"
+        },
+        {
+          "date": "2026-11-18",
+          "series": "The Gospel (Mental Health)",
+          "week": "Week 3",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        },
+        {
+          "date": "2026-11-25",
+          "series": "No Midweek",
+          "week": "Thanksgiving week",
+          "title": "No Midweek",
+          "noService": true,
+          "note": "Thanksgiving week. No student Midweek."
+        },
+        {
+          "date": "2026-12-02",
+          "series": "The King Is Here",
+          "week": "Week 1",
+          "title": "Facing the Opps",
+          "scripture": "Matthew 2:13-23",
+          "bigIdea": "We can overcome opposition through faith in God and His promises.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-12-09",
+          "series": "The King Is Here",
+          "week": "Week 2",
+          "title": "The Hype vs. The Hope",
+          "scripture": "Luke 2:8-14",
+          "bigIdea": "We often get caught up in the “hype” of Christmas, but the true meaning offers lasting hope.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-12-16",
+          "series": "The King Is Here",
+          "week": "Week 3",
+          "title": "2",
+          "scripture": "0",
+          "bigIdea": "2",
+          "sensitivity": "6"
+        }
+      ],
+      "weeksEmpty": "No middle school curriculum posted yet.",
+      "weeksSource": "Fall 2026 Student Ministry Preaching Calendar (Annex / JH)",
       "sections": [
-        { "title": "This week's guide", "items": [], "emptyMessage": "No middle school guide posted for this week yet." },
-        { "title": "Curriculum", "items": [], "emptyMessage": "No middle school curriculum posted yet." },
+        {
+          "title": "Know your room",
+          "items": [
+            {
+              "title": "Junior high · 6th–8th",
+              "body": "Use concrete language, shorter stories, fewer abstractions, clear definitions, and explicit application. Assume less background knowledge.",
+              "source": "Fall 2026 Student Ministry Preaching Calendar · Guest Teacher Guide"
+            }
+          ]
+        },
         {
           "title": "Sunday table devotionals",
           "items": [
@@ -18,8 +192,7 @@
               "body": "On Sunday mornings the devotionals run 25 minutes around the tables and follow the same structure as the 5–7 minute message. They're hosted on Canva and usually prepared for the month ahead.",
               "source": "Middle School Sunday Morning Flow"
             }
-          ],
-          "emptyMessage": "Nothing posted here yet."
+          ]
         }
       ]
     },
@@ -27,15 +200,203 @@
       "level": "high",
       "label": "High School",
       "title": "High School Small Group Leader Guide",
+      "room": "Chapel (high school)",
+      "thisWeekEmpty": "No high school guide posted for this week yet.",
+      "weeks": [
+        {
+          "date": "2026-08-19",
+          "series": "Unapologetic",
+          "week": "Week 3",
+          "title": "JW & Jesus",
+          "scripture": "John 1:1-18; John 10",
+          "bigIdea": "Just because you believe you know the Father doesn’t mean you understand the Son.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-08-26",
+          "series": "Unapologetic",
+          "week": "Week 4",
+          "title": "Hebrew Israelites & Jesus",
+          "scripture": "Matthew 15:21-28; Matthew 8:1-13; Luke 19:1-10",
+          "bigIdea": "Sometimes people want Jesus to be more like them than for them to become more like Jesus.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-09-02",
+          "series": "Telos",
+          "week": "Week 1",
+          "title": "Design",
+          "scripture": "Genesis 1:26-28",
+          "bigIdea": "You are designed with purpose and responsibility, given to you by God.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-09",
+          "series": "Telos",
+          "week": "Week 2",
+          "title": "Direction",
+          "scripture": "Genesis 3:1-7",
+          "bigIdea": "God created everything with a purpose; sin is using what He made in ways He did not design.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-16",
+          "series": "Telos",
+          "week": "Week 3",
+          "title": "Purpose",
+          "scripture": "Matthew 5:13-16",
+          "bigIdea": "Our purpose is to know and follow Jesus while sharing Him with others.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-23",
+          "series": "Telos",
+          "week": "Week 4",
+          "title": "Responsibility",
+          "scripture": "Matthew 25:14-30",
+          "bigIdea": "God has created us to take on responsibility, and in doing so, we find meaning and purpose.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-09-30",
+          "series": "Pastor's Choice",
+          "week": "Open week",
+          "title": "Pastor's Choice",
+          "note": "Open week. Scripture and big idea are set with Jake before Monday and aren't posted yet.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-10-07",
+          "series": "Prayer & Worship",
+          "week": "Week 1",
+          "title": "Redirection",
+          "scripture": "Psalm 63:1-5; Romans 5:12; Romans 3:23; Luke 7:36-39, 44-47; Romans 2:4; Isaiah 26:3",
+          "bigIdea": "Prayer and worship are part of the ongoing conversation we have with a personal and relational God. They are expressions of our dependence on and love for God.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-10-14",
+          "series": "Prayer & Worship",
+          "week": "Week 2",
+          "title": "Relationship",
+          "scripture": "Mark 1:35; Luke 5:16; Matthew 26:36-39; John 14:31; Matthew 6:9-13",
+          "bigIdea": "Jesus modeled the importance of prayer, continually seeking the Father’s will over his own, and giving us a pattern to follow.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-10-21",
+          "series": "Prayer & Worship",
+          "week": "Week 3",
+          "title": "Reflection",
+          "scripture": "Psalm 100:1-3; 1 Peter 2:9; John 13:34; Colossians 3:16-17",
+          "bigIdea": "God created humans to know and worship him. We do this by reflecting his image to the world around us through our actions and treatment of others.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-10-28",
+          "series": "Prayer & Worship",
+          "week": "Week 4",
+          "title": "Rhythms",
+          "scripture": "Daniel 9:1-3, 18; Acts 2:42-47; Acts 9:17-19; 1 Timothy 1:12-17",
+          "bigIdea": "It is important to establish a daily rhythm of prayer and worship in our lives through God’s Word, Christian community, and continued surrender before God.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-11-04",
+          "series": "The Gospel (Mental Health)",
+          "week": "Week 1",
+          "title": "Anxiety",
+          "scripture": "Philippians 4:4-9",
+          "bigIdea": "God cares about our anxiety; prayer, gratitude, and focusing on God and others help put anxiety in its place.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-11-11",
+          "series": "The Gospel (Mental Health)",
+          "week": "Week 2",
+          "title": "Depression",
+          "scripture": "Psalm 42:6-11",
+          "bigIdea": "We can trust God while experiencing depression and ask Him to turn our despair into hope.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-11-18",
+          "series": "The Gospel (Mental Health)",
+          "week": "Week 3",
+          "title": "Attachment",
+          "scripture": "Romans 8:31-39",
+          "bigIdea": "In Christ, we can find the secure love and trust we need to know who we are and build healthy relationships.",
+          "sensitivity": "yellow"
+        },
+        {
+          "date": "2026-11-25",
+          "series": "No Midweek",
+          "week": "Thanksgiving week",
+          "title": "No Midweek",
+          "noService": true,
+          "note": "Thanksgiving week. No student Midweek."
+        },
+        {
+          "date": "2026-12-02",
+          "series": "The King Is Here",
+          "week": "Week 1",
+          "title": "The Hype vs. The Hope",
+          "scripture": "Luke 2:8-14",
+          "bigIdea": "We often get caught up in the “hype” of Christmas, but the true meaning offers lasting hope.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-12-09",
+          "series": "The King Is Here",
+          "week": "Week 2",
+          "title": "Facing the Opps",
+          "scripture": "Matthew 2:13-23",
+          "bigIdea": "We can overcome opposition through faith in God and His promises.",
+          "sensitivity": "green"
+        },
+        {
+          "date": "2026-12-16",
+          "series": "The King Is Here",
+          "week": "Week 3",
+          "title": "The Perfect Gift",
+          "scripture": "John 3:16",
+          "bigIdea": "The ultimate gift is Jesus, who came to give, not to receive.",
+          "sensitivity": "green"
+        }
+      ],
+      "weeksEmpty": "No high school curriculum posted yet.",
+      "weeksSource": "Fall 2026 Student Ministry Preaching Calendar (Chapel / HS)",
       "sections": [
-        { "title": "This week's guide", "items": [], "emptyMessage": "No high school guide posted for this week yet." },
-        { "title": "Curriculum", "items": [], "emptyMessage": "No high school curriculum posted yet." }
+        {
+          "title": "Know your room",
+          "items": [
+            {
+              "title": "High school · 9th–12th",
+              "body": "Students can handle greater nuance, tension, theological complexity, and unresolved questions. Be clear without oversimplifying.",
+              "source": "Fall 2026 Student Ministry Preaching Calendar · Guest Teacher Guide"
+            }
+          ]
+        }
       ]
     }
   ],
   "shared": {
     "title": "For every small group leader",
     "items": [
+      {
+        "title": "Topic sensitivity",
+        "bullets": [
+          "Green: standard teaching. Normal pastoral wisdom.",
+          "Yellow: extra care. Leaders are made aware of the topic before service.",
+          "Red: parents are contacted before the message, with closer content review."
+        ],
+        "source": "Fall 2026 Student Ministry Preaching Calendar · Guest Teacher Guide"
+      },
+      {
+        "title": "Mixed spiritual maturity",
+        "body": "Some students know Scripture well; others are exploring faith for the first time. Explain church vocabulary rather than assuming it.",
+        "source": "Fall 2026 Student Ministry Preaching Calendar · Guest Teacher Guide"
+      },
       {
         "title": "What a good guide includes",
         "bullets": [
@@ -55,15 +416,32 @@
         "source": "Ministry Memory & AI Context"
       },
       {
-        "title": "September leader-practice focus",
+        "title": "Leader-practice focus",
         "body": "Modeling engagement and praying with students.",
-        "source": "Ministry Memory & AI Context · Ministry Tasks"
+        "source": "Ministry Memory & AI Context"
+      },
+      {
+        "title": "Safety and serious disclosures",
+        "bullets": [
+          "Don't counsel a student alone in a closed room. Keep conversations observable.",
+          "Don't promise secrecy. If a student discloses abuse, self-harm, danger, or another serious concern, involve Jake or the designated ministry leader right away."
+        ],
+        "source": "Fall 2026 Student Ministry Preaching Calendar · Guest Teacher Guide"
       }
     ]
   },
   "sources": [
-    { "name": "Middle School Sunday Morning Flow (Sunday Checklist)", "id": "3e57b1f0f0cb815a8439edd178677965" },
-    { "name": "Ministry Memory & AI Context", "id": "3e57b1f0f0cb81b6ae49d8caca7bd65f" },
-    { "name": "Ministry Tasks: Confirm Paka follow-through and leader-practice training", "id": "3d97b1f0f0cb81dcbc0cc88756b3db68" }
+    {
+      "name": "Google Sheet: Fall 2026 Student Ministry Preaching Calendar (tabs Preaching Calendar, Guest Teacher Guide); linked from Student Ministry Dashboard",
+      "id": "sheet:1EEksbhWHBH8OtjqFYooc5IplLnqX_5uo9hnb49rdJFI"
+    },
+    {
+      "name": "Middle School Sunday Morning Flow (Sunday Checklist)",
+      "id": "3e57b1f0f0cb815a8439edd178677965"
+    },
+    {
+      "name": "Ministry Memory & AI Context",
+      "id": "3e57b1f0f0cb81b6ae49d8caca7bd65f"
+    }
   ]
 }
