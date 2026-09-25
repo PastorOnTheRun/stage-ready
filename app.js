@@ -48,9 +48,24 @@
     ];
   }
 
+  // Campus announcement dashboards. Each item carries campus ("windermere" | "lakeside")
+  // and service ("wed" | "sun"). Legacy "services" tags are mapped to Windermere.
+  const CAMPUSES = {
+    "campus-windermere": { key: "windermere", campus: "Windermere" },
+    "campus-lakeside": { key: "lakeside", campus: "Lakeside" }
+  };
+  const MODE_ALIASES = {
+    "announcements": "campus-windermere",
+    "sunday-announcements": "campus-windermere",
+    "live-announcements": "campus-windermere",
+    "live-windermere": "campus-windermere",
+    "live-lakeside": "campus-lakeside"
+  };
+
   const state = {
     mode: null,
     isLiveUse: false,
+    campusMode: null,
     isSundayUse: false,
     serviceFilter: null,
     phase: "choose",
@@ -60,22 +75,51 @@
     endAt: 0
   };
 
-  function matchesService(event, service) {
-    if (!service) return true;
-    if (!event.services || !event.services.length) return true;
-    return event.services.includes(service);
+  const asList = value => (Array.isArray(value) ? value : value ? [value] : []);
+
+  function eventCampuses(event) {
+    const campuses = asList(event.campus).map(c => String(c).toLowerCase());
+    if (campuses.length) return campuses;
+    const legacy = asList(event.services);
+    if (legacy.includes("live-lakeside") && legacy.length === 1) return ["lakeside"];
+    return ["windermere"];
   }
 
-  function eventsForService(service) {
+  function eventServices(event) {
+    const services = asList(event.service).map(s => String(s).toLowerCase());
+    if (services.length) return services;
+    const legacy = asList(event.services);
+    const mapped = [];
+    if (legacy.includes("sunday")) mapped.push("sun");
+    if (legacy.some(s => s === "live" || s.startsWith("live-"))) mapped.push("wed");
+    return mapped.length ? mapped : ["wed", "sun"];
+  }
+
+  // Mon–Wed: lead with Wednesday items. Thu–Sun: lead with Sunday items. (America/New_York)
+  function focusService() {
+    const weekday = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short" }).format(new Date());
+    return ["Mon", "Tue", "Wed"].includes(weekday) ? "wed" : "sun";
+  }
+
+  function liveCampus() {
+    return state.campusMode ? CAMPUSES[state.campusMode].campus : "";
+  }
+
+  function eventsForService(campusKey) {
     const base = announcementPrompts[0];
     if (!base) return [];
-    return (base.events || []).filter(event => matchesService(event, service));
+    const focus = focusService();
+    const events = (base.events || []).filter(event => !campusKey || eventCampuses(event).includes(campusKey));
+    return events
+      .map((event, index) => ({ event, index, rank: eventServices(event).includes(focus) ? 0 : 1 }))
+      .sort((a, b) => a.rank - b.rank || a.index - b.index)
+      .map(item => item.event);
   }
 
-  function promptForService(service) {
+  function promptForService(campusKey) {
     const base = announcementPrompts[0];
     if (!base) return null;
-    return { ...base, events: eventsForService(service) };
+    return { ...base, events: eventsForService(campusKey) };
   }
 
   const $ = (selector) => document.querySelector(selector);
@@ -95,10 +139,10 @@
   }
 
   function serviceTags(event) {
-    const services = event.services && event.services.length ? event.services : ["sunday", "live"];
+    const services = eventServices(event);
     const labels = [];
-    if (services.includes("sunday")) labels.push(`<span class="svc-tag sunday">Sun</span>`);
-    if (services.includes("live")) labels.push(`<span class="svc-tag wed">Wed</span>`);
+    if (services.includes("wed")) labels.push(`<span class="svc-tag wed">Wed</span>`);
+    if (services.includes("sun")) labels.push(`<span class="svc-tag sunday">Sun</span>`);
     return labels.join("");
   }
 
@@ -119,8 +163,7 @@
   }
 
   async function loadAnnouncements() {
-    const sundayButton = $("#sunday-announcements-mode");
-    const liveButton = $("#live-announcements-mode");
+    const campusButtons = Object.keys(CAMPUSES).map(mode => [mode, $(`#${mode}-mode`), $(`#${mode}-description`)]);
     try {
       let data;
       if (typeof EMBEDDED_ANNOUNCEMENTS !== "undefined" && EMBEDDED_ANNOUNCEMENTS) {
@@ -139,24 +182,25 @@
       announcementPrompts = (data.prompts || []).map(prompt => ({
         ...prompt,
         events: (prompt.events || []).filter(event => !event.endDate || event.endDate >= today)
-      })).filter(prompt => prompt.events.length > 0);
+      }));
       announcementUpdatedAt = data.updatedAt || "";
-      if (!announcementPrompts.length) throw new Error("No current announcements");
-      const sundayCount = eventsForService("sunday").length;
-      const liveCount = eventsForService("live").length;
-      sundayButton.disabled = sundayCount === 0;
-      liveButton.disabled = liveCount === 0;
-      $("#sunday-description").textContent = sundayCount ? `${sundayCount} items` : "None";
-      $("#live-description").textContent = liveCount ? `${liveCount} items` : "None";
-      $("#home-ann-meta").textContent = `Reviewed ${announcementUpdatedAt}`;
-      renderHomeAnnouncements(announcementPrompts[0].events);
+      if (!announcementPrompts.length) throw new Error("No announcement data");
+      campusButtons.forEach(([mode, button, description]) => {
+        const events = eventsForService(CAMPUSES[mode].key);
+        const wed = events.filter(e => eventServices(e).includes("wed")).length;
+        const sun = events.filter(e => eventServices(e).includes("sun")).length;
+        button.disabled = false; // opens even when empty and shows a clean empty state
+        description.textContent = events.length ? [wed ? `${wed} Wed` : "", sun ? `${sun} Sun` : ""].filter(Boolean).join(" · ") : "None yet";
+      });
+      const meta = $("#home-ann-meta");
+      if (meta) meta.textContent = `Reviewed ${announcementUpdatedAt}`;
     } catch (error) {
-      sundayButton.disabled = true;
-      liveButton.disabled = true;
-      $("#sunday-description").textContent = "Unavailable";
-      $("#live-description").textContent = "Unavailable";
-      $("#home-ann-meta").textContent = "Unavailable";
-      renderHomeAnnouncements([]);
+      campusButtons.forEach(([, button, description]) => {
+        button.disabled = true;
+        description.textContent = "Unavailable";
+      });
+      const meta = $("#home-ann-meta");
+      if (meta) meta.textContent = "Unavailable";
     }
   }
 
@@ -169,21 +213,24 @@
     renderPrompt();
   }
 
-  function selectMode(mode) {
-    const announcementModes = ["sunday-announcements", "live-announcements", "announcements"];
-    if (announcementModes.includes(mode) && !announcementPrompts.length) return;
+  function selectMode(requestedMode) {
+    const mode = MODE_ALIASES[requestedMode] || requestedMode;
+    if (CAMPUSES[mode] && !announcementPrompts.length) return;
     clearTimer();
     closeSheets();
-    state.isLiveUse = mode === "live-announcements";
-    state.isSundayUse = mode === "sunday-announcements" || mode === "announcements";
-    state.serviceFilter = state.isLiveUse ? "live" : state.isSundayUse ? "sunday" : null;
+    state.isLiveUse = Boolean(CAMPUSES[mode]);
+    state.campusMode = state.isLiveUse ? mode : null;
+    state.isSundayUse = false;
+    state.serviceFilter = state.isLiveUse ? CAMPUSES[mode].key : null;
     state.mode = (state.isLiveUse || state.isSundayUse) ? "announcements" : mode;
-    if (state.mode === "announcements" && !eventsForService(state.serviceFilter).length) return;
+    state.lastMode = mode;
+    const isEmpty = state.mode === "announcements" && !eventsForService(state.serviceFilter).length;
+    if (isEmpty && !state.isLiveUse) return;
     selectContent();
     const chrome = $("#mode-chrome-label");
     if (chrome) {
       chrome.textContent = state.isLiveUse
-        ? "Live Announcements"
+        ? `${liveCampus()} announcements`
         : state.isSundayUse
         ? "Sunday AM Announcements"
         : state.mode === "opening"
@@ -193,27 +240,45 @@
         : "Stage Ready";
     }
     showScreen("workspace");
-    startReview();
+    if (isEmpty) showEmptyMode();
+    else startReview();
+  }
+
+  function showEmptyMode() {
+    state.phase = "empty";
+    document.body.dataset.phase = "choose";
+    $("#phase-label").textContent = "No items yet";
+    $("#status-title").textContent = "Nothing to announce yet";
+    $("#status-help").textContent = "This list fills in after the weekly refresh.";
+    $("#review-actions").hidden = true;
+    $("#live-actions").hidden = true;
+    clock.textContent = "—";
+    clock.setAttribute("aria-label", "No timer: no announcements yet");
+    clock.classList.remove("danger");
+    strip.style.setProperty("--phase-color", "var(--sky)");
+    strip.style.setProperty("--progress-width", "0%");
+    announcer.textContent = `No ${liveCampus()} announcements yet.`;
   }
 
   function renderPrompt() {
     const card = $("#prompt-card");
+    $("#open-pacing").hidden = false;
     const isEncouragement = state.mode !== "announcements";
     const type = isEncouragement
       ? "Opening encouragement"
       : state.isLiveUse
-      ? "Wednesday Live"
+      ? `${liveCampus()} · Wed + Sun`
       : "Sunday AM";
     const duration = isEncouragement ? "1-minute message" : "3-minute announcements";
     const setup = state.isLiveUse
-      ? "Lead these Wednesday student ministry announcements for the room. Use the facts below, speak naturally, and end when you are finished."
+      ? `Lead these ${liveCampus()} student announcements. Each item is tagged Wed (Wednesday night student service) or Sun (Sunday). Use only the facts below, speak naturally, and end when you are finished.`
       : state.isSundayUse
       ? "Point students to the week ahead—Wednesday nights, midweek events, and wider Family Church life. Use only the facts below; speak warmly and clearly."
       : state.prompt.setup;
     if (state.isSundayUse && state.prompt) {
       state.prompt = { ...state.prompt, title: "This week at Family Church" };
     } else if (state.isLiveUse && state.prompt) {
-      state.prompt = { ...state.prompt, title: "Student ministry this week" };
+      state.prompt = { ...state.prompt, title: `${liveCampus()} students this week` };
     }
 
     let body = `<div class="prompt-kicker"><span class="chip accent">${type}</span><span class="chip">${duration}</span>${state.mode === "announcements" ? `<span class="chip">Reviewed ${esc(announcementUpdatedAt)}</span>` : ""}</div><h2>${esc(state.prompt.title)}</h2><p class="prompt-setup">${esc(setup)}</p>`;
@@ -225,12 +290,17 @@
         body += `<li class="beat"><span class="beat-index">${index + 1}</span><span><strong>${esc(beat[0])}</strong><span class="beat-copy">${esc(beat[1])}</span></span></li>`;
       });
       body += "</ol>";
+    } else if (!state.prompt.events.length) {
+      $("#open-coaching").hidden = true;
+      $("#open-pacing").hidden = true;
+      body = `<div class="prompt-kicker"><span class="chip accent">${type}</span></div><h2>${esc(state.prompt.title)}</h2>`;
+      body += `<div class="empty-state" role="status"><h3>No ${esc(liveCampus())} announcements yet</h3><p>${esc(liveCampus())} student announcements will show here after the next refresh (Mondays and Thursdays).</p></div>`;
     } else {
       $("#open-coaching").hidden = false;
       body += `<div class="prompt-kicker"><span class="chip accent">Tap Coaching tips for introduce / why / vision</span></div>`;
       body += '<div class="events">';
       state.prompt.events.forEach(event => {
-        body += `<section class="event"><div><h3>${esc(event.name)}</h3><p>${esc(event.when)}</p><p>${esc(event.where)}</p></div>${event.cost ? `<span class="cost">${esc(event.cost)}</span>` : ""}<p class="event-detail">${esc(event.detail)}</p><p class="event-action">Next step: ${esc(event.action)}</p></section>`;
+        body += `<section class="event"><div><h3>${esc(event.name)}</h3><span class="svc-tags">${serviceTags(event)}</span><p>${esc(event.when)}</p><p>${esc(event.where)}</p></div>${event.cost ? `<span class="cost">${esc(event.cost)}</span>` : ""}<p class="event-detail">${esc(event.detail)}</p><p class="event-action">Next step: ${esc(event.action)}</p></section>`;
       });
       body += "</div>";
     }
@@ -339,7 +409,7 @@
     showScreen("finish");
     $("#finish-title").textContent = (state.isLiveUse || state.isSundayUse) ? "Announcements complete." : "Round complete.";
     $("#finish-copy").textContent = state.isLiveUse
-      ? "Thanks for leading Wednesday. Clear details help students show up to student ministry this week."
+      ? `Thanks for leading the ${liveCampus()} announcements. Clear details help students show up this week.`
       : state.isSundayUse
       ? "Thanks for leading Sunday morning. You pointed students toward the week ahead and the life of the church."
       : "Was the Scripture clear and the invitation natural?";
@@ -388,6 +458,10 @@
   $("#skip-review").addEventListener("click", startDelivery);
   $("#finish-early").addEventListener("click", completeRound);
   $("#same-mode").addEventListener("click", () => {
+    if (state.lastMode) {
+      selectMode(state.lastMode);
+      return;
+    }
     showScreen("workspace");
     selectContent();
     startReview();
@@ -417,17 +491,18 @@
       Promise.resolve(document.modelContext.registerTool({
         name: "start_ministry_segment",
         title: "Start ministry segment",
-        description: "Start an opening charge, worship lean-in, Sunday AM announcements, or weekly live announcements, beginning with a 60-second preparation period.",
+        description: "Start an opening charge, worship lean-in, Sunday AM announcements, or campus announcements for Windermere or Lakeside, beginning with a 60-second preparation period.",
         inputSchema: {
           type: "object",
-          properties: { mode: { type: "string", enum: ["opening", "worship", "sunday-announcements", "live-announcements"] } },
+          properties: { mode: { type: "string", enum: ["opening", "worship", "campus-windermere", "campus-lakeside"] } },
           required: ["mode"],
           additionalProperties: false
         },
         annotations: { readOnlyHint: false, untrustedContentHint: false },
         execute(input) {
-          if (!input || !["opening", "worship", "sunday-announcements", "live-announcements"].includes(input.mode)) throw new Error("Choose opening, worship, sunday-announcements, or live-announcements.");
-          if (["sunday-announcements", "live-announcements"].includes(input.mode) && !announcementPrompts.length) throw new Error("Announcements are not available yet.");
+          const validModes = ["opening", "worship", "campus-windermere", "campus-lakeside", ...Object.keys(MODE_ALIASES)];
+          if (!input || !validModes.includes(input.mode)) throw new Error("Choose opening, worship, campus-windermere, or campus-lakeside.");
+          if (input.mode !== "opening" && input.mode !== "worship" && !announcementPrompts.length) throw new Error("Announcements are not available yet.");
           selectMode(input.mode);
           return { mode: input.mode, phase: state.phase, reviewSeconds: 60 };
         }

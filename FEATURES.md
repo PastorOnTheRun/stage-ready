@@ -119,3 +119,7 @@ Home-screen mode cards are a compact 2×2 grid (≥64px tall) with a small durat
 ## Mode screens vs home chooser
 
 The Family Church banner and 2×2 mode chooser appear **only on the home screen**. After tapping a mode, those go away and the selected mode gets a full screen with a slim Back chrome, timer, and content. No mode screen shows the four choice boxes or the big banner.
+
+## Campus announcement dashboards (Sep 25, 2026)
+
+Sunday AM and Live Announcements were folded into two campus buttons on home: **Windermere announcements** (`campus-windermere`) and **Lakeside announcements** (`campus-lakeside`). Each opens a full-screen dashboard with the same 60s prep / 3:00 speaking / overtime timer and Back button. Items carry `campus` and `service` ("wed" or "sun", shown as Wed / Sun tags). A campus with no items opens to a “No {Campus} announcements yet” empty state with no timer. Full schema and refresh process: see `REFRESH.md`.

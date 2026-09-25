@@ -35,22 +35,16 @@
         <button class="mode-card" type="button" data-mode="worship">
           <span class="mode-top"><span class="tag">1 min</span><span class="mode-title">Worship Lean-In</span></span>
         </button>
-        <button class="mode-card" type="button" data-mode="sunday-announcements" id="sunday-announcements-mode" disabled>
-          <span class="mode-top"><span class="tag">3 min</span><span class="mode-title">Sunday AM</span></span>
-          <span class="mode-count" id="sunday-description">…</span>
+        <button class="mode-card live-card" type="button" data-mode="campus-windermere" id="campus-windermere-mode" aria-label="Windermere announcements, 3 minutes" disabled>
+          <span class="mode-top"><span class="tag">3 min</span><span class="mode-title">Windermere announcements</span></span>
+          <span class="mode-count" id="campus-windermere-description">…</span>
         </button>
-        <button class="mode-card live-card" type="button" data-mode="live-announcements" id="live-announcements-mode" disabled>
-          <span class="mode-top"><span class="tag">Live</span><span class="mode-title">Live Announcements</span></span>
-          <span class="mode-count" id="live-description">…</span>
+        <button class="mode-card live-card lakeside-card" type="button" data-mode="campus-lakeside" id="campus-lakeside-mode" aria-label="Lakeside announcements, 3 minutes" disabled>
+          <span class="mode-top"><span class="tag">3 min</span><span class="mode-title">Lakeside announcements</span></span>
+          <span class="mode-count" id="campus-lakeside-description">…</span>
         </button>
       </div>
-      <div class="home-announcements" aria-labelledby="home-ann-title">
-        <div class="head">
-          <h2 id="home-ann-title">This week</h2>
-          <span id="home-ann-meta">Loading…</span>
-        </div>
-        <div class="ann-list" id="home-ann-list"></div>
-      </div>
+      <p class="home-meta" id="home-ann-meta">Loading…</p>
     </section>
 
     <section class="screen" id="workspace" aria-labelledby="status-title">
