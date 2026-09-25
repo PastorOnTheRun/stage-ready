@@ -50,7 +50,8 @@ Search terms that find the right pages: `Lakeside`, `Luke`, `Windermere`, `annou
   - **Wed** is for student ministry items: Middle School Sundays, the BAND app (the students' push channel).
   - Keep overlap small. Don't put the same item under both services unless Jake asks for it.
   - If an item is unclear, apply the rules above.
-- Standing rule from Notion: the Oct 7, 2026 prayer night is a Windermere **Sunday** announcement with no routine Midweek promotion. Don't put it on Lakeside unless Notion adds Lakeside student details.
+- Standing rule (Jake, Sep 25, 2026): the Oct 7, 2026 prayer night goes on BOTH campuses as a `sun` item. Windermere keeps the bus wording. Lakeside's says it's on-site at Lakeside with no bus.
+- Jake approved simple, generic Lakeside items on Sep 25, 2026: "Wednesday Nights at Lakeside" and the Lakeside Prayer Night. Keep them until Notion or Jake gives specifics, then replace them with the real details. Never add times or rooms that aren't confirmed.
 
 ## 4. JSON schema (`announcements.json`, schemaVersion 2)
 

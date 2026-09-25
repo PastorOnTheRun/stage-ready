@@ -55,6 +55,26 @@
           "action": "Ask a student ministry leader for the BAND invitation and join the group.",
           "campus": "windermere",
           "service": "wed"
+        },
+        {
+          "name": "Wednesday Nights at Lakeside",
+          "when": "Every Wednesday night",
+          "where": "Family Church Students · Lakeside",
+          "detail": "Wednesday nights are where we hang out, worship together, and get into small groups. If you haven't been in a while, this is your week to come back, and bring a friend with you.",
+          "action": "Come this Wednesday and bring a friend.",
+          "campus": "lakeside",
+          "service": "sun"
+        },
+        {
+          "name": "Church Prayer Night",
+          "when": "Wednesday, October 7, 2026",
+          "where": "Right here at Family Church Lakeside",
+          "cost": "Free",
+          "detail": "Save the date! The church-wide prayer night is happening right here at our Lakeside campus. There's no bus to catch. Just come join us on-site and pray with the whole church family.",
+          "action": "Put October 7 on your calendar and tell your parents.",
+          "endDate": "2026-10-07",
+          "campus": "lakeside",
+          "service": "sun"
         }
       ]
     }
