@@ -1,26 +1,37 @@
 {
-  "updatedAt": "September 23, 2026",
+  "updatedAt": "September 25, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
       "setup": "Lead these current ministry announcements with warmth and clarity. State only the details shown; do not guess a price or registration detail.",
       "events": [
         {
-          "name": "SLT Meeting",
-          "when": "Wednesday, September 23, 2026 · 5:30 PM",
-          "where": "Family Church Students",
-          "detail": "Student Leadership Team, our meeting starts at 5:30 PM.",
-          "action": "SLT members: be ready to begin at 5:30 PM.",
-          "endDate": "2026-09-23",
-          "services": ["live"]
+          "name": "Wednesday Nights",
+          "when": "Wednesday, September 30, 2026 · 6–8 PM · dinner starts at 5 PM",
+          "where": "Family Church Students · Windermere",
+          "cost": "$1 pizza",
+          "detail": "Come hang out with us from 6 to 8 PM. If you want to come early for dinner, we start at 5, and there's pizza every week for just a dollar. Wednesday is the best place to get to know people and find your small group.",
+          "action": "Bring a friend this Wednesday.",
+          "endDate": "2026-09-30",
+          "services": ["sunday"]
         },
         {
           "name": "Church Prayer Night",
-          "when": "Wednesday, October 7, 2026 · be at church by 5:45 PM",
-          "where": "Meet at Family Church Windermere for the bus to Lakeside",
-          "detail": "We are going to the church prayer night at Lakeside. The bus is expected back at Windermere around 8:30 PM. Jake will be in Israel that week and will not be on the bus.",
-          "action": "Arrive at Windermere by 5:45 PM to ride the bus.",
+          "when": "Wednesday, October 7, 2026 · bus leaves at 5:45 PM",
+          "where": "Bus from Family Church Windermere to Lakeside",
+          "cost": "Free",
+          "detail": "Save the date! We're going to the church-wide prayer night at Lakeside, and it's free. The bus leaves Family Church Windermere at 5:45 PM, and we'll be back around 8:30 PM. Jake will be in Israel that week and will not be on the bus.",
+          "action": "Sign up for the bus on BAND and tell your parents tonight.",
           "endDate": "2026-10-07",
+          "services": ["sunday"]
+        },
+        {
+          "name": "Student Be Class and Baptism Interest",
+          "when": "Next class: Sunday, October 18, 2026",
+          "where": "Family Church Students",
+          "detail": "Students who want to learn about following Jesus, baptism, and belonging at Family Church can take our next Be Class on October 18.",
+          "action": "Talk with a student pastor to get the class time and sign up.",
+          "endDate": "2026-10-18",
           "services": ["sunday"]
         },
         {
@@ -38,14 +49,6 @@
           "detail": "BAND is where our student ministry shares announcements and keeps families connected across the week.",
           "action": "Ask a student ministry leader for the BAND invitation and join the group.",
           "services": ["live"]
-        },
-        {
-          "name": "Student Be Class and Baptism Interest",
-          "when": "Ongoing next step · Ask for the next class date",
-          "where": "Family Church Students",
-          "detail": "Students who want to learn about following Jesus, baptism, and belonging at Family Church can ask about Be Class.",
-          "action": "Talk with a student pastor or visit the Student Ministry page for current details.",
-          "services": ["sunday"]
         }
       ]
     }
