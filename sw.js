@@ -2,7 +2,7 @@
    Network-first for everything (HTML, JSON data, JS, CSS, icons) so Monday/Thursday refreshes
    and new deploys show up immediately; the cache is only an offline fallback.
    Bump CACHE_VERSION on every deploy that changes app files. */
-const CACHE_VERSION = "stage-ready-v2026-09-25h";
+const CACHE_VERSION = "stage-ready-v2026-09-25i";
 const SHELL = [
   "./",
   "./index.html",

@@ -134,7 +134,8 @@ The app has a fixed bottom tab bar with five tabs, in this order: **Guides** (Sm
 - The audience is leaders and the stage team. Don't add student-facing copy or "sign in" or "private version" placeholders.
 - If a section has nothing sourced, leave `items` empty. The app shows the section's `emptyMessage` (e.g. "Nothing posted here yet.").
 - Bump `updatedAt` (e.g. `"October 1, 2026"`) whenever you edit a file. Keep the `sources` list (Notion page name + ID) current. The app doesn't show it; it's there for traceability.
-- Validate JSON before pushing: `for f in guides service calendar resources; do python3 -m json.tool $f.json >/dev/null && echo ok $f; done`.
+- Validate before pushing: `python3 validate_content.py` must print `VALID`. It rejects 1–2 character or digits-only text (the kind of garbage a bad sheet parse produces), sensitivity values other than green/yellow/red, bad dates, non-https links, and weeks with neither Scripture + big idea nor a note.
+- To rebuild the guide weeks from the preaching calendar: export the sheet ranges A3:C22, D3:I22 (Chapel/HS) and K3:P22 (Annex/JH) as CSV into `/workspace/stage-ready/sheet-cache/` (`dates.csv`, `hs.csv`, `jh.csv`), then run `python3 /workspace/stage-ready/build_guide_weeks.py /workspace/stage-ready/sheet-cache guides.json` followed by `python3 validate_content.py`. The builder never copies preacher names.
 
 ### Notion sources for the leader tabs
 | File | Notion pages (IDs) |
