@@ -3,24 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#FF7010">
+  <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Stage Ready">
   <meta name="application-name" content="Stage Ready">
   <meta name="description" content="Leader and stage team hub for Family Church Students: guides, announcements, order of service, calendar and resources.">
   <title>Stage Ready</title>
-  <link rel="manifest" href="manifest.webmanifest?v=20260925c">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png?v=20260925c">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=20260925c">
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=20260925c">
-  <link rel="shortcut icon" href="icons/favicon.ico?v=20260925c">
-  <link rel="stylesheet" href="styles.css?v=20260926e">
+  <link rel="manifest" href="manifest.webmanifest?v=20260926f">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png?v=20260926f">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=20260926f">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=20260926f">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=20260926f">
+  <link rel="preload" href="assets/fonts/archivo-wide-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20260926f">
 </head>
 <body data-phase="choose">
   <main class="app tab-panel active" id="tab-announcements" data-tab="announcements" aria-label="Announcements &amp; Stage Stuff">
     <section class="screen active" id="chooser" aria-labelledby="chooser-title">
+      <!-- Landing (Jake, Sep 26, 2026): STUDENTS wordmark, corner labels, boxed filter row, colour-block tiles -->
       <header class="brand-bar" aria-label="Family Church Students">
         <img class="brand-logo" src="icons/icon-192.png" alt="Family Church" width="40" height="40">
         <div class="brand-text">
@@ -28,21 +30,32 @@
           <span>Family Church Students</span>
         </div>
       </header>
-      <h1 id="chooser-title" class="page-title">Announcements &amp; Stage Stuff</h1>
-      <div class="mode-grid">
-        <button class="mode-card" type="button" data-mode="opening">
-          <span class="mode-top"><span class="tag">1 min</span><span class="mode-title">Opening Charge</span></span>
+      <div class="lp-mast" role="img" aria-label="Students">
+        <svg class="lp-word" viewBox="0 -700 7228 712" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text x="-43" y="0" textLength="7307" lengthAdjust="spacingAndGlyphs">STUDENTS</text></svg>
+      </div>
+      <div class="lp-corners"><span class="lp-corner-l">Family Church</span><span class="lp-corner-c">Stage Ready</span><span class="lp-corner-r" aria-hidden="true"></span></div>
+      <h1 id="chooser-title" class="page-title lp-title">Announcements &amp; Stage Stuff</h1>
+      <div class="lp-seg" role="tablist" aria-label="Filter tiles">
+        <button type="button" role="tab" class="lp-seg-btn" data-filter="all" aria-selected="true"><span>All</span><small id="lp-count-all">9</small></button>
+        <button type="button" role="tab" class="lp-seg-btn" data-filter="stage" aria-selected="false"><span>Stage</span><small>4</small></button>
+        <button type="button" role="tab" class="lp-seg-btn" data-filter="leaders" aria-selected="false"><span>Leaders</span><small id="lp-count-leaders">5</small></button>
+      </div>
+      <div class="mode-grid lp-grid" id="lp-grid">
+        <button class="mode-card live-card lp-tile tone-orange" type="button" data-mode="campus-windermere" data-group="stage" id="campus-windermere-mode" aria-label="Windermere announcements, 3 minutes" disabled>
+          <span class="lp-block" aria-hidden="true"><span class="lp-big">3:00</span></span>
+          <span class="lp-panel"><span class="lp-label"><span class="tag">3 min</span> · Stage</span><span class="mode-title">Windermere announcements</span><span class="mode-count lp-detail" id="campus-windermere-description">…</span></span>
         </button>
-        <button class="mode-card" type="button" data-mode="worship">
-          <span class="mode-top"><span class="tag">1 min</span><span class="mode-title">Worship Lean-In</span></span>
+        <button class="mode-card live-card lakeside-card lp-tile tone-black" type="button" data-mode="campus-lakeside" data-group="stage" id="campus-lakeside-mode" aria-label="Lakeside announcements, 3 minutes" disabled>
+          <span class="lp-block" aria-hidden="true"><span class="lp-big">3:00</span></span>
+          <span class="lp-panel"><span class="lp-label"><span class="tag">3 min</span> · Stage</span><span class="mode-title">Lakeside announcements</span><span class="mode-count lp-detail" id="campus-lakeside-description">…</span></span>
         </button>
-        <button class="mode-card live-card" type="button" data-mode="campus-windermere" id="campus-windermere-mode" aria-label="Windermere announcements, 3 minutes" disabled>
-          <span class="mode-top"><span class="tag">3 min</span><span class="mode-title">Windermere announcements</span></span>
-          <span class="mode-count" id="campus-windermere-description">…</span>
+        <button class="mode-card lp-tile tone-black" type="button" data-mode="opening" data-group="stage">
+          <span class="lp-block" aria-hidden="true"><span class="lp-big">1:00</span></span>
+          <span class="lp-panel"><span class="lp-label"><span class="tag">1 min</span> · Stage</span><span class="mode-title">Opening Charge</span><span class="lp-detail">Prep&nbsp;1:00 · Live&nbsp;1:00</span></span>
         </button>
-        <button class="mode-card live-card lakeside-card" type="button" data-mode="campus-lakeside" id="campus-lakeside-mode" aria-label="Lakeside announcements, 3 minutes" disabled>
-          <span class="mode-top"><span class="tag">3 min</span><span class="mode-title">Lakeside announcements</span></span>
-          <span class="mode-count" id="campus-lakeside-description">…</span>
+        <button class="mode-card lp-tile tone-orange" type="button" data-mode="worship" data-group="stage">
+          <span class="lp-block" aria-hidden="true"><span class="lp-big">1:00</span></span>
+          <span class="lp-panel"><span class="lp-label"><span class="tag">1 min</span> · Stage</span><span class="mode-title">Worship Lean-In</span><span class="lp-detail">Prep&nbsp;1:00 · Live&nbsp;1:00</span></span>
         </button>
       </div>
       <p class="home-meta" id="home-ann-meta">Loading…</p>
@@ -171,7 +184,8 @@
   </aside>
 
   <p class="sr-only" id="announcer" aria-live="polite"></p>
-  <script src="app.js?v=20260926e"></script>
-  <script src="tabs.js?v=20260926e"></script>
+  <script src="app.js?v=20260926f"></script>
+  <script src="tabs.js?v=20260926f"></script>
+  <script src="landing.js?v=20260926f"></script>
 </body>
 </html>
