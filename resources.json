@@ -1,5 +1,5 @@
 {
-  "updatedAt": "September 25, 2026",
+  "updatedAt": "September 26, 2026",
   "title": "Resources",
   "intro": "Links, forms, PDFs, and the tools the team uses.",
   "groups": [
@@ -34,9 +34,10 @@
           "note": "Where the student ministry shares weekly updates and sign-ups (for example, the Oct 7 prayer-night bus). Students get the invite from a leader."
         },
         {
-          "title": "Sidekick",
-          "type": "tool",
-          "note": "Runs the Sunday game on the room computer."
+          "title": "PAKA by DYM",
+          "type": "link",
+          "url": "https://www.downloadyouthministry.com/page/paka.html",
+          "note": "Free small group toolkit app from Download Youth Ministry: ice-breakers, Would You Rather, low-prep games, a people picker and a scorekeeper. Get it on iOS or Android."
         },
         {
           "title": "Download Youth Ministry",
@@ -67,6 +68,10 @@
     {
       "name": "Official Family Church website (not in Notion; kept per Jake's team, verified loading Sep 25, 2026)",
       "id": "https://www.ourfamily.church/"
+    },
+    {
+      "name": "Official PAKA page, Download Youth Ministry (added at Jake's request, Sep 26, 2026)",
+      "id": "https://www.downloadyouthministry.com/page/paka.html"
     }
   ]
 }
