@@ -1,5 +1,5 @@
 {
-  "updatedAt": "September 25, 2026",
+  "updatedAt": "September 26, 2026",
   "title": "Order of Service",
   "intro": "What runs in each service, from the working schedules in Notion.",
   "services": [
@@ -25,18 +25,18 @@
         },
         {
           "time": "6:30 PM",
-          "title": "Service begins"
+          "title": "Game and worship",
+          "detail": "6:30–7:00 PM."
         },
         {
+          "time": "7:00 PM",
           "title": "Message",
-          "detail": "22–25 minute teaching window."
+          "detail": "7:00–7:27 PM."
         },
         {
-          "title": "Response and prayer",
-          "detail": "As directed, then students dismiss to small groups."
-        },
-        {
-          "title": "Small groups"
+          "time": "7:30 PM",
+          "title": "Small groups",
+          "detail": "7:30–8:00 PM."
         },
         {
           "time": "8:00 PM",

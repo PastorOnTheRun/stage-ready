@@ -398,27 +398,16 @@
         "source": "Fall 2026 Student Ministry Preaching Calendar · Guest Teacher Guide"
       },
       {
-        "title": "What a good guide includes",
-        "bullets": [
-          "The Scripture reference, the purpose, and one clear big idea.",
-          "Enough context for the group to locate the passage.",
-          "A response and a prayer, kept in proportion to the time you have."
-        ],
-        "source": "Ministry Memory & AI Context"
-      },
-      {
         "title": "Asking questions",
         "bullets": [
           "Move from observation, to meaning, to application.",
           "Go further than “What did you think?”",
           "Let application come from what the text says, not from a list of tips."
-        ],
-        "source": "Ministry Memory & AI Context"
+        ]
       },
       {
         "title": "Leader-practice focus",
-        "body": "Modeling engagement and praying with students.",
-        "source": "Ministry Memory & AI Context"
+        "body": "Modeling engagement and praying with students."
       },
       {
         "title": "Safety and serious disclosures",
@@ -438,10 +427,6 @@
     {
       "name": "Middle School Sunday Morning Flow (Sunday Checklist)",
       "id": "3e57b1f0f0cb815a8439edd178677965"
-    },
-    {
-      "name": "Ministry Memory & AI Context",
-      "id": "3e57b1f0f0cb81b6ae49d8caca7bd65f"
     }
   ]
 }
