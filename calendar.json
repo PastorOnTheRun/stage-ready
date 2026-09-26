@@ -1,5 +1,5 @@
 {
-  "updatedAt": "September 25, 2026",
+  "updatedAt": "September 26, 2026",
   "title": "Calendar",
   "term": {
     "name": "Fall 2026",
@@ -24,6 +24,12 @@
       "title": "Wednesday Night · Lakeside",
       "detail": "Building 5 · Family Church Lakeside.",
       "source": "Lakeside Growth Reflection"
+    },
+    {
+      "day": "Thursday",
+      "title": "FCA",
+      "detail": "Fellowship of Christian Athletes · Windermere High School · every Thursday. Time isn't posted yet.",
+      "source": "Jake (Sep 26, 2026)"
     },
     {
       "day": "Sunday",
@@ -137,6 +143,10 @@
     },
     {
       "name": "REFRESH.md standing rule (Jake, Sep 25, 2026): Lakeside prayer night is on-site",
+      "id": "REFRESH.md"
+    },
+    {
+      "name": "REFRESH.md standing rule (Jake, Sep 26, 2026): FCA meets every Thursday at Windermere High School",
       "id": "REFRESH.md"
     }
   ]

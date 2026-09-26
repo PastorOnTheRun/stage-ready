@@ -20,8 +20,8 @@
         },
         {
           "time": "6:00 PM",
-          "title": "Leader huddle and hangout",
-          "detail": "Hangout runs 6:00–6:30. Assign huddle coverage so arriving students are still welcomed."
+          "title": "Leader hangout",
+          "detail": "Hangout runs 6:00–6:30."
         },
         {
           "time": "6:30 PM",
@@ -42,6 +42,11 @@
           "time": "8:00 PM",
           "title": "Dismissal",
           "detail": "Pickup runs through 8:15 PM."
+        },
+        {
+          "time": "8:15 PM",
+          "title": "Leader huddle",
+          "detail": "After service."
         }
       ],
       "checklist": [
