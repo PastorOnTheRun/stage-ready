@@ -22,7 +22,17 @@
     },
     {
       "title": "BAND invite, sign-up forms & PDFs",
-      "items": [],
+      "items": [
+        {
+          "title": "BAND invite",
+          "type": "link",
+          "url": "https://band.us/n/aaafbdF364s34",
+          "groupName": "Family Students (WN)",
+          "inviteCode": "YS5-FNX-4T",
+          "note": "Join requests are approved by an admin.",
+          "source": "Jake (Sep 26, 2026)"
+        }
+      ],
       "emptyMessage": "Nothing posted here yet."
     },
     {
@@ -31,23 +41,13 @@
         {
           "title": "BAND",
           "type": "tool",
-          "note": "Where the student ministry shares weekly updates and sign-ups (for example, the Oct 7 prayer-night bus). Students get the invite from a leader."
+          "note": "Where the student ministry shares weekly updates and sign-ups (for example, the Oct 7 prayer-night bus). The invite link and code are in the BAND invite card above."
         },
         {
           "title": "PAKA by DYM",
           "type": "link",
           "url": "https://www.downloadyouthministry.com/page/paka.html",
           "note": "Free small group toolkit app from Download Youth Ministry: ice-breakers, Would You Rather, low-prep games, a people picker and a scorekeeper. Get it on iOS or Android."
-        },
-        {
-          "title": "Download Youth Ministry",
-          "type": "tool",
-          "note": "Source of the Sunday games."
-        },
-        {
-          "title": "Canva",
-          "type": "tool",
-          "note": "Hosts the Sunday table devotionals."
         }
       ]
     }
@@ -62,16 +62,16 @@
       "id": "3e57b1f0f0cb81e6a34df4bc976c7fb2"
     },
     {
-      "name": "Middle School Sunday Morning Flow (Sunday Checklist)",
-      "id": "3e57b1f0f0cb815a8439edd178677965"
-    },
-    {
       "name": "Official Family Church website (not in Notion; kept per Jake's team, verified loading Sep 25, 2026)",
       "id": "https://www.ourfamily.church/"
     },
     {
       "name": "Official PAKA page, Download Youth Ministry (added at Jake's request, Sep 26, 2026)",
       "id": "https://www.downloadyouthministry.com/page/paka.html"
+    },
+    {
+      "name": "BAND invite for Family Students (WN): link and code shared by Jake, approved for public posting because join requests need admin approval (Sep 26, 2026)",
+      "id": "https://band.us/n/aaafbdF364s34"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "September 25, 2026",
+  "updatedAt": "September 26, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -50,9 +50,9 @@
         {
           "name": "Join our BAND app",
           "when": "Ongoing · get the current ministry updates",
-          "where": "Family Church Students",
-          "detail": "BAND is where our student ministry shares announcements and keeps families connected across the week.",
-          "action": "Ask a student ministry leader for the BAND invitation and join the group.",
+          "where": "BAND group: Family Students (WN)",
+          "detail": "BAND is where our student ministry shares announcements and keeps families connected across the week. Join at band.us/n/aaafbdF364s34 or with invite code YS5-FNX-4T. An admin approves each join request.",
+          "action": "Join Family Students (WN) on BAND with invite code YS5-FNX-4T.",
           "campus": "windermere",
           "service": "wed"
         },

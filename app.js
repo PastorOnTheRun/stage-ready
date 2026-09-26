@@ -130,6 +130,8 @@
   const strip = $("#status-strip");
   const announcer = $("#announcer");
   const esc = (value) => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[char]);
+  // Keep invite codes like "ABC-DEF-12" on one line (input must already be escaped).
+  const keepCodes = (html) => html.replace(/\b[A-Z0-9]{3}-[A-Z0-9]{3}-[A-Z0-9]{2,4}\b/g, m => `<span class="code-nowrap">${m}</span>`);
 
   function showScreen(name) {
     [chooser, workspace, finish].forEach(el => el.classList.remove("active"));
@@ -300,7 +302,7 @@
       body += `<div class="prompt-kicker"><span class="chip accent">Tap Coaching tips for introduce / why / vision</span></div>`;
       body += '<div class="events">';
       state.prompt.events.forEach(event => {
-        body += `<section class="event"><div><h3>${esc(event.name)}</h3><span class="svc-tags">${serviceTags(event)}</span><p>${esc(event.when)}</p><p>${esc(event.where)}</p></div>${event.cost ? `<span class="cost">${esc(event.cost)}</span>` : ""}<p class="event-detail">${esc(event.detail)}</p><p class="event-action">Next step: ${esc(event.action)}</p></section>`;
+        body += `<section class="event"><div><h3>${esc(event.name)}</h3><span class="svc-tags">${serviceTags(event)}</span><p>${esc(event.when)}</p><p>${esc(event.where)}</p></div>${event.cost ? `<span class="cost">${esc(event.cost)}</span>` : ""}<p class="event-detail">${keepCodes(esc(event.detail))}</p><p class="event-action">Next step: ${keepCodes(esc(event.action))}</p></section>`;
       });
       body += "</div>";
     }

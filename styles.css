@@ -1368,3 +1368,27 @@ a.res:active { background: var(--surface-3); border-color: var(--accent-line); t
   .mode-card { padding: 13px 10px 11px; }
   .mode-title { font-size: .96rem; }
 }
+
+/* —— BAND invite card (group name + invite code) —— */
+.res.has-invite .res-invite {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--accent-line);
+}
+.res-invite-row { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.res-invite-k { color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+.res-invite-name { color: var(--ink); font-size: var(--fs-lg); font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
+.res-invite-code {
+  color: var(--accent-hi);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.code-nowrap { white-space: nowrap; }
