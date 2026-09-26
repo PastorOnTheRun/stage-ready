@@ -1637,3 +1637,130 @@ body .lp-tile .mode-title, .lp-tile .lp-ttl {
 :is(body[data-phase="choose"], body[data-phase="done"]) .tabbar .tab.active { color: #141110; }
 :is(body[data-phase="choose"], body[data-phase="done"]) .tabbar .tab.active svg { background: #141110; color: #ffffff; } /* 18:1 */
 /* ================= end white theme / wide headings / landing ================= */
+
+/* ==========================================================================
+   Whole-app reference aesthetic (Jake, Sep 26, 2026: "Give the whole page
+   that aesthetic please.") Extends the STUDENTS landing look to Guides,
+   Service, Calendar, Resources and the rest of the Stage home: dotted-grid
+   backdrop, STUDENTS lockup header, boxed segmented controls, crisp
+   square-ish white cards with thin borders, small uppercase monospace labels,
+   wide bold titles, solid orange/black highlight blocks.
+   Scoped to the normal screens (body phase "choose"/"done"); the stage
+   dashboards, pacing/coaching sheets and timers stay dark and unchanged.
+   Remove this block to go back to the plain white version.
+   ========================================================================== */
+:is(body[data-phase="choose"], body[data-phase="done"]) {
+  --surface-1: #ffffff;
+  --surface-2: #ffffff;
+  --hair: rgba(26,21,18,.14);
+  --hair-2: rgba(26,21,18,.22);
+  --r-sm: 3px; --r-md: 4px; --r-lg: 6px;
+  --shadow-1: none;
+  --line-crisp: rgba(26,21,18,.18);
+  background-color: #f3f2ef;
+  background-image: radial-gradient(circle, rgba(26,21,18,.16) 1px, transparent 1.3px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+}
+html:has(body[data-phase="choose"]), html:has(body[data-phase="done"]) { background: #f3f2ef; }
+
+/* —— Header on Guides / Service / Calendar / Resources: small STUDENTS lockup + big wide title —— */
+.lp-head { display: grid; gap: 5px; width: min(64%, 260px); margin: 8px 0 0; }
+.lp-head-word { display: block; width: 100%; height: auto; overflow: visible; }
+.lp-head-word text { font-family: var(--font-heading); font-weight: 900; font-size: 1000px; fill: #FF7010; }
+.lp-head-labels {
+  display: flex; justify-content: space-between; gap: 8px;
+  font-family: var(--font-mono); font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: #a84300; white-space: nowrap;
+}
+.lp-head-labels span + span { color: var(--ink); font-weight: 800; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .tab-panel:not(#tab-announcements) .page-title { margin: 8px 0 0; font-size: 1.56rem; line-height: 1.1; }
+@media (max-width: 380px) { :is(body[data-phase="choose"], body[data-phase="done"]) .tab-panel:not(#tab-announcements) .page-title { font-size: 1.4rem; } }
+@media (max-width: 340px) {
+  .lp-head { width: 66%; }
+  .lp-head-labels { font-size: .58rem; letter-spacing: .05em; gap: 6px; }
+  :is(body[data-phase="choose"], body[data-phase="done"]) .tab-panel:not(#tab-announcements) .page-title { font-size: 1.24rem; }
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .tab-intro { color: var(--ink); }
+:is(body[data-phase="choose"], body[data-phase="done"]) :is(.tab-updated, .home-meta) { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+
+/* —— Boxed segmented controls (MS/HS, Month/List), like the landing's All/Stage/Leaders row —— */
+:is(body[data-phase="choose"], body[data-phase="done"]) :is(.seg, .level-switch) {
+  display: grid; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) :is(.seg button, .level-btn) {
+  min-height: 50px; padding: 8px 6px;
+  border: 1px solid var(--hair-2); border-radius: 4px; background: #ffffff; color: var(--ink);
+  font-size: .86rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; line-height: 1.15; box-shadow: none;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .level-btn { min-height: 56px; }
+:is(body[data-phase="choose"], body[data-phase="done"]) :is(.seg button, .level-btn)[aria-selected="true"] {
+  background: #ffe9da; border-color: #c45200; color: #1a1512; box-shadow: inset 0 0 0 1px #c45200;
+}
+@media (max-width: 340px) { :is(body[data-phase="choose"], body[data-phase="done"]) :is(.seg button, .level-btn) { font-size: .78rem; letter-spacing: .04em; } }
+
+/* —— Jump chips: boxed, monospace —— */
+:is(body[data-phase="choose"], body[data-phase="done"]) .chip-link {
+  padding: 8px 11px; border-radius: 4px; border: 1px solid var(--hair-2); background: #ffffff; color: var(--ink);
+  font-family: var(--font-mono); font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .chip-link:active { background: #ffe9da; border-color: #c45200; color: #1a1512; }
+
+/* —— Sections and cards: white panels, thin crisp borders, square-ish corners —— */
+:is(body[data-phase="choose"], body[data-phase="done"]) .tab-section {
+  padding: 14px; gap: 12px;
+  background: #ffffff; border: 1px solid var(--line-crisp); border-radius: 6px; box-shadow: none;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .tab-section > h2 { padding-bottom: 10px; border-bottom: 1px solid var(--hair); }
+:is(body[data-phase="choose"], body[data-phase="done"]) .tab-section.shared { background: #ffffff; border-color: var(--line-crisp); box-shadow: inset 0 4px 0 #FF7010; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .info-card { background: #ffffff; border: 1px solid var(--hair); border-radius: 4px; padding: 12px 14px; }
+:is(body[data-phase="choose"], body[data-phase="done"]) :is(.tab-empty, .empty-state) { border-radius: 4px; border: 1px dashed rgba(26,21,18,.28); background: #ffffff; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .guide-title { margin-top: 4px; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .svc-meta { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); line-height: 1.45; }
+
+/* Monospace uppercase label lines */
+:is(body[data-phase="choose"], body[data-phase="done"]) :is(.week-date, .sub-h, .cal-date, .pill, .res-type, .run-t, .res-invite-k, .past-weeks summary, .cal-grid .dow) {
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .04em;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .src { font-family: var(--font-mono); font-size: .7rem !important; letter-spacing: .01em; line-height: 1.4; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .week-date { font-size: .76rem !important; font-weight: 700; color: var(--accent-hi) !important; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .sub-h { font-size: .74rem; font-weight: 700; color: var(--accent-hi); }
+:is(body[data-phase="choose"], body[data-phase="done"]) .pill { border-radius: 3px; font-size: .7rem; font-weight: 700; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .past-weeks summary { font-size: .8rem; font-weight: 700; }
+
+/* Guides: this week's guide gets a solid orange header block */
+:is(body[data-phase="choose"], body[data-phase="done"]) .week-card.is-this-week {
+  padding: 0 14px 14px; overflow: hidden; background: #ffffff; border: 1px solid #141110; border-radius: 4px;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .week-card.is-this-week .week-date {
+  margin: 0 -14px 8px !important; padding: 10px 14px; background: #FF7010; color: #1c0d03 !important; font-weight: 800;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .week-list li.is-next .week-card { border-color: rgba(214,88,0,.45); }
+
+/* Service: times in solid black blocks */
+:is(body[data-phase="choose"], body[data-phase="done"]) .run li { grid-template-columns: 6.3rem minmax(0, 1fr); align-items: start; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .run-t {
+  justify-self: start; padding: 4px 7px; border-radius: 3px; background: #141110; color: #FF7010;
+  font-size: .72rem; font-weight: 700; line-height: 1.3; white-space: nowrap;
+}
+:is(body[data-phase="choose"], body[data-phase="done"]) .run-t:empty { padding: 0; background: none; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .svc-roles { border-radius: 4px; background: #ffffff; }
+
+/* Calendar: solid orange date blocks, square day cells */
+:is(body[data-phase="choose"], body[data-phase="done"]) .cal-ev { border-radius: 4px; background: #ffffff; border: 1px solid var(--hair); }
+:is(body[data-phase="choose"], body[data-phase="done"]) .cal-date { background: #FF7010; border: 0; border-radius: 3px; color: #1c0d03; font-size: .74rem; font-weight: 800; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .cal-day { border-radius: 3px; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .cal-day.has-ev { background: #FF7010; border-color: #FF7010; box-shadow: none; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .cal-day.has-ev.is-today { box-shadow: inset 0 0 0 2px #141110; }
+
+/* Resources: crisp cards; link type = solid orange block, tool = solid black block */
+:is(body[data-phase="choose"], body[data-phase="done"]) .res { border-radius: 4px; background: #ffffff; border: 1px solid var(--hair); }
+:is(body[data-phase="choose"], body[data-phase="done"]) .res-type { border-radius: 3px; border: 0; padding: 5px 7px; font-size: .7rem; font-weight: 800; background: #141110; color: #FF7010; }
+:is(body[data-phase="choose"], body[data-phase="done"]) a.res .res-type { background: #FF7010; color: #1c0d03; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .res-go { border-radius: 3px; border-color: #141110; background: #141110; color: #ffffff; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .res.has-invite .res-invite { border-radius: 4px; }
+
+/* Stage home leftovers and the finish screen */
+:is(body[data-phase="choose"], body[data-phase="done"]) .finish-card { border-radius: 6px; border: 1px solid var(--line-crisp); background: #ffffff; box-shadow: none; }
+:is(body[data-phase="choose"], body[data-phase="done"]) .btn { border-radius: 4px; }
+/* ======================= end whole-app reference aesthetic ======================= */
