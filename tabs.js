@@ -125,9 +125,44 @@
         ${e.source ? `<span class="src">Source: ${esc(e.source)}</span>` : ""}</span></li>`;
   }
 
-  function renderCalendar(d, view) {
+  /* Wednesday messages on the calendar, joined from guides.json weeks (Jake, Sep 27, 2026: a parent question per message).
+     Same message in both rooms = one entry; different messages = one block per room (middle school first). */
+  const ROOM = { middle: { label: "Middle school", ask: "Ask your middle schooler" }, high: { label: "High school", ask: "Ask your high schooler" } };
+  function messageEvents(guides) {
+    const byDate = new Map();
+    for (const g of guides?.guides || []) {
+      for (const w of g.weeks || []) {
+        if (w.noService || !(w.scripture && w.bigIdea)) continue;   // Pastor's Choice / no Midweek already have calendar events
+        if (!byDate.has(w.date)) byDate.set(w.date, []);
+        byDate.get(w.date).push({ level: g.level, ...w });
+      }
+    }
+    return [...byDate].map(([date, rooms]) => ({ date, kind: "message", rooms }));
+  }
+  const askBlock = (q, label) => q ? `<div class="pq"><span class="pq-k">${esc(label)}</span><p class="pq-q">${esc(q)}</p></div>` : "";
+  function messageRow(e, today) {
+    const past = e.date < today;
+    const [a, b] = e.rooms;
+    const same = !b || (a.title === b.title && a.scripture === b.scripture);
+    const roomsLabel = e.rooms.length > 1 ? "Middle & high school" : ROOM[a.level]?.label;
+    let head, extra;
+    if (same) {
+      head = `<strong>${esc(a.title)}</strong><span class="msg-meta">${esc([a.series, a.week, roomsLabel].filter(Boolean).join(" · "))}</span>`;
+      extra = `<div class="msg-room msg-one"><span class="msg-ref">${esc(a.scripture)}</span><span class="msg-idea">${esc(a.bigIdea)}</span>${askBlock(a.parentQuestion, e.rooms.length > 1 ? "Ask your student" : ROOM[a.level]?.ask || "Ask your student")}</div>`;
+    } else {
+      head = `<strong>${esc([a.series, a.week].filter(Boolean).join(" · "))}</strong><span>Different message in each room this week.</span>`;
+      extra = e.rooms.map(r => `<div class="msg-room"><span class="msg-room-k">${esc(ROOM[r.level]?.label || r.level)}</span><strong>${esc(r.title)}</strong>
+        <span class="msg-ref">${esc(r.scripture)}</span><span class="msg-idea">${esc(r.bigIdea)}</span>${askBlock(r.parentQuestion, ROOM[r.level]?.ask || "Ask your student")}</div>`).join("");
+    }
+    return `<li class="cal-ev cal-msg ${past ? "is-past" : ""}">
+      <span class="cal-date">${esc(fmtDay(e.date))}</span>
+      <span class="cal-body"><em class="pill">Wednesday message</em>${head}</span>
+      <div class="cal-msg-x">${extra}<span class="src">Source: Fall 2026 Preaching Calendar</span></div></li>`;
+  }
+
+  function renderCalendar(d, view, guides) {
     const today = todayET();
-    const events = [...(d.events || [])].sort((a, b) => a.date.localeCompare(b.date));
+    const events = [...(d.events || []), ...messageEvents(guides)].sort((a, b) => a.date.localeCompare(b.date));
     const start = parse(d.term.start), end = parse(d.term.end);
     const months = [];
     for (let y = start.getUTCFullYear(), m = start.getUTCMonth(); y < end.getUTCFullYear() || (y === end.getUTCFullYear() && m <= end.getUTCMonth()); m === 11 ? (y++, m = 0) : m++) months.push([y, m]);
@@ -157,7 +192,7 @@
         }
         html += `</div>`;
       }
-      html += monthEvents.length ? `<ol class="cal-list">${monthEvents.map(e => eventRow(e, today)).join("")}</ol>` : `<p class="muted">Nothing posted for this month yet.</p>`;
+      html += monthEvents.length ? `<ol class="cal-list">${monthEvents.map(e => e.kind === "message" ? messageRow(e, today) : eventRow(e, today)).join("")}</ol>` : `<p class="muted">Nothing posted for this month yet.</p>`;
       html += `</section>`;
     });
     return html;
@@ -183,16 +218,22 @@
 
   let calendarData = null;
   let calendarView = "month";
+  let calendarGuides = null;   // guides.json weeks = the Wednesday messages (with parentQuestion)
   function paintCalendar() {
     const body = $("#calendar-body");
-    body.innerHTML = renderCalendar(calendarData, calendarView);
+    body.innerHTML = renderCalendar(calendarData, calendarView, calendarGuides);
     body.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => { calendarView = b.dataset.view; paintCalendar(); }));
   }
 
   const RENDER = {
     guides: async () => { guidesData = await getJSON("guides"); paintGuides(); },
     service: async () => { $("#service-body").innerHTML = renderService(await getJSON("service")); },
-    calendar: async () => { calendarData = await getJSON("calendar"); paintCalendar(); },
+    calendar: async () => {
+      const [cal, gd] = await Promise.allSettled([getJSON("calendar"), guidesData ? Promise.resolve(guidesData) : getJSON("guides")]);
+      if (cal.status !== "fulfilled") throw cal.reason;
+      calendarData = cal.value; calendarGuides = gd.status === "fulfilled" ? gd.value : null;   // messages are optional; events still render
+      paintCalendar();
+    },
     resources: async () => { $("#resources-body").innerHTML = renderResources(await getJSON("resources")); }
   };
 

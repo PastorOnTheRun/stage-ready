@@ -17,7 +17,8 @@
           "title": "JW & Jesus",
           "scripture": "John 1:1-18; John 10",
           "bigIdea": "Just because you believe you know the Father doesn’t mean you understand the Son.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "If a friend asked you who Jesus really is, how would you explain it in your own words?"
         },
         {
           "date": "2026-08-26",
@@ -26,7 +27,8 @@
           "title": "Hebrew Israelites & Jesus",
           "scripture": "Matthew 15:21-28; Matthew 8:1-13; Luke 19:1-10",
           "bigIdea": "Sometimes people want Jesus to be more like them than for them to become more like Jesus.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "What's something about Jesus that challenges the way you'd normally think or act?"
         },
         {
           "date": "2026-09-02",
@@ -35,7 +37,8 @@
           "title": "Design",
           "scripture": "Genesis 1:26-28",
           "bigIdea": "You are designed with purpose and responsibility, given to you by God.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's something you're good at or care about that you think God put in you on purpose?"
         },
         {
           "date": "2026-09-09",
@@ -44,7 +47,8 @@
           "title": "Purpose",
           "scripture": "Matthew 5:13-16",
           "bigIdea": "Our purpose is to know and follow Jesus while sharing Him with others.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "Where in your normal week do you get a chance to be salt and light for someone?"
         },
         {
           "date": "2026-09-16",
@@ -53,7 +57,8 @@
           "title": "Direction",
           "scripture": "Genesis 3:1-7",
           "bigIdea": "God created everything with a purpose; sin is using what He made in ways He did not design.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's one good thing in your life, like your phone or your words, that's easy to use the wrong way?"
         },
         {
           "date": "2026-09-23",
@@ -62,7 +67,8 @@
           "title": "Responsibility",
           "scripture": "Matthew 25:14-30",
           "bigIdea": "God has created us to take on responsibility, and in doing so, we find meaning and purpose.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's one responsibility you have right now that matters more than people might think?"
         },
         {
           "date": "2026-09-30",
@@ -88,7 +94,8 @@
           "title": "Relationship",
           "scripture": "Mark 1:35; Luke 5:16; Matthew 26:36-39; John 14:31; Matthew 6:9-13",
           "bigIdea": "Jesus modeled the importance of prayer, continually seeking the Father’s will over his own, and giving us a pattern to follow.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "When is it easiest for you to talk to God, and when is it hardest?"
         },
         {
           "date": "2026-10-21",
@@ -97,7 +104,8 @@
           "title": "Reflection",
           "scripture": "Psalm 100:1-3; 1 Peter 2:9; John 13:34; Colossians 3:16-17",
           "bigIdea": "God created humans to know and worship him. We do this by reflecting his image to the world around us through our actions and treatment of others.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "Who's someone who shows you what God is like just by how they treat people?"
         },
         {
           "date": "2026-10-28",
@@ -106,7 +114,8 @@
           "title": "Rhythms",
           "scripture": "Daniel 9:1-3, 18; Acts 2:42-47; Acts 9:17-19; 1 Timothy 1:12-17",
           "bigIdea": "It is important to establish a daily rhythm of prayer and worship in our lives through God’s Word, Christian community, and continued surrender before God.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's one small daily habit that helps you stay close to God, or one you'd like to try?"
         },
         {
           "date": "2026-11-04",
@@ -115,7 +124,8 @@
           "title": "Anxiety",
           "scripture": "Philippians 4:4-9",
           "bigIdea": "God cares about our anxiety; prayer, gratitude, and focusing on God and others help put anxiety in its place.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "When worry starts piling up, what helps you feel steadier, and how can I help?"
         },
         {
           "date": "2026-11-11",
@@ -124,7 +134,8 @@
           "title": "Depression",
           "scripture": "Psalm 42:6-11",
           "bigIdea": "We can trust God while experiencing depression and ask Him to turn our despair into hope.",
-          "sensitivity": "red"
+          "sensitivity": "red",
+          "parentQuestion": "If a friend felt really down for a long time, what do you think would help them most?"
         },
         {
           "date": "2026-11-18",
@@ -133,7 +144,8 @@
           "title": "Attachment",
           "scripture": "Romans 8:31-39",
           "bigIdea": "In Christ, we can find the secure love and trust we need to know who we are and build healthy relationships.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "What helps you feel secure in who you are, even when friendships feel shaky?"
         },
         {
           "date": "2026-11-25",
@@ -150,7 +162,8 @@
           "title": "Facing the Opps",
           "scripture": "Matthew 2:13-23",
           "bigIdea": "We can overcome opposition through faith in God and His promises.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "Where do you feel pushback for what you believe, and what helps you stand firm?"
         },
         {
           "date": "2026-12-09",
@@ -159,7 +172,8 @@
           "title": "The Hype vs. The Hope",
           "scripture": "Luke 2:8-14",
           "bigIdea": "We often get caught up in the “hype” of Christmas, but the true meaning offers lasting hope.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What part of Christmas do you look forward to most, and where does Jesus fit in it for you?"
         },
         {
           "date": "2026-12-16",
@@ -168,7 +182,8 @@
           "title": "The Perfect Gift",
           "scripture": "John 3:16",
           "bigIdea": "The ultimate gift is Jesus, who came to give, not to receive.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "If Christmas is more about giving than getting, who would you love to give something to this year?"
         }
       ],
       "weeksEmpty": "No middle school curriculum posted yet.",
@@ -210,7 +225,8 @@
           "title": "JW & Jesus",
           "scripture": "John 1:1-18; John 10",
           "bigIdea": "Just because you believe you know the Father doesn’t mean you understand the Son.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "If a friend asked you who Jesus really is, how would you explain it in your own words?"
         },
         {
           "date": "2026-08-26",
@@ -219,7 +235,8 @@
           "title": "Hebrew Israelites & Jesus",
           "scripture": "Matthew 15:21-28; Matthew 8:1-13; Luke 19:1-10",
           "bigIdea": "Sometimes people want Jesus to be more like them than for them to become more like Jesus.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "What's something about Jesus that challenges the way you'd normally think or act?"
         },
         {
           "date": "2026-09-02",
@@ -228,7 +245,8 @@
           "title": "Design",
           "scripture": "Genesis 1:26-28",
           "bigIdea": "You are designed with purpose and responsibility, given to you by God.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's something you're good at or care about that you think God put in you on purpose?"
         },
         {
           "date": "2026-09-09",
@@ -237,7 +255,8 @@
           "title": "Direction",
           "scripture": "Genesis 3:1-7",
           "bigIdea": "God created everything with a purpose; sin is using what He made in ways He did not design.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's one good thing in your life, like your phone or your words, that's easy to use the wrong way?"
         },
         {
           "date": "2026-09-16",
@@ -246,7 +265,8 @@
           "title": "Purpose",
           "scripture": "Matthew 5:13-16",
           "bigIdea": "Our purpose is to know and follow Jesus while sharing Him with others.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "Where in your normal week do you get a chance to be salt and light for someone?"
         },
         {
           "date": "2026-09-23",
@@ -255,7 +275,8 @@
           "title": "Responsibility",
           "scripture": "Matthew 25:14-30",
           "bigIdea": "God has created us to take on responsibility, and in doing so, we find meaning and purpose.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's one responsibility you have right now that matters more than people might think?"
         },
         {
           "date": "2026-09-30",
@@ -281,7 +302,8 @@
           "title": "Relationship",
           "scripture": "Mark 1:35; Luke 5:16; Matthew 26:36-39; John 14:31; Matthew 6:9-13",
           "bigIdea": "Jesus modeled the importance of prayer, continually seeking the Father’s will over his own, and giving us a pattern to follow.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "When is it easiest for you to talk to God, and when is it hardest?"
         },
         {
           "date": "2026-10-21",
@@ -290,7 +312,8 @@
           "title": "Reflection",
           "scripture": "Psalm 100:1-3; 1 Peter 2:9; John 13:34; Colossians 3:16-17",
           "bigIdea": "God created humans to know and worship him. We do this by reflecting his image to the world around us through our actions and treatment of others.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "Who's someone who shows you what God is like just by how they treat people?"
         },
         {
           "date": "2026-10-28",
@@ -299,7 +322,8 @@
           "title": "Rhythms",
           "scripture": "Daniel 9:1-3, 18; Acts 2:42-47; Acts 9:17-19; 1 Timothy 1:12-17",
           "bigIdea": "It is important to establish a daily rhythm of prayer and worship in our lives through God’s Word, Christian community, and continued surrender before God.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What's one small daily habit that helps you stay close to God, or one you'd like to try?"
         },
         {
           "date": "2026-11-04",
@@ -308,7 +332,8 @@
           "title": "Anxiety",
           "scripture": "Philippians 4:4-9",
           "bigIdea": "God cares about our anxiety; prayer, gratitude, and focusing on God and others help put anxiety in its place.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "When worry starts piling up, what helps you feel steadier, and how can I help?"
         },
         {
           "date": "2026-11-11",
@@ -317,7 +342,8 @@
           "title": "Depression",
           "scripture": "Psalm 42:6-11",
           "bigIdea": "We can trust God while experiencing depression and ask Him to turn our despair into hope.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "If a friend felt really down for a long time, what do you think would help them most?"
         },
         {
           "date": "2026-11-18",
@@ -326,7 +352,8 @@
           "title": "Attachment",
           "scripture": "Romans 8:31-39",
           "bigIdea": "In Christ, we can find the secure love and trust we need to know who we are and build healthy relationships.",
-          "sensitivity": "yellow"
+          "sensitivity": "yellow",
+          "parentQuestion": "What helps you feel secure in who you are, even when friendships feel shaky?"
         },
         {
           "date": "2026-11-25",
@@ -343,7 +370,8 @@
           "title": "The Hype vs. The Hope",
           "scripture": "Luke 2:8-14",
           "bigIdea": "We often get caught up in the “hype” of Christmas, but the true meaning offers lasting hope.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "What part of Christmas do you look forward to most, and where does Jesus fit in it for you?"
         },
         {
           "date": "2026-12-09",
@@ -352,7 +380,8 @@
           "title": "Facing the Opps",
           "scripture": "Matthew 2:13-23",
           "bigIdea": "We can overcome opposition through faith in God and His promises.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "Where do you feel pushback for what you believe, and what helps you stand firm?"
         },
         {
           "date": "2026-12-16",
@@ -361,7 +390,8 @@
           "title": "The Perfect Gift",
           "scripture": "John 3:16",
           "bigIdea": "The ultimate gift is Jesus, who came to give, not to receive.",
-          "sensitivity": "green"
+          "sensitivity": "green",
+          "parentQuestion": "If Christmas is more about giving than getting, who would you love to give something to this year?"
         }
       ],
       "weeksEmpty": "No high school curriculum posted yet.",

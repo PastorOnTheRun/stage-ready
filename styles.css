@@ -1764,3 +1764,24 @@ html:has(body[data-phase="choose"]), html:has(body[data-phase="done"]) { backgro
 :is(body[data-phase="choose"], body[data-phase="done"]) .finish-card { border-radius: 6px; border: 1px solid var(--line-crisp); background: #ffffff; box-shadow: none; }
 :is(body[data-phase="choose"], body[data-phase="done"]) .btn { border-radius: 4px; }
 /* ======================= end whole-app reference aesthetic ======================= */
+
+/* —— Calendar: Wednesday message entries with a parent question (Jake, Sep 27, 2026) ——
+   Messages come from guides.json weeks; the "Ask your student" block spans the full card width
+   so the question can be large on a 402px phone. Small orange text is #a84300 (AA on the tint). */
+.cal-ev.cal-msg { grid-template-columns: 5.2rem minmax(0, 1fr); }
+.cal-msg .cal-body .pill { margin-bottom: 2px; }
+.cal-msg .msg-meta, .cal-msg .msg-ref, .cal-msg .msg-room-k { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; }
+.cal-msg .msg-ref { color: var(--ink-2); font-weight: 700; }
+.cal-msg-x { grid-column: 1 / -1; display: grid; gap: 10px; min-width: 0; }
+.cal-msg-x .src { color: var(--muted); font-family: var(--font-mono); font-size: .7rem; letter-spacing: .01em; line-height: 1.4; }
+.msg-room { display: grid; gap: 4px; padding: 10px 0 0; border-top: 1px solid var(--hair); min-width: 0; }
+.msg-room > strong { font-family: var(--font-heading); font-weight: 850; font-size: .92rem; line-height: 1.25; color: var(--ink); overflow-wrap: anywhere; }
+.msg-room .msg-room-k { color: #a84300; font-weight: 800; }
+.msg-room .msg-idea { color: var(--ink-2); font-size: var(--fs-xs); line-height: 1.4; }
+.pq {
+  display: grid; gap: 6px; margin-top: 2px; padding: 12px 14px 13px;
+  background: #fff7f0; border: 1px solid rgba(214,88,0,.40); border-radius: 4px; box-shadow: inset 4px 0 0 #FF7010;
+}
+.pq-k { font-family: var(--font-mono); font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #a84300; line-height: 1.3; }
+.pq-q { margin: 0; font-size: 1.14rem; font-weight: 650; line-height: 1.38; color: #1a1512; overflow-wrap: break-word; text-wrap: pretty; }
+@media (max-width: 340px) { .pq-q { font-size: 1.04rem; } .pq { padding: 10px 11px 11px; } }
