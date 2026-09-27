@@ -2,7 +2,7 @@
    Network-first for everything (HTML, JSON data, JS, CSS, icons) so Monday/Thursday refreshes
    and new deploys show up immediately; the cache is only an offline fallback.
    Bump CACHE_VERSION on every deploy that changes app files. */
-const CACHE_VERSION = "stage-ready-v2026-09-26g";
+const CACHE_VERSION = "stage-ready-v2026-09-26h";
 const SHELL = [
   "./",
   "./index.html",
@@ -23,7 +23,9 @@ const SHELL = [
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
-  "./icons/favicon-32.png"
+  "./icons/favicon-32.png",
+  "./icons/favicon-16.png",
+  "./icons/favicon.ico"
 ];
 
 self.addEventListener("install", (event) => {
