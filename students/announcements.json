@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-09-28",
+  "source": "Jake (Sep 28, 2026)",
+  "title": "Family Church Students — Announcements",
+  "org": "Family Church",
+  "campus": "Windermere",
+  "vision": "Belong. Believe. Beyond.",
+  "detailsUrl": "https://pastorontherun.github.io/stage-ready/students/",
+  "sections": [
+    {
+      "id": "this-week",
+      "title": "This Week",
+      "items": [
+        { "title": "Wednesday Night", "when": "Every Wednesday · 6:00–8:00 PM · Building 5",
+          "details": ["Hangout at 6:00, service about 6:30, pickup through 8:15."], "recurring": true },
+        { "title": "Sunday Middle School", "when": "9:45–10:45 AM · Building 4", "recurring": true },
+        { "title": "Lakeside Prayer Night", "when": "Wednesday, Oct 7",
+          "details": ["Windermere students meet by 5:45 PM; return about 8:30 PM."],
+          "status": "Transportation still being confirmed.", "date": "2026-10-07" }
+      ]
+    },
+    {
+      "id": "upcoming",
+      "title": "Upcoming",
+      "items": [
+        { "title": "Pumpkin Party / Student Costume Night", "when": "Wednesday, Oct 28 · 6–8 PM · Windermere",
+          "status": "Details still being finalized.", "date": "2026-10-28" },
+        { "title": "24-Hour Prayer", "when": "Friday, Oct 30 – Saturday, Oct 31",
+          "details": ["Daytime: families welcome.", "Overnight: high school and up, with a leader."],
+          "status": "Sign-up coming.", "date": "2026-10-30", "endDate": "2026-10-31" },
+        { "title": "Be Class", "when": "Sunday, Oct 18", "date": "2026-10-18" },
+        { "title": "Friendsgiving", "when": "Wednesday, Nov 18 · 6–8 PM",
+          "details": ["Guests don't need to bring food."], "date": "2026-11-18" },
+        { "title": "Christmas Party", "when": "Wednesday, Dec 16 · 6–8 PM",
+          "details": ["Big invite night."], "date": "2026-12-16" }
+      ]
+    },
+    {
+      "id": "reminders",
+      "title": "Reminders",
+      "kind": "reminders",
+      "items": [
+        { "text": "Bring a friend." },
+        { "text": "Use the designated student door." },
+        { "text": "Be considerate if pizza dinner is offered." }
+      ]
+    }
+  ]
+}

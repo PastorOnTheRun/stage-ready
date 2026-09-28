@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+"""Student announcements: one data file, two pages.
+Source of truth: students/announcements.json (Jake's exact wording; hand-edited only on Jake's request).
+  - students/index.html        : the static, no-JS student page. The block between the BEGIN/END markers is generated.
+  - students/lobby/index.html  : the lobby TV slideshow. A copy of the JSON is embedded between its markers so the
+                                 screen still works if the fetch of ../announcements.json fails.
+Usage: python3 build_students.py          (validate + regenerate both pages)
+       python3 build_students.py --check  (validate + fail if either page is out of sync; nothing written)"""
+import json, re, sys, datetime, html
+from pathlib import Path
+here = Path(__file__).resolve().parent
+DATA = here / "students" / "announcements.json"
+PAGE = here / "students" / "index.html"
+LOBBY = here / "students" / "lobby" / "index.html"
+problems = []
+
+def validate(d):
+    for k in ("title", "org", "campus", "vision", "detailsUrl"):
+        if not str(d.get(k, "")).strip(): problems.append(f"missing {k}")
+    if not re.match(r"^https://\S+$", d.get("detailsUrl", "")): problems.append("detailsUrl must be https")
+    ids = [s.get("id") for s in d.get("sections", [])]
+    if len(set(ids)) != len(ids): problems.append("duplicate section ids")
+    for s in d.get("sections", []):
+        where = f"section {s.get('id')}"
+        if not s.get("title") or not s.get("items"): problems.append(f"{where}: needs title and items")
+        for i, it in enumerate(s.get("items", [])):
+            w = f"{where} item {i}"
+            if s.get("kind") == "reminders":
+                if not str(it.get("text", "")).strip(): problems.append(f"{w}: reminder needs text")
+                continue
+            for k in ("title", "when"):
+                if not str(it.get(k, "")).strip(): problems.append(f"{w}: missing {k}")
+            for k in ("date", "endDate"):
+                if k in it:
+                    try: datetime.date.fromisoformat(it[k])
+                    except ValueError: problems.append(f"{w}: bad {k} {it[k]!r}")
+            if "endDate" in it and "date" in it and it["endDate"] < it["date"]: problems.append(f"{w}: endDate before date")
+            if not it.get("recurring") and "date" not in it: problems.append(f"{w}: dated events need a date (or recurring: true)")
+            if it.get("recurring") and ("date" in it or "endDate" in it): problems.append(f"{w}: recurring items have no date")
+            for x in it.get("details", []):
+                if not str(x).strip(): problems.append(f"{w}: empty detail")
+            for v in [it.get("title", ""), it.get("when", ""), it.get("status", "")] + it.get("details", []):
+                if re.search(r"https?://|@|\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b", str(v)): problems.append(f"{w}: no links, emails or phone numbers in student text: {v!r}")
+
+e = lambda s: html.escape(str(s), quote=False)
+
+def static_block(d):
+    out = [f'''    <header>
+      <div class="mast" aria-hidden="true">
+        <svg class="word" viewBox="0 -700 7228 712" preserveAspectRatio="xMidYMid meet" focusable="false"><text x="-43" y="0" textLength="7307" lengthAdjust="spacingAndGlyphs">STUDENTS</text></svg>
+        <div class="corners"><span>{e(d["org"])}</span><span>{e(d["campus"])}</span></div>
+      </div>
+      <h1><span class="sr">{e(d["org"])} Students — </span>Announcements</h1>
+      <p class="vision">{e(d["vision"])}</p>
+    </header>
+
+    <main>''']
+    for n, s in enumerate(d["sections"]):
+        sid = s["id"]
+        out.append(f'''      <section id="{sid}" aria-labelledby="h-{sid}">
+        <h2 id="h-{sid}">{e(s["title"])}</h2>''')
+        if s.get("kind") == "reminders":
+            out.append('        <ul class="reminders">')
+            out += [f'          <li>{e(it["text"])}</li>' for it in s["items"]]
+            out.append('        </ul>')
+        else:
+            out.append('        <ul class="cards">')
+            for it in s["items"]:
+                cls = "card now" if n == 0 else "card"
+                lines = [f'          <li class="{cls}">', f'            <p class="when">{e(it["when"])}</p>', f'            <h3>{e(it["title"])}</h3>']
+                lines += [f'            <p class="detail">{e(x)}</p>' for x in it.get("details", [])]
+                if it.get("status"): lines.append(f'            <p class="status">{e(it["status"])}</p>')
+                lines.append('          </li>')
+                out += lines
+            out.append('        </ul>')
+        out.append('      </section>\n')
+    out[-1] = out[-1].rstrip("\n")
+    out.append('    </main>')
+    return "\n".join(out)
+
+def replace_between(text, begin, end, body, fname):
+    pat = re.compile(re.escape(begin) + r".*?" + re.escape(end), re.S)
+    if not pat.search(text): problems.append(f"{fname}: markers not found"); return text
+    return pat.sub(lambda m: begin + "\n" + body + "\n" + end, text, count=1)
+
+d = json.loads(DATA.read_text(encoding="utf-8"))
+validate(d)
+B1, E1 = "<!-- BEGIN students:content (generated by build_students.py from announcements.json; edit the JSON, not this block) -->", "<!-- END students:content -->"
+B2, E2 = '<script type="application/json" id="lobby-data">', "</script><!-- END lobby-data -->"
+page_old, lobby_old = PAGE.read_text(encoding="utf-8"), LOBBY.read_text(encoding="utf-8")
+page_new = replace_between(page_old, B1, E1, static_block(d), "students/index.html")
+page_new = re.sub(r"<title>.*?</title>", lambda m: f"<title>{e(d['title'])}</title>", page_new, count=1)
+embedded = json.dumps(d, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+lobby_new = replace_between(lobby_old, B2, E2, embedded, "students/lobby/index.html")
+if problems:
+    print("INVALID"); [print(" -", p) for p in problems]; sys.exit(1)
+if "--check" in sys.argv:
+    stale = [n for n, o, w in (("students/index.html", page_old, page_new), ("students/lobby/index.html", lobby_old, lobby_new)) if o != w]
+    if stale: print("OUT OF SYNC (run python3 build_students.py):", ", ".join(stale)); sys.exit(1)
+    print("VALID (students pages in sync)"); sys.exit(0)
+PAGE.write_text(page_new, encoding="utf-8"); LOBBY.write_text(lobby_new, encoding="utf-8")
+print("VALID · wrote students/index.html and students/lobby/index.html")

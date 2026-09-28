@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Church Students — Announcements · Lobby</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png?v=20260927a">
+  <link rel="shortcut icon" href="../../icons/favicon.ico?v=20260927a">
+  <!-- Lobby TV display (Jake, Sep 28, 2026). Content comes from ../announcements.json (same data as /students/),
+       with a copy embedded below by build_students.py. Standalone: no service worker, no tab bar, not linked from
+       the leader app. Written for older Chromium TV browsers (smart TV, Fire TV Silk): flexbox only (no grid),
+       no CSS variables, no :has(), no gap, no inset/aspect-ratio/clamp; rem units sized from 1vw, with min() behind
+       @supports and a script fallback; ES5-style JavaScript. -->
+  <style>
+    @font-face {
+      font-family: "Archivo Wide";
+      src: url("../../assets/fonts/archivo-wide-latin.woff2") format("woff2");
+      font-weight: 100 900; font-style: normal; font-display: swap;
+    }
+    /* One layout unit = 1rem = 1/100 of the 16:9 stage width. Plain 1vw is exact on 16:9 TVs and works in any
+       browser; newer browsers letterbox other shapes via min(); the script also sets it (old browsers, odd shapes).
+       Layout uses flexbox only (no grid, no CSS variables, no gap/:has()/aspect-ratio/clamp) for old TV Chromium. */
+    html { font-size: 1vw; }
+    @supports (width: min(1vw, 1vh)) { html { font-size: min(1vw, 1.7778vh); } }
+    html, body, * { cursor: none !important; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #f3f2ef; }
+    body {
+      color: #1a1512; font-family: Inter, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif;
+      display: -webkit-box; display: -webkit-flex; display: flex;
+      -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center;
+    }
+    .stage {
+      position: relative; overflow: hidden;
+      width: 100rem; height: 56.25rem; -webkit-flex: 0 0 auto; flex: 0 0 auto;
+      padding: 2.6rem 2.8rem;
+      background-color: #f3f2ef;
+      background-image: radial-gradient(circle, rgba(26,21,18,.16) 0.9px, transparent 1.3px);
+      background-image: radial-gradient(circle, rgba(26,21,18,.17) 0.075rem, transparent 0.1rem);
+      background-size: 1.3rem 1.3rem;
+      display: -webkit-box; display: -webkit-flex; display: flex;
+    }
+    .main, .rail, .slide { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-orient: vertical; -webkit-flex-direction: column; flex-direction: column; min-width: 0; min-height: 0; }
+    .main { position: relative; -webkit-flex: 1 1 0px; flex: 1 1 0px; }
+    .rail { -webkit-flex: 0 0 18rem; flex: 0 0 18rem; width: 18rem; margin-left: 2.6rem; -webkit-justify-content: space-between; justify-content: space-between; }
+
+    /* Header: STUDENTS wordmark lockup */
+    .brand { -webkit-flex: 0 0 auto; flex: 0 0 auto; width: 46rem; }
+    .word { display: block; width: 100%; height: 4.55rem; overflow: visible; }
+    .word text { font-family: "Archivo Wide", "Arial Black", sans-serif; font-weight: 900; font-size: 1000px; fill: #FF7010; }
+    .corners {
+      display: -webkit-box; display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between;
+      margin-top: 0.55rem; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-weight: 700; text-transform: uppercase; white-space: nowrap;
+      font-size: 1.25rem; letter-spacing: .1em; color: #a84300;
+    }
+    .corners span + span { color: #1a1512; font-weight: 800; }
+
+    /* Rail: vision line + QR */
+    .vision {
+      -webkit-flex: 0 0 auto; flex: 0 0 auto; margin: 0; padding: 1.4rem 1.5rem; border-radius: 0.25rem;
+      background: #141110; color: #FF7010;
+      font-family: "Archivo Wide", "Arial Black", sans-serif; font-weight: 900; font-size: 2.05rem; line-height: 1.18;
+    }
+    .vision span { display: block; }
+    .qr {
+      -webkit-flex: 0 0 auto; flex: 0 0 auto; background: #ffffff; border: 0.1rem solid rgba(26,21,18,.22); border-radius: 0.3rem;
+      padding: 1.1rem 1.1rem 1.2rem; text-align: center;
+    }
+    .qr img { display: block; width: 100%; height: auto; }
+    .qr p {
+      margin: 0.6rem 0 0; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+      font-weight: 800; font-size: 1.35rem; letter-spacing: .06em; text-transform: uppercase; color: #141110;
+    }
+
+    /* Slides */
+    .slides { position: relative; -webkit-flex: 1 1 0px; flex: 1 1 0px; min-height: 0; margin: 1.4rem 0; }
+    .slide {
+      position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+      opacity: 0; visibility: hidden; -webkit-transition: opacity .9s ease, visibility 0s linear .9s; transition: opacity .9s ease, visibility 0s linear .9s;
+    }
+    .slide.on { opacity: 1; visibility: visible; -webkit-transition: opacity .9s ease; transition: opacity .9s ease; }
+    .slide.measure { visibility: hidden !important; opacity: 0 !important; -webkit-transition: none; transition: none; }
+    .sec { -webkit-flex: 0 0 auto; flex: 0 0 auto; display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; min-width: 0; margin-bottom: 1.3rem; }
+    .sec h2 { margin: 0; font-family: "Archivo Wide", "Arial Black", sans-serif; font-weight: 900; font-size: 4rem; line-height: 1.05; white-space: nowrap; }
+    .sec:before { content: ""; -webkit-flex: 0 0 auto; flex: 0 0 auto; width: 2.4rem; height: 2.4rem; margin-right: 1.3rem; background: #FF7010; }
+    .sec.dark:before { background: #141110; }
+    .sec .page { margin-left: 1.6rem; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-weight: 700; font-size: 1.6rem; color: #5e5750; }
+    .list { position: relative; -webkit-flex: 1 1 0px; flex: 1 1 0px; min-height: 0; overflow: hidden; }
+    .card + .card { margin-top: 1.1rem; }
+    .card {
+      display: -webkit-box; display: -webkit-flex; display: flex; min-width: 0;
+      background: #ffffff; border: 0.1rem solid rgba(26,21,18,.2); border-radius: 0.3rem; overflow: hidden;
+    }
+    .when {
+      -webkit-flex: 0 0 23rem; flex: 0 0 23rem; width: 23rem; margin: 0; padding: 1.3rem 1.3rem; background: #FF7010; color: #1c0d03;
+      font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-weight: 800; text-transform: uppercase;
+      font-size: 1.8rem; line-height: 1.3; letter-spacing: .02em; word-wrap: break-word; overflow-wrap: break-word;
+    }
+    .when span { display: block; }
+    .body { -webkit-flex: 1 1 0px; flex: 1 1 0px; min-width: 0; padding: 1.15rem 1.6rem 1.3rem; }
+    .body h3 { margin: 0; font-family: "Archivo Wide", "Arial Black", sans-serif; font-weight: 850; font-size: 3.2rem; line-height: 1.1; word-wrap: break-word; overflow-wrap: break-word; }
+    .body .detail { margin: 0.55rem 0 0; font-size: 2.1rem; font-weight: 600; line-height: 1.3; color: #3b342e; }
+    .body .status {
+      display: inline-block; margin: 0.8rem 0 0; padding: 0.45rem 0.8rem; border-radius: 0.2rem;
+      background: #141110; color: #FF7010; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+      font-weight: 800; font-size: 1.5rem; letter-spacing: .04em; text-transform: uppercase; line-height: 1.25;
+    }
+    .reminders { margin: 0; padding: 0.6rem 2.4rem; list-style: none; background: #141110; color: #ffffff; border-radius: 0.3rem; }
+    .reminders li {
+      display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: baseline; align-items: baseline;
+      padding: 1.7rem 0; font-family: "Archivo Wide", "Arial Black", sans-serif; font-weight: 850; font-size: 3rem; line-height: 1.2;
+    }
+    .reminders li + li { border-top: 0.1rem solid rgba(255,255,255,.18); }
+    .reminders li span + span { -webkit-flex: 1 1 0px; flex: 1 1 0px; min-width: 0; }
+    .reminders .n { -webkit-flex: 0 0 5rem; flex: 0 0 5rem; width: 5rem; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-weight: 800; font-size: 2rem; color: #FF7010; }
+
+    /* Progress indicator */
+    .progress { -webkit-flex: 0 0 auto; flex: 0 0 auto; display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; height: 1.4rem; }
+    .seg { position: relative; overflow: hidden; width: 5rem; height: 0.75rem; margin-right: 0.6rem; background: rgba(26,21,18,.16); border-radius: 0.3rem; }
+    .seg.done { background: #141110; }
+    .seg i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; background: #FF7010; }
+    .seg.cur i { width: 100%; -webkit-animation: fill 13s linear forwards; animation: fill 13s linear forwards; }
+    @-webkit-keyframes fill { from { width: 0; } to { width: 100%; } }
+    @keyframes fill { from { width: 0; } to { width: 100%; } }
+    .count { margin-left: 0.6rem; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-weight: 700; font-size: 1.5rem; color: #5e5750; letter-spacing: .06em; }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="main">
+      <div class="brand" aria-hidden="true">
+        <svg class="word" viewBox="0 -700 7228 712" preserveAspectRatio="xMinYMid meet" focusable="false"><text x="-43" y="0" textLength="7307" lengthAdjust="spacingAndGlyphs">STUDENTS</text></svg>
+        <div class="corners"><span id="org">Family Church</span><span id="campus">Windermere</span></div>
+      </div>
+      <div class="slides" id="slides" aria-live="polite"></div>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+    </div>
+    <div class="rail">
+      <p class="vision" id="vision"><span>Belong.</span><span>Believe.</span><span>Beyond.</span></p>
+      <div></div>
+      <div class="qr"><img src="qr-students.svg" alt="QR code for pastorontherun.github.io/stage-ready/students/" width="41" height="41"><p>Scan for details</p></div>
+    </div>
+  </div>
+
+<script type="application/json" id="lobby-data">
+{"schemaVersion":1,"updated":"2026-09-28","source":"Jake (Sep 28, 2026)","title":"Family Church Students — Announcements","org":"Family Church","campus":"Windermere","vision":"Belong. Believe. Beyond.","detailsUrl":"https://pastorontherun.github.io/stage-ready/students/","sections":[{"id":"this-week","title":"This Week","items":[{"title":"Wednesday Night","when":"Every Wednesday · 6:00–8:00 PM · Building 5","details":["Hangout at 6:00, service about 6:30, pickup through 8:15."],"recurring":true},{"title":"Sunday Middle School","when":"9:45–10:45 AM · Building 4","recurring":true},{"title":"Lakeside Prayer Night","when":"Wednesday, Oct 7","details":["Windermere students meet by 5:45 PM; return about 8:30 PM."],"status":"Transportation still being confirmed.","date":"2026-10-07"}]},{"id":"upcoming","title":"Upcoming","items":[{"title":"Pumpkin Party / Student Costume Night","when":"Wednesday, Oct 28 · 6–8 PM · Windermere","status":"Details still being finalized.","date":"2026-10-28"},{"title":"24-Hour Prayer","when":"Friday, Oct 30 – Saturday, Oct 31","details":["Daytime: families welcome.","Overnight: high school and up, with a leader."],"status":"Sign-up coming.","date":"2026-10-30","endDate":"2026-10-31"},{"title":"Be Class","when":"Sunday, Oct 18","date":"2026-10-18"},{"title":"Friendsgiving","when":"Wednesday, Nov 18 · 6–8 PM","details":["Guests don't need to bring food."],"date":"2026-11-18"},{"title":"Christmas Party","when":"Wednesday, Dec 16 · 6–8 PM","details":["Big invite night."],"date":"2026-12-16"}]},{"id":"reminders","title":"Reminders","kind":"reminders","items":[{"text":"Bring a friend."},{"text":"Use the designated student door."},{"text":"Be considerate if pizza dinner is offered."}]}]}
+</script><!-- END lobby-data -->
+<script>
+(function () {
+  "use strict";
+  var DUR = 13000;                       // per slide (ms)
+  var RELOAD_EVERY = 30 * 60 * 1000;     // reload when online
+  var MAX_PER_SLIDE = 3;
+  var slidesEl = document.getElementById("slides");
+  var progressEl = document.getElementById("progress");
+  var data = null, slides = [], idx = -1, timer = null, lastKey = "";
+
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function todayET() {
+    try {
+      var p = {};
+      new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" })
+        .formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      if (p.year && p.month && p.day) return p.year + "-" + p.month + "-" + p.day;
+    } catch (e) { /* old browser without formatToParts: US Eastern rule below */ }
+    // EDT (UTC-4) from 2nd Sunday of March 2:00 to 1st Sunday of November 2:00 local; EST (UTC-5) otherwise.
+    var now = Date.now(), y = new Date(now).getUTCFullYear();
+    function nthSunday(month, n) { var d1 = new Date(Date.UTC(y, month, 1)); return 1 + (7 - d1.getUTCDay()) % 7 + (n - 1) * 7; }
+    var dstStart = Date.UTC(y, 2, nthSunday(2, 2), 7), dstEnd = Date.UTC(y, 10, nthSunday(10, 1), 6);
+    var d = new Date(now - ((now >= dstStart && now < dstEnd) ? 4 : 5) * 3600 * 1000);
+    return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
+  }
+  // Recurring items always show; dated items hide the day after their date (multi-day: after endDate); undated items show.
+  function visibleItem(it, today) {
+    if (it.recurring) return true;
+    var end = it.endDate || it.date;
+    return !end || end >= today;
+  }
+  function visibleSections(d, today) {
+    var out = [];
+    (d.sections || []).forEach(function (s) {
+      var items = (s.items || []).filter(function (it) { return s.kind === "reminders" ? !!(it && it.text) : !!(it && it.title) && visibleItem(it, today); });
+      if (items.length) out.push({ id: s.id, title: s.title, kind: s.kind, items: items });
+    });
+    return out;
+  }
+  function cardHTML(it) {
+    var when = String(it.when || "").split(" · ").map(function (w) { return "<span>" + esc(w) + "</span>"; }).join("");
+    var h = '<div class="card"><p class="when">' + when + '</p><div class="body"><h3>' + esc(it.title) + "</h3>";
+    (it.details || []).forEach(function (x) { h += '<p class="detail">' + esc(x) + "</p>"; });
+    if (it.status) h += '<p class="status">' + esc(it.status) + "</p>";
+    return h + "</div></div>";
+  }
+  function newSlide(sec, dark) {
+    var el = document.createElement("section");
+    el.className = "slide measure";
+    el.setAttribute("data-section", sec.id);
+    el.innerHTML = '<div class="sec' + (dark ? " dark" : "") + '"><h2>' + esc(sec.title) + '</h2><span class="page"></span></div>' +
+      (sec.kind === "reminders" ? '<div class="list"><ol class="reminders"></ol></div>' : '<div class="list"></div>');
+    slidesEl.appendChild(el);
+    return el;
+  }
+  function overflows(list) { return list.scrollHeight > list.clientHeight + 1; }
+
+  // Build slides by measuring: add items one at a time; start a new slide when the list would overflow (max 3 per slide).
+  function build() {
+    var today = todayET();
+    var secs = visibleSections(data, today);
+    slidesEl.innerHTML = "";
+    slides = [];
+    secs.forEach(function (sec) {
+      var reminders = sec.kind === "reminders";
+      var group = [];
+      var el = newSlide(sec, reminders), list = el.querySelector(reminders ? ".reminders" : ".list"), count = 0;
+      group.push(el);
+      sec.items.forEach(function (it, i) {
+        var node;
+        if (reminders) {
+          node = document.createElement("li");
+          node.innerHTML = '<span class="n">' + pad(i + 1) + "</span><span>" + esc(it.text) + "</span>";
+        } else {
+          var tmp = document.createElement("div"); tmp.innerHTML = cardHTML(it); node = tmp.firstChild;
+        }
+        if (count >= (reminders ? 6 : MAX_PER_SLIDE)) { el = newSlide(sec, reminders); list = el.querySelector(reminders ? ".reminders" : ".list"); count = 0; group.push(el); }
+        list.appendChild(node); count++;
+        if (count > 1 && overflows(el.querySelector(".list"))) {
+          list.removeChild(node);
+          el = newSlide(sec, reminders); list = el.querySelector(reminders ? ".reminders" : ".list"); group.push(el);
+          list.appendChild(node); count = 1;
+        }
+      });
+      if (group.length > 1) group.forEach(function (g, k) { g.querySelector(".page").textContent = (k + 1) + " / " + group.length; });
+      slides = slides.concat(group);
+    });
+    slides.forEach(function (s) { s.className = "slide"; });
+    lastKey = today + "|" + JSON.stringify(secs);
+    progressEl.innerHTML = slides.map(function () { return '<span class="seg"><i></i></span>'; }).join("") +
+      '<span class="count"></span>';
+    window.__lobby = { today: today, slides: slides.map(function (s) { return s.getAttribute("data-section") + (s.querySelector(".page").textContent ? " " + s.querySelector(".page").textContent : ""); }) };
+  }
+  function show(i) {
+    if (!slides.length) return;
+    idx = (i + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.className = "slide" + (k === idx ? " on" : ""); });
+    var segs = progressEl.querySelectorAll(".seg");
+    for (var k = 0; k < segs.length; k++) {
+      var seg = segs[k];
+      seg.className = "seg" + (k < idx ? " done" : "");
+      if (k === idx) { void seg.offsetWidth; seg.className = "seg cur"; var bar = seg.firstChild; bar.style.webkitAnimationDuration = bar.style.animationDuration = (DUR / 1000) + "s"; }
+    }
+    var c = progressEl.querySelector(".count"); if (c) c.textContent = pad(idx + 1) + " / " + pad(slides.length);
+    if (window.__lobby) window.__lobby.current = idx;
+  }
+  function tick() {
+    var next = idx + 1;
+    if (next >= slides.length) {             // end of a loop: re-check the date filter (and fonts/size) before starting over
+      var today = todayET();
+      if (lastKey.indexOf(today + "|") !== 0 || lastKey !== today + "|" + JSON.stringify(visibleSections(data, today))) build();
+      next = 0;
+    }
+    show(next);
+    timer = setTimeout(tick, DUR);
+  }
+  function start() {
+    clearTimeout(timer);
+    build();
+    show(0);
+    timer = setTimeout(tick, DUR);
+  }
+  function applyText(d) {
+    if (d.org) document.getElementById("org").textContent = d.org;
+    if (d.campus) document.getElementById("campus").textContent = d.campus;
+    if (d.vision) document.getElementById("vision").innerHTML = String(d.vision).split(/\s+/).map(function (w) { return "<span>" + esc(w) + "</span>"; }).join("");
+  }
+
+  // Size the stage: 1rem = 1/100 of the largest 16:9 box that fits (covers browsers without min()).
+  function sizeRoot() {
+    var w = window.innerWidth || document.documentElement.clientWidth, h = window.innerHeight || document.documentElement.clientHeight;
+    if (w && h) document.documentElement.style.fontSize = (Math.min(w, h * 16 / 9) / 100) + "px";
+  }
+  sizeRoot();
+  try { data = JSON.parse(document.getElementById("lobby-data").textContent); } catch (e) { data = { sections: [] }; }
+  applyText(data);
+  var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  fontsReady.then(start, start);
+
+  // Prefer the live data file (same one /students/ is built from); keep the embedded copy if it fails.
+  if (window.fetch) {
+    fetch("../announcements.json?cb=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d.sections || JSON.stringify(d) === JSON.stringify(data)) return;
+        data = d; applyText(d); fontsReady.then(start, start);
+      })
+      .catch(function () { /* offline or blocked: embedded copy keeps running */ });
+  }
+  // Re-measure if the screen size changes (e.g. TV switches resolution).
+  var rs = null;
+  window.addEventListener("resize", function () { clearTimeout(rs); rs = setTimeout(function () { sizeRoot(); start(); }, 400); });
+  // Reload about every 30 minutes, only when online (quick check fetch first).
+  setInterval(function () {
+    if (navigator.onLine === false || !window.fetch) return;
+    fetch("../announcements.json?ping=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { if (r.ok) location.reload(); })
+      .catch(function () { /* stay on the current slides */ });
+  }, RELOAD_EVERY);
+})();
+</script>
+</body>
+</html>
