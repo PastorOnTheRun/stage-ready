@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Family Church Students — Announcements · Lobby</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png?v=20260927a">
-  <link rel="shortcut icon" href="../../icons/favicon.ico?v=20260927a">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png?v=20260928a">
+  <link rel="shortcut icon" href="../../icons/favicon.ico?v=20260928a">
   <!-- Lobby TV display (Jake, Sep 28, 2026). Content comes from ../announcements.json (same data as /students/),
        with a copy embedded below by build_students.py. Standalone: no service worker, no tab bar, not linked from
        the leader app. Written for older Chromium TV browsers (smart TV, Fire TV Silk): flexbox only (no grid),
@@ -45,9 +45,8 @@
     .rail { -webkit-flex: 0 0 18rem; flex: 0 0 18rem; width: 18rem; margin-left: 2.6rem; -webkit-justify-content: space-between; justify-content: space-between; }
 
     /* Header: STUDENTS wordmark lockup */
-    .brand { -webkit-flex: 0 0 auto; flex: 0 0 auto; width: 46rem; }
-    .word { display: block; width: 100%; height: 4.55rem; overflow: visible; }
-    .word text { font-family: "Archivo Wide", "Arial Black", sans-serif; font-weight: 900; font-size: 1000px; fill: #FF7010; }
+    .brand { -webkit-flex: 0 0 auto; flex: 0 0 auto; width: 26rem; }
+    .word { display: block; width: 26rem; height: 7.57rem; }  /* logo art is 1693x493 */
     .corners {
       display: -webkit-box; display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between;
       margin-top: 0.55rem; font-family: "SF Mono", "Roboto Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace; font-weight: 700; text-transform: uppercase; white-space: nowrap;
@@ -129,7 +128,7 @@
   <div class="stage" id="stage">
     <div class="main">
       <div class="brand" aria-hidden="true">
-        <svg class="word" viewBox="0 -700 7228 712" preserveAspectRatio="xMinYMid meet" focusable="false"><text x="-43" y="0" textLength="7307" lengthAdjust="spacingAndGlyphs">STUDENTS</text></svg>
+        <img class="word" src="../../assets/logos/students-internal-color.svg" alt="Students" width="1693" height="493">
         <div class="corners"><span id="org">Family Church</span><span id="campus">Windermere</span></div>
       </div>
       <div class="slides" id="slides" aria-live="polite"></div>

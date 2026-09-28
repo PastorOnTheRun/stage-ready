@@ -47,7 +47,7 @@ e = lambda s: html.escape(str(s), quote=False)
 def static_block(d):
     out = [f'''    <header>
       <div class="mast" aria-hidden="true">
-        <svg class="word" viewBox="0 -700 7228 712" preserveAspectRatio="xMidYMid meet" focusable="false"><text x="-43" y="0" textLength="7307" lengthAdjust="spacingAndGlyphs">STUDENTS</text></svg>
+        <img class="word" src="../assets/logos/students-internal-color.svg" alt="" width="1693" height="493">
         <div class="corners"><span>{e(d["org"])}</span><span>{e(d["campus"])}</span></div>
       </div>
       <h1><span class="sr">{e(d["org"])} Students — </span>Announcements</h1>

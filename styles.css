@@ -90,15 +90,17 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 }
 .brand-bar > * { position: relative; z-index: 1; }
 .brand-logo {
-  width: 36px;
-  height: 44px;
+  width: auto;
+  height: 36px;
+  max-width: 42vw;
   object-fit: contain;
-  object-position: center;
-  border-radius: 8px;
-  background: rgba(0,0,0,.22);
-  border: 1px solid rgba(255,255,255,.22);
-  padding: 2px;
+  object-position: left center;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
+.brand-logo-on-dark { display: none; }
 .brand-text { min-width: 0; }
 .brand-text strong {
   display: block;
@@ -151,6 +153,17 @@ button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
   letter-spacing: .04em;
   text-transform: uppercase;
 }
+.mode-chrome-logo {
+  display: block;
+  height: 34px;
+  width: auto;
+  max-width: min(56vw, 200px);
+  object-fit: contain;
+  object-position: left center;
+  flex: 0 0 auto;
+}
+.mode-chrome-label { flex: 1 1 0; text-align: right; min-width: 0; line-height: 1.25; overflow-wrap: anywhere; }
+@media (max-width: 380px) { .mode-chrome-logo { height: 26px; } .mode-chrome-label { font-size: .7rem; letter-spacing: .02em; } }
 
 /* —— Screens —— */
 .screen {
@@ -929,14 +942,18 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 }
 .brand-bar::before { display: none; }
 .brand-logo {
-  width: 40px; height: 40px;
-  padding: 0;
-  border: 0;
-  border-radius: 11px;
-  background: var(--accent);
-  object-fit: cover;
-  box-shadow: 0 2px 8px rgba(255,112,16,.35), 0 0 0 1px rgba(255,255,255,.14) inset;
+  width: auto; height: 40px; max-width: 46vw;
+  padding: 0; border: 0; border-radius: 0;
+  background: transparent; object-fit: contain;
+  box-shadow: none;
 }
+/* Dark stage dashboards (review/live/over): light-on-dark Students logo */
+body[data-phase="review"] .brand-logo-color,
+body[data-phase="live"] .brand-logo-color,
+body[data-phase="over"] .brand-logo-color { display: none; }
+body[data-phase="review"] .brand-logo-on-dark,
+body[data-phase="live"] .brand-logo-on-dark,
+body[data-phase="over"] .brand-logo-on-dark { display: block; }
 .brand-text strong {
   font-size: 1.17rem;
   font-weight: 800;
@@ -1492,7 +1509,6 @@ body[data-phase="choose"] .tab-panel, body[data-phase="done"] .tab-panel { color
   border-color: rgba(214,88,0,.30);
 }
 :is(body[data-phase="choose"], body[data-phase="done"]) .brand-text strong { color: var(--ink); }
-:is(body[data-phase="choose"], body[data-phase="done"]) .brand-logo { box-shadow: 0 2px 8px rgba(255,112,16,.30); }
 :is(body[data-phase="choose"], body[data-phase="done"]) .src { color: var(--muted) !important; }
 :is(body[data-phase="choose"], body[data-phase="done"]) .week-ref { color: var(--ink-2) !important; }
 :is(body[data-phase="choose"], body[data-phase="done"]) .week-date { color: var(--accent-hi) !important; }
@@ -1565,7 +1581,8 @@ html:has(body[data-phase="choose"] #tab-announcements:not([hidden]) #chooser.act
 #chooser { gap: 10px; }
 #chooser .brand-bar { display: none; }               /* the wordmark replaces the header on the landing */
 .lp-mast { display: grid; gap: 7px; margin-top: 10px; }
-.lp-word { display: block; width: 100%; height: auto; overflow: visible; }
+.lp-logo { display: block; width: 100%; height: auto; max-height: 92px; object-fit: contain; object-position: left center; }
+.lp-word { display: block; width: 100%; height: auto; overflow: visible; } /* kept for any leftover refs */
 .lp-word text { font-family: var(--font-heading); font-weight: 900; font-size: 1000px; fill: var(--lp-orange); }
 .lp-corners {
   display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: baseline; gap: 8px;
@@ -1665,7 +1682,8 @@ body .lp-tile .mode-title, .lp-tile .lp-ttl {
 html:has(body[data-phase="choose"]), html:has(body[data-phase="done"]) { background: #f3f2ef; }
 
 /* —— Header on Guides / Service / Calendar / Resources: small STUDENTS lockup + big wide title —— */
-.lp-head { display: grid; gap: 5px; width: min(64%, 260px); margin: 8px 0 0; }
+.lp-head { display: grid; gap: 5px; width: min(62%, 240px); margin: 8px 0 0; }
+.lp-head-logo { display: block; width: 100%; height: auto; }
 .lp-head-word { display: block; width: 100%; height: auto; overflow: visible; }
 .lp-head-word text { font-family: var(--font-heading); font-weight: 900; font-size: 1000px; fill: #FF7010; }
 .lp-head-labels {

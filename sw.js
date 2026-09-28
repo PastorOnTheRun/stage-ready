@@ -2,7 +2,7 @@
    Network-first for everything (HTML, JSON data, JS, CSS, icons) so Monday/Thursday refreshes
    and new deploys show up immediately; the cache is only an offline fallback.
    Bump CACHE_VERSION on every deploy that changes app files. */
-const CACHE_VERSION = "stage-ready-v2026-09-27a";
+const CACHE_VERSION = "stage-ready-v2026-09-28a";
 const SHELL = [
   "./",
   "./index.html",
@@ -17,6 +17,10 @@ const SHELL = [
   "./calendar.json",
   "./resources.json",
   "./assets/fc-logo-clean.png",
+  "./assets/logos/students-internal-color.svg",
+  "./assets/logos/students-internal-white.svg",
+  "./assets/logos/students-internal-color.png",
+  "./assets/logos/students-internal-white.png",
   "./assets/fonts/archivo-wide-latin.woff2", // heading font: Archivo Expanded (SIL OFL)
   "./assets/fonts/OFL.txt",
   "./icons/apple-touch-icon-180.png",
