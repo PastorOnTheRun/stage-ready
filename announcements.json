@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "September 26, 2026",
+  "updatedAt": "September 28, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -8,8 +8,8 @@
       "events": [
         {
           "name": "Wednesday Nights",
-          "when": "Wednesday, September 30, 2026 · 6–8 PM · dinner starts at 5 PM",
-          "where": "Family Church Students · Windermere",
+          "when": "Wednesday, September 30, 2026 \u00b7 6\u20138 PM \u00b7 dinner starts at 5 PM",
+          "where": "Family Church Students \u00b7 Windermere",
           "cost": "$1 pizza",
           "detail": "Come hang out with us from 6 to 8 PM. If you want to come early for dinner, we start at 5, and there's pizza every week for just a dollar. Wednesday is the best place to get to know people and find your small group.",
           "action": "Bring a friend this Wednesday.",
@@ -19,7 +19,7 @@
         },
         {
           "name": "Church Prayer Night",
-          "when": "Wednesday, October 7, 2026 · bus leaves at 5:45 PM",
+          "when": "Wednesday, October 7, 2026 \u00b7 bus leaves at 5:45 PM",
           "where": "Bus from Family Church Windermere to Lakeside",
           "cost": "Free",
           "detail": "Save the date! We're going to the church-wide prayer night at Lakeside, and it's free. The bus leaves Family Church Windermere at 5:45 PM, and we'll be back around 8:30 PM.",
@@ -40,8 +40,8 @@
         },
         {
           "name": "Middle School Sundays",
-          "when": "Sundays · 9:45–10:45 AM",
-          "where": "Building 4 · Windermere",
+          "when": "Sundays \u00b7 9:45\u201310:45 AM",
+          "where": "Building 4 \u00b7 Windermere",
           "detail": "Middle school students gather for teaching and connection, with worship service options at 8:30 or 11:00 AM.",
           "action": "Invite a middle school friend this Sunday and connect with a leader at check-in.",
           "campus": "windermere",
@@ -49,7 +49,7 @@
         },
         {
           "name": "Join our BAND app",
-          "when": "Ongoing · get the current ministry updates",
+          "when": "Ongoing \u00b7 get the current ministry updates",
           "where": "BAND group: Family Students (WN)",
           "detail": "BAND is where our student ministry shares announcements and keeps families connected across the week. Join at band.us/n/aaafbdF364s34 or with invite code YS5-FNX-4T. An admin approves each join request.",
           "action": "Join Family Students (WN) on BAND with invite code YS5-FNX-4T.",
@@ -59,7 +59,7 @@
         {
           "name": "Wednesday Nights at Lakeside",
           "when": "Every Wednesday night",
-          "where": "Family Church Students · Lakeside",
+          "where": "Family Church Students \u00b7 Lakeside",
           "detail": "Wednesday nights are where we hang out, worship together, and get into small groups. If you haven't been in a while, this is your week to come back, and bring a friend with you.",
           "action": "Come this Wednesday and bring a friend.",
           "campus": "lakeside",
