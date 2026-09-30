@@ -39,6 +39,13 @@
       "title": "Tools the team uses",
       "items": [
         {
+          "title": "Be Class",
+          "type": "link",
+          "url": "https://pastorontherun.github.io/stage-ready/be-class/",
+          "note": "Student and parent page. Next class is Sunday, October 18, 2026. Third Sunday of every month. Time and room are not posted yet.",
+          "source": "Jake (Sep 29, 2026)"
+        },
+        {
           "title": "Open Floor",
           "type": "link",
           "url": "https://students-poll.grok.me/",

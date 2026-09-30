@@ -1,0 +1,116 @@
+{
+  "formUrl": "",
+  "title": "Be Class",
+  "subtitle": "Belong · Believe · Beyond",
+  "date": "Sunday, October 18, 2026",
+  "cadence": "The third Sunday of every month.",
+  "time": "",
+  "room": "",
+  "building": "",
+  "parking": "",
+  "arriveBy": "",
+  "campusNote": "",
+  "emptyLogistics": "Time and room will be posted here.",
+  "why": [
+    "Be Class is how students take a next step with Jesus and with Family Church — baptism and/or belonging.",
+    "You can come if you are sure, if you are still asking, or if you only want to listen.",
+    "Nothing here signs you up for baptism. The class is the conversation."
+  ],
+  "whoTitle": "Who should come",
+  "who": "Students. A parent is welcome when they can come.",
+  "bringTitle": "What to bring",
+  "bring": ["A Bible, if you have one.", "Nothing to buy."],
+  "actions": [
+    { "id": "interested", "label": "I’m interested" },
+    { "id": "coming", "label": "I’m coming" },
+    { "id": "question", "label": "I have a question" }
+  ],
+  "formMissing": "Form link not set.",
+  "parentTitle": "For parents",
+  "parent": "Be Class is a next-step class for students — baptism and belonging with Family Church. It meets the third Sunday of every month. It is not a lock-in. Parents are welcome when they can come.",
+  "footer": "Questions: ask your small group leader or the student desk.",
+  "installTitle": "Add to Home Screen",
+  "installBody": "On iPhone, tap Share, then Add to Home Screen.",
+  "faqTitle": "Questions",
+  "faq": [
+    {
+      "q": "Do I have to already be sure?",
+      "a": "No. Come if you are curious, if you already follow Jesus, or if you are still figuring it out."
+    },
+    {
+      "q": "Do I have to be baptized to come?",
+      "a": "No. This class is where we talk about baptism. You do not have to be baptized to be in the room."
+    },
+    {
+      "q": "What if I follow Jesus but never joined the church?",
+      "a": "You can come. You do not have to have joined Family Church already."
+    },
+    {
+      "q": "Can I come and just listen?",
+      "a": "Yes. Listening is enough."
+    },
+    {
+      "q": "Do I need a parent there?",
+      "a": "A parent is welcome when they can come. You can still come if they cannot."
+    }
+  ],
+  "scriptureMissing": "Scripture coming",
+  "days": [
+    {
+      "title": "What you said yes to",
+      "reference": "",
+      "scripture": "",
+      "body": "Saying yes to Jesus is a start, not a performance. Be Class is one next step with him and with this church. You do not need every answer before you walk in."
+    },
+    {
+      "title": "One story of Jesus",
+      "reference": "",
+      "scripture": "",
+      "body": "Pick one thing Jesus did that you could say out loud. A meal, a healing, the cross, an empty tomb. If you cannot name one yet, that is fine. When the passage is posted, read it and tell it in your own words."
+    },
+    {
+      "title": "Prayer that is not a performance",
+      "reference": "",
+      "scripture": "",
+      "body": "Prayer is talking with God. It is not a speech for the room. Short is fine. Honest is better than impressive. You do not have to sound like a leader."
+    },
+    {
+      "title": "Why church is not optional",
+      "reference": "",
+      "scripture": "",
+      "body": "Following Jesus is personal. It is not meant to stay private. The church is the people you belong with — a Sunday, a class, a group. You were not asked to do this alone."
+    },
+    {
+      "title": "Baptism, what it is and is not",
+      "reference": "",
+      "scripture": "",
+      "body": "Baptism is a public way to say you belong to Jesus. It does not save you, and it does not make you more loved. It shows what he has already done. If you want to talk about being baptized, Be Class is that conversation."
+    },
+    {
+      "title": "Belong: a group and a person who knows your name",
+      "reference": "",
+      "scripture": "",
+      "body": "Belonging is more than sitting in a big room. It is a group, and at least one person who knows your name. If you do not have that yet, say so. That is a real next step."
+    },
+    {
+      "title": "Beyond: tell one person, or come to Be Class",
+      "reference": "",
+      "scripture": "",
+      "body": "Faith moves outward. Tell one person what you are thinking about Jesus, or plan to be at Be Class. You do not have to do both. You do not have to post it anywhere."
+    }
+  ],
+  "dayQuestion": "I have a question",
+  "dayDone": "Done",
+  "dayDoneSaved": "Done on this phone",
+  "backToClass": "Back to Be Class",
+  "afterIntro": "What comes after class will be posted here. Nothing below is a signup.",
+  "after": [
+    { "title": "If you want to be baptized", "body": "" },
+    { "title": "If you want to belong to a group", "body": "" },
+    { "title": "If you are not ready yet", "body": "" }
+  ],
+  "afterEmpty": "This will be posted here.",
+  "nextDateLabel": "Next Be Class date",
+  "nextDate": "Sunday, November 15, 2026",
+  "nextDateEmpty": "The next date will be posted here."
+}
