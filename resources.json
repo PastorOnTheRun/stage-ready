@@ -1,5 +1,5 @@
 {
-  "updatedAt": "September 26, 2026",
+  "updatedAt": "September 29, 2026",
   "title": "Resources",
   "intro": "Links, forms, PDFs, and the tools the team uses.",
   "groups": [
@@ -38,6 +38,13 @@
     {
       "title": "Tools the team uses",
       "items": [
+        {
+          "title": "Open Floor",
+          "type": "link",
+          "url": "https://students-poll.grok.me/",
+          "note": "Live question floor for a panel or a small group. Students join with the code or QR. No account. The leader sets a 4-digit PIN.",
+          "source": "Jake (Sep 29, 2026)"
+        },
         {
           "title": "BAND",
           "type": "tool",
