@@ -9,7 +9,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon-180.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
   <!-- Weekly attendance numbers (Jake, Oct 2, 2026), filled in by the campus leads each Sunday/Wednesday.
-       Public-safe: numbers only, never student names. Not cached by the service worker.
+       Public-safe (no codes, logins or contact details). Not cached by the service worker.
+       Routing: always to Jake (FORM_ENDPOINT) + CC KTrimbee; Luke also CCs BVereb, Jacob also CCs Ngoelz (FormSubmit _cc).
        Emails Jake through the SAME FormSubmit endpoint as /sunday-setup/ (one activation covers both; see REFRESH.md). -->
   <style>
     @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
@@ -46,6 +47,13 @@
     input.bad { border-color: #c2410c; background: #fff4ee; }
     h2 { display: flex; align-items: center; margin: 16px 0 2px; font-family: var(--heading); font-weight: 900; font-size: 18px; }
     h2::before { content: ""; width: 12px; height: 12px; background: var(--orange); margin-right: 9px; }
+    .lbl { display: block; font-weight: 800; font-size: 15px; }
+    .pick { display: flex; margin-top: 6px; border: 1.5px solid var(--black); border-radius: 8px; overflow: hidden; }
+    .pick.bad { border-color: #c2410c; box-shadow: 0 0 0 2px #fde8de; }
+    .pick button { flex: 1 1 0; min-height: 52px; border: 0; background: #fff; color: var(--ink); font: 800 17px var(--body); cursor: pointer; }
+    .pick button + button { border-left: 1.5px solid var(--black); }
+    .pick button[aria-pressed=true] { background: var(--orange); color: var(--black); }
+    #name-wrap { margin-top: 10px; }
     .grid { display: flex; flex-wrap: wrap; margin: 0 -5px; }
     .grid label { flex: 1 1 calc(50% - 10px); margin: 10px 5px 0; }
     .grid input { font: 900 24px var(--heading); text-align: center; }
@@ -68,12 +76,11 @@
     <div class="corners"><span>Family Church</span><span>Stage Ready</span></div>
   </header>
   <h1>Weekly Numbers</h1>
-  <p class="lead">Headcounts only. Never names.</p>
 
   <form id="f" novalidate>
     <div class="bar">
       <div class="f campus"><label class="k" for="campus">Campus</label>
-        <select id="campus"><option>Windermere</option><option>Lakeside</option></select></div>
+        <select id="campus"><option>Windermere</option><option>Lakeside</option><option>Oakland</option></select></div>
       <div class="f svc"><span class="k" id="svc-k">Service</span>
         <div class="seg" role="group" aria-labelledby="svc-k"><button type="button" data-svc="Sunday" aria-pressed="false">Sunday</button><button type="button" data-svc="Wednesday" aria-pressed="false">Wednesday</button></div></div>
       <div class="f date"><label class="k" for="date">Date</label><input type="date" id="date" required>
@@ -81,7 +88,9 @@
     </div>
 
     <div class="card">
-      <label for="name">Your name <span class="req">*</span><input type="text" id="name" autocomplete="name" maxlength="60" placeholder="First name" required></label>
+      <span class="lbl" id="who-k">Who’s submitting? <span class="req">*</span></span>
+      <div class="pick" id="who" role="group" aria-labelledby="who-k"><button type="button" data-who="Luke" aria-pressed="false">Luke</button><button type="button" data-who="Jacob" aria-pressed="false">Jacob</button><button type="button" data-who="Other" aria-pressed="false">Other</button></div>
+      <label for="name" id="name-wrap" hidden>Your name <span class="req">*</span><input type="text" id="name" autocomplete="name" maxlength="60" placeholder="First name"></label>
       <h2>Middle school</h2>
       <div class="grid">
         <label>MS students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="ms_s"></label>
@@ -98,7 +107,7 @@
       <button class="btn dark" id="retry" type="button" hidden>Try again</button>
     </div>
   </form>
-  <div class="small">Your name and campus are remembered on this phone.</div>
+  <div class="small">Your choice and campus are remembered on this phone.</div>
 </div>
 <script>
 (function () {
@@ -107,7 +116,18 @@
   var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
   var TZ = "America/New_York", FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders" };
   var $ = function (id) { return document.getElementById(id); };
-  var svc = "Sunday", pendingPayload = null, busy = false;
+  var svc = "Sunday", who = "", pendingPayload = null, busy = false;
+  var JAKE_CC = "KTrimbee@ourfamily.church", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" } };
+  var CAMPUSES = ["Windermere", "Lakeside", "Oakland"];
+  function ccFor(w) { return [JAKE_CC].concat(WHO[w] ? [WHO[w].cc] : []).join(","); }
+  function setWho(w, fromUser) {
+    who = w;
+    [].forEach.call(document.querySelectorAll("#who button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-who") === w)); });
+    $("who").classList.remove("bad");
+    $("name-wrap").hidden = w !== "Other";
+    if (fromUser && WHO[w]) $("campus").value = WHO[w].campus;     // default campus for Luke / Jacob (still changeable)
+    try { localStorage.setItem("numbers:who", w); if (fromUser && WHO[w]) localStorage.setItem("numbers:campus", WHO[w].campus); } catch (e) {}
+  }
 
   /* ---------- dates in ET ---------- */
   function nyToday() {
@@ -164,15 +184,16 @@
   }
   $("f").addEventListener("submit", function (e) {
     e.preventDefault();
-    var name = $("name").value.trim(), n = nums(), bad = [];
-    $("name").classList.toggle("bad", !name); if (!name) bad.push("your name");
+    var name = who === "Other" ? $("name").value.trim() : who, n = nums(), bad = [];
+    if (!who) { $("who").classList.add("bad"); bad.push("who's submitting"); }
+    else if (!name) { $("name").classList.add("bad"); bad.push("your name"); }
     FIELDS.forEach(function (id) { var ok = /^\d{1,3}$/.test(n[id]); $(id).classList.toggle("bad", !ok); if (!ok) bad.push(LABELS[id]); });
     if (!$("date").value) bad.push("the date");
     if (bad.length) { status("bad", "Please fill in " + bad.join(", ") + " (whole numbers, 0 or more)."); $("retry").hidden = true; return; }
     var campus = $("campus").value, date = pretty($("date").value), t = total();
     var payload = {
-      _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _template: "table", _captcha: "false",
-      "Campus": campus, "Service": svc, "Date": date, "Name": name,
+      _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _cc: ccFor(who), _template: "table", _captcha: "false",
+      "Campus": campus, "Service": svc, "Date": date, "Submitted by": name,
       "MS students": +n.ms_s, "MS leaders": +n.ms_l, "HS students": +n.hs_s, "HS leaders": +n.hs_l, "Total": t, "Submitted at": nyTime()
     };
     Object.defineProperty(payload, "_summary", { value: campus + " " + svc + " " + date + ", total " + t + ".", enumerable: false });
@@ -185,10 +206,15 @@
   $("name").addEventListener("input", function () { $("name").classList.remove("bad"); try { localStorage.setItem("numbers:name", $("name").value.trim()); } catch (e) {} });
   $("campus").addEventListener("change", function () { try { localStorage.setItem("numbers:campus", $("campus").value); } catch (e) {} });
 
-  try { $("name").value = localStorage.getItem("numbers:name") || ""; var c = localStorage.getItem("numbers:campus"); if (c === "Windermere" || c === "Lakeside") $("campus").value = c; } catch (e) {}
+  document.querySelector("#who").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) { setWho(b.getAttribute("data-who"), true); if (who === "Other") $("name").focus(); } });
+  try {
+    $("name").value = localStorage.getItem("numbers:name") || "";
+    var c = localStorage.getItem("numbers:campus"); if (CAMPUSES.indexOf(c) >= 0) $("campus").value = c;
+    var w = localStorage.getItem("numbers:who"); if (w === "Luke" || w === "Jacob" || w === "Other") setWho(w, false);
+  } catch (e) {}
   $("date").max = iso(nyToday());
   setSvc(defaultSvc(), true); paintTotal();
-  window.__numbers = { svc: function () { return svc; }, mostRecent: mostRecent, defaultSvc: defaultSvc };   // for tests
+  window.__numbers = { who: function () { return who; }, svc: function () { return svc; }, mostRecent: mostRecent, defaultSvc: defaultSvc };   // for tests
 })();
 </script>
 </body>
