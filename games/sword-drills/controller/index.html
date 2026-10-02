@@ -46,7 +46,10 @@
     .chips { display: flex; flex-wrap: wrap; margin: 8px -3px 0; }
     .chips button { flex: 1 0 30%; margin: 3px; min-height: 44px; border-radius: 8px; background: #2a2420; color: #fff; font-weight: 800; font-size: 13px; padding: 4px 6px; line-height: 1.15; }
     .chips button.sel { background: #FF7010; color: #141110; }
-    .chips button.got { background: #3b342e; color: #b9b0a8; text-decoration: line-through; }
+    .chips button.got { background: #3b342e; color: #b9b0a8; }
+    .chips button.got .r { text-decoration: line-through; } .chips button .w { display: block; color: #FF7010; font-weight: 900; text-decoration: none; }
+    .tile .vv, .tile.lead .vv, .tile.won .vv { font-weight: 800; font-size: 11px; color: #FF7010; background: #141110; border-radius: 6px; padding: 1px 6px; margin-top: 3px; letter-spacing: .02em; }
+    .note { margin: 6px 0 0; padding: 7px 10px; border-radius: 8px; background: #2a2420; color: #fff; font-size: 13px; font-weight: 700; line-height: 1.3; }
     .acts { display: flex; margin-top: 10px; }
     .spin { flex: 2 1 0; min-height: 76px; border-radius: 12px; background: #FF7010; color: #141110; font-weight: 900; font-size: 26px; }
     .wildb { flex: 1 1 0; margin-left: 8px; min-height: 76px; border-radius: 12px; background: #141110; color: #FF7010; font-weight: 900; font-size: 14px; line-height: 1.15; }
@@ -106,6 +109,7 @@
       <div class="ref wide" id="nref">Waiting for the screen…</div>
       <div class="pt" id="npt"></div>
       <div class="chips" id="chips" hidden></div>
+      <div class="note" id="wnote" role="status" hidden></div>
     </div>
     <div class="acts">
       <button class="spin wide" id="b-spin" data-a="spin">SPIN</button>
@@ -144,6 +148,7 @@
   var RKEY = "sworddrills:room";
   var $ = function (id) { return document.getElementById(id); };
   var room = "", st = null, rev = -1, sel = -1;
+  var pend = {}, pendSpin = null, noteT = null, lastAw = null;   // wildcard awards sent but not yet confirmed by the screen: { slot: { t: table, at: ms } }
   var peer = null, conn = null, lastSeen = 0, dialT = null, lastDial = 0, startAt = 0, relay = null, viaRelay = false, relaySeen = 0;
 
   function setPill(cls, txt) { $("pill").className = "pill mono " + cls; $("pill").textContent = txt; }
@@ -242,16 +247,24 @@
     // wildcard verse chips
     var ch = $("chips");
     if (wild && landed) {
-      if (sel < 0 || sel >= sp.count || sp.awards[sel] !== null) sel = sp.awards.indexOf(null);
-      var h = ""; sp.refs.forEach(function (r, i) { var a = sp.awards[i]; h += '<button data-slot="' + i + '" class="' + (a !== null ? "got" : i === sel ? "sel" : "") + '"' + (a !== null ? " disabled" : "") + '>' + (i + 1) + ". " + esc(r) + (a !== null ? "<br>T" + (a + 1) : "") + "</button>"; });
-      ch.innerHTML = h; ch.hidden = false;
-    } else { ch.hidden = true; ch.innerHTML = ""; sel = -1; }
+      if (pendSpin !== sp.id) { pend = {}; pendSpin = sp.id; }
+      for (var k in pend) if (sp.awards[k] !== null || Date.now() - pend[k].at > 6000) delete pend[k];   // confirmed, or lost: let it be re-sent
+      if (lastAw && lastAw.id === sp.id) sp.awards.forEach(function (x, i) { if (x === null && lastAw.a[i] !== null) sel = i; });   // undone verse: select it again
+      lastAw = { id: sp.id, a: sp.awards.slice() };
+      if (!free(sp, sel)) sel = firstFree(sp, 0);
+      var h = ""; sp.refs.forEach(function (r, i) { var a = owner(sp, i);
+        h += '<button data-slot="' + i + '" class="' + (a !== null ? "got" : i === sel ? "sel" : "") + '"' + (a !== null ? ' aria-disabled="true"' : "") + '><span class="r">' + (i + 1) + ". " + esc(r) + "</span>" + (a !== null ? '<span class="w">Table ' + (a + 1) + (sp.awards[i] === null ? "…" : "") + "</span>" : "") + "</button>"; });
+      if (ch.getAttribute("data-h") !== h) { ch.innerHTML = h; ch.setAttribute("data-h", h); }   // don't rebuild under a finger
+      ch.hidden = false;
+    } else { ch.hidden = true; ch.innerHTML = ""; ch.removeAttribute("data-h"); sel = -1; pend = {}; $("wnote").hidden = true; }
     var canAward = ok && landed && (wild ? sel >= 0 : sp.to === null);
     $("tlab").textContent = !st ? "Tables" : canAward ? "Tap the table that read it first · +" + sp.pts + (wild ? " (verse " + (sel + 1) + ")" : "") : landed && !wild ? "Awarded. Undo to change it." : "Tables";
     var n = st ? st.tables : 0, tl = $("tiles"), max = st ? Math.max.apply(null, st.scores) : 0, t = "";
     for (var i = 0; i < n; i++) {
-      var won = sp && landed && !wild && sp.to === i;
-      t += '<button class="tile' + (won ? " won" : max > 0 && st.scores[i] === max ? " lead" : "") + '" data-t="' + i + '"' + (canAward ? "" : " disabled") + '><b class="wide">Table ' + (i + 1) + '</b><span>' + st.scores[i] + ' pts</span></button>';
+      var won = sp && landed && !wild && sp.to === i, vv = [];
+      if (wild && landed) sp.refs.forEach(function (_, j) { if (sp.awards[j] === i) vv.push(j + 1); });
+      t += '<button class="tile' + (won ? " won" : max > 0 && st.scores[i] === max ? " lead" : "") + '" data-t="' + i + '"' + (canAward ? "" : " disabled") + '><b class="wide">Table ' + (i + 1) + '</b><span>' + st.scores[i] + ' pts</span>' +
+        (vv.length ? '<span class="vv mono">' + (vv.length > 1 ? "Verses " : "Verse ") + vv.join(" + ") + "</span>" : "") + '</button>';
     }
     if (tl.getAttribute("data-h") !== t) { tl.innerHTML = t; tl.setAttribute("data-h", t); }
     tl.className = "tiles" + (n <= 4 ? " c2" : n <= 6 ? " c3" : "");
@@ -264,6 +277,11 @@
       $("s-per").classList.toggle("dim", st.mode !== "themed"); $("s-tables").textContent = st.tables;
     }
   }
+  // wildcard helpers: a verse is taken if the screen says so or we already sent an award for it
+  function owner(sp, i) { return sp.awards[i] !== null ? sp.awards[i] : pend[i] ? pend[i].t : null; }
+  function free(sp, i) { return i >= 0 && i < sp.count && owner(sp, i) === null; }
+  function firstFree(sp, from) { for (var k = 0; k < sp.count; k++) { var i = (from + k) % sp.count; if (free(sp, i)) return i; } return -1; }
+  function note(txt) { var n = $("wnote"); n.textContent = txt; n.hidden = false; clearTimeout(noteT); noteT = setTimeout(function () { n.hidden = true; }, 4000); }
   function segSel(id, v) { [].forEach.call($(id).children, function (b) { b.classList.toggle("sel", b.getAttribute("data-v") === v); b.disabled = !linkOk(); }); }
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
 
@@ -272,8 +290,20 @@
     var b = e.target.closest("button"); if (!b || b.disabled) return;
     var a = b.getAttribute("data-a");
     if (a) { send(a); return; }
-    if (b.hasAttribute("data-t")) { var x = { table: +b.getAttribute("data-t") }; if (st && st.spin && st.spin.kind === "wild") x.slot = sel; send("award", x); return; }
-    if (b.hasAttribute("data-slot")) { sel = +b.getAttribute("data-slot"); render(); return; }
+    if (b.hasAttribute("data-t")) {
+      var x = { table: +b.getAttribute("data-t") }, sp = st && st.spin;
+      if (sp && sp.kind === "wild") {   // each verse is its own award; the same table can win any number of them
+        if (!free(sp, sel)) return;
+        x.slot = sel; pend[sel] = { t: x.table, at: Date.now() }; pendSpin = sp.id;
+        $("wnote").hidden = true; sel = firstFree(sp, sel + 1);
+      }
+      send("award", x); render(); return;
+    }
+    if (b.hasAttribute("data-slot")) {
+      var i = +b.getAttribute("data-slot"), w = st && st.spin;
+      if (w && w.kind === "wild" && !free(w, i)) { note("Verse " + (i + 1) + " already went to Table " + (owner(w, i) + 1) + ". Tap Undo to change it."); return; }
+      sel = i; $("wnote").hidden = true; render(); return;
+    }
     var g = b.parentNode.id, v = b.getAttribute("data-v");
     if (g === "s-mode") send("mode", { mode: v }); else if (g === "s-per") send("per", { n: +v }); else if (g === "s-final") send("final", { on: v === "1" });
     else if (b.id === "t-minus") send("tables", { d: -1 }); else if (b.id === "t-plus") send("tables", { d: 1 });   // relative, so quick taps all count
