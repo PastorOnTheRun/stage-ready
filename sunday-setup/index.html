@@ -236,7 +236,7 @@
     if (sending) return;
     sending = true; paintSend();
     var now = new Date();
-    post({ _subject: "Sunday setup complete \u2013 " + prettyDate(key), _template: "table", _captcha: "false",
+    post({ _subject: "Sunday setup complete \u2013 " + prettyDate(key), _cc: "djjalab@gmail.com", _template: "table", _captcha: "false",
            "Sunday": prettyDate(key), "Setup by": who(), "Completed at": nyTime(now), "Steps checked": IDS.length + " of " + IDS.length, "Page": location.origin + location.pathname })
       .then(function (r) {
         sending = false;
@@ -263,7 +263,7 @@
     if (bad) { setStatus($("astatus"), "bad", "Enter a whole number (0 or more) in all four boxes."); return; }
     aBusy = true; $("asend").disabled = true; setStatus($("astatus"), "wait", "Sending to Jake…");
     var now = new Date();
-    post({ _subject: "Sunday attendance \u2013 " + prettyDate(key), _template: "table", _captcha: "false",
+    post({ _subject: "Sunday attendance \u2013 " + prettyDate(key), _cc: "djjalab@gmail.com", _template: "table", _captcha: "false",
            "Sunday": prettyDate(key), "Submitted by": who(), "Submitted at": nyTime(now),
            "MS students": n.ms_s, "MS leaders": n.ms_l, "HS students": n.hs_s, "HS leaders": n.hs_l, "Total": n.ms_s + n.ms_l + n.hs_s + n.hs_l })
       .then(function (r) {

@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
   <!-- Weekly attendance numbers (Jake, Oct 2, 2026), filled in by the campus leads each Sunday/Wednesday.
        Public-safe (no codes, logins or contact details). Not cached by the service worker.
-       Routing: always to Jake (FORM_ENDPOINT) + CC KTrimbee; Luke also CCs BVereb, Jacob also CCs Ngoelz (FormSubmit _cc).
+       Routing: always to Jake (FORM_ENDPOINT) + CC KTrimbee + djjalab@gmail.com (Jake personal backup); Luke also CCs BVereb, Jacob also CCs Ngoelz (FormSubmit _cc).
        Emails Jake through the SAME FormSubmit endpoint as /sunday-setup/ (one activation covers both; see REFRESH.md). -->
   <style>
     @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
@@ -117,7 +117,7 @@
   var TZ = "America/New_York", FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders" };
   var $ = function (id) { return document.getElementById(id); };
   var svc = "Sunday", who = "", pendingPayload = null, busy = false;
-  var JAKE_CC = "KTrimbee@ourfamily.church", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" } };
+  var JAKE_CC = "KTrimbee@ourfamily.church,djjalab@gmail.com", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" } };
   var CAMPUSES = ["Windermere", "Lakeside", "Oakland"];
   function ccFor(w) { return [JAKE_CC].concat(WHO[w] ? [WHO[w].cc] : []).join(","); }
   function setWho(w, fromUser) {
