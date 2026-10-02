@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Weekly Numbers · Family Church Students</title>
+  <meta name="theme-color" content="#f3f2ef">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+  <!-- Weekly attendance numbers (Jake, Oct 2, 2026), filled in by the campus leads each Sunday/Wednesday.
+       Public-safe: numbers only, never student names. Not cached by the service worker.
+       Emails Jake through the SAME FormSubmit endpoint as /sunday-setup/ (one activation covers both; see REFRESH.md). -->
+  <style>
+    @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+    :root { --orange: #FF7010; --black: #141110; --otext: #a84300; --ink: #1a1512; --ink2: #3b342e; --line: rgba(26,21,18,.18);
+      --heading: "Archivo Wide", "Arial Black", system-ui, sans-serif; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    [hidden] { display: none !important; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: #f3f2ef; }
+    body { margin: 0; color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.4;
+      background-color: #f3f2ef; background-image: radial-gradient(circle, rgba(26,21,18,.16) 1px, transparent 1.3px); background-size: 18px 18px; background-position: 9px 9px; }
+    .wrap { max-width: 640px; margin: 0 auto; padding: calc(14px + env(safe-area-inset-top, 0px)) 14px calc(40px + env(safe-area-inset-bottom, 0px)); }
+    .mast img { display: block; width: 52%; max-width: 260px; height: auto; margin-top: 4px; }
+    .corners { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--otext); white-space: nowrap; }
+    .corners span + span { color: var(--ink); font-weight: 800; }
+    h1 { margin: 14px 0 0; font-family: var(--heading); font-weight: 900; font-size: 28px; line-height: 1.05; }
+    .lead { margin: 6px 0 0; color: var(--ink2); font-size: 15px; }
+    /* compact bar */
+    .bar { margin-top: 14px; padding: 10px; background: var(--black); border-radius: 8px; display: flex; flex-wrap: wrap; }
+    .bar .f { display: flex; flex-direction: column; min-width: 0; }
+    .bar .k { font-family: var(--mono); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin: 0 0 4px 2px; }
+    .bar .campus { flex: 0 0 136px; margin-right: 8px; } .bar .svc { flex: 1 1 0; } .bar .date { flex: 1 1 100%; margin-top: 8px; }
+    .bar select, .bar input[type=date] { width: 100%; min-height: 46px; padding: 8px 10px; border: 0; border-radius: 6px; background: #fff; color: var(--ink); font: 700 16px var(--body); -webkit-appearance: none; appearance: none; }
+    .bar select { background-image: linear-gradient(45deg, transparent 50%, #141110 50%), linear-gradient(135deg, #141110 50%, transparent 50%); background-position: calc(100% - 17px) 50%, calc(100% - 11px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 28px; }
+    .seg { display: flex; background: #2a2420; border-radius: 6px; padding: 3px; min-height: 46px; }
+    .seg button { flex: 1 1 0; min-width: 0; border: 0; border-radius: 4px; background: transparent; color: #fff; font: 800 15px var(--body); cursor: pointer; padding: 0 4px; }
+    .seg button[aria-pressed=true] { background: var(--orange); color: var(--black); }
+    .note { margin: 6px 2px 0; font-size: 13px; color: #e6c3a8; } .note.warn { color: #ffb37a; font-weight: 700; }
+    .card { margin-top: 14px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+    label { display: block; font-weight: 800; font-size: 15px; }
+    label .req { color: var(--otext); }
+    input[type=text], input[type=number] { display: block; width: 100%; margin-top: 6px; min-height: 52px; padding: 10px 12px; font: 600 18px var(--body); color: var(--ink); background: #fff; border: 1.5px solid rgba(26,21,18,.35); border-radius: 6px; }
+    input:focus, select:focus, .seg button:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; }
+    input.bad { border-color: #c2410c; background: #fff4ee; }
+    h2 { display: flex; align-items: center; margin: 16px 0 2px; font-family: var(--heading); font-weight: 900; font-size: 18px; }
+    h2::before { content: ""; width: 12px; height: 12px; background: var(--orange); margin-right: 9px; }
+    .grid { display: flex; flex-wrap: wrap; margin: 0 -5px; }
+    .grid label { flex: 1 1 calc(50% - 10px); margin: 10px 5px 0; }
+    .grid input { font: 900 24px var(--heading); text-align: center; }
+    .total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--mono); font-weight: 800; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--otext); }
+    .total b { font-family: var(--heading); font-size: 26px; color: var(--ink); letter-spacing: 0; }
+    .btn { display: block; width: 100%; min-height: 58px; margin-top: 14px; border: 0; border-radius: 8px; background: var(--orange); color: var(--black); font: 900 17px var(--heading); cursor: pointer; }
+    .btn.dark { background: var(--black); color: #fff; }
+    .btn:disabled { opacity: .45; cursor: default; }
+    .st { margin-top: 12px; padding: 11px 12px; border-radius: 6px; font-weight: 700; font-size: 15px; line-height: 1.35; }
+    .st.ok { background: #e3f6e8; color: #14532d; border: 1px solid #86c99a; }
+    .st.bad { background: #fde8de; color: #8a2a00; border: 1px solid #f0a37f; }
+    .st.wait { background: #fff2e8; color: var(--otext); border: 1px solid #f6b98d; }
+    .small { margin-top: 16px; font-family: var(--mono); font-size: 12px; color: #5e5750; text-align: center; letter-spacing: .03em; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <img src="../assets/logos/students-internal-color.svg" alt="Students" width="1693" height="493">
+    <div class="corners"><span>Family Church</span><span>Stage Ready</span></div>
+  </header>
+  <h1>Weekly Numbers</h1>
+  <p class="lead">Headcounts only. Never names.</p>
+
+  <form id="f" novalidate>
+    <div class="bar">
+      <div class="f campus"><label class="k" for="campus">Campus</label>
+        <select id="campus"><option>Windermere</option><option>Lakeside</option></select></div>
+      <div class="f svc"><span class="k" id="svc-k">Service</span>
+        <div class="seg" role="group" aria-labelledby="svc-k"><button type="button" data-svc="Sunday" aria-pressed="false">Sunday</button><button type="button" data-svc="Wednesday" aria-pressed="false">Wednesday</button></div></div>
+      <div class="f date"><label class="k" for="date">Date</label><input type="date" id="date" required>
+        <div class="note" id="dnote"></div></div>
+    </div>
+
+    <div class="card">
+      <label for="name">Your name <span class="req">*</span><input type="text" id="name" autocomplete="name" maxlength="60" placeholder="First name" required></label>
+      <h2>Middle school</h2>
+      <div class="grid">
+        <label>MS students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="ms_s"></label>
+        <label>MS leaders<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="ms_l"></label>
+      </div>
+      <h2>High school</h2>
+      <div class="grid">
+        <label>HS students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="hs_s"></label>
+        <label>HS leaders<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="hs_l"></label>
+      </div>
+      <div class="total"><span>Total</span><b id="total">0</b></div>
+      <button class="btn" id="send" type="submit">Send numbers to Jake</button>
+      <div class="st" id="status" hidden></div>
+      <button class="btn dark" id="retry" type="button" hidden>Try again</button>
+    </div>
+  </form>
+  <div class="small">Your name and campus are remembered on this phone.</div>
+</div>
+<script>
+(function () {
+  "use strict";
+  // SAME endpoint as /sunday-setup/ (keep them in sync; one FormSubmit activation covers both). See REFRESH.md.
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
+  var TZ = "America/New_York", FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders" };
+  var $ = function (id) { return document.getElementById(id); };
+  var svc = "Sunday", pendingPayload = null, busy = false;
+
+  /* ---------- dates in ET ---------- */
+  function nyToday() {
+    var p = {}; new Intl.DateTimeFormat("en-US", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+    return new Date(Date.UTC(+p.year, +p.month - 1, +p.day));
+  }
+  var iso = function (d) { return d.toISOString().slice(0, 10); };
+  var WD = { Sunday: 0, Wednesday: 3 };
+  function mostRecent(name) { var t = nyToday(); t.setUTCDate(t.getUTCDate() - ((t.getUTCDay() - WD[name] + 7) % 7)); return iso(t); }
+  function defaultSvc() { var d = nyToday().getUTCDay(); return d === 0 || d === 1 ? "Sunday" : "Wednesday"; }
+  function pretty(s) { var a = s.split("-"); return new Date(Date.UTC(+a[0], +a[1] - 1, +a[2], 12)).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric", year: "numeric" }); }
+  function nyTime() { return new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date()) + " ET"; }
+  function dateNote() {
+    var v = $("date").value, n = $("dnote");
+    if (!v) { n.className = "note warn"; n.textContent = "Pick the service date."; return; }
+    var wd = new Date(v + "T12:00:00Z").getUTCDay();
+    if (wd !== WD[svc]) { n.className = "note warn"; n.textContent = pretty(v) + " isn't a " + svc + ". Check the date."; }
+    else { n.className = "note"; n.textContent = pretty(v); }
+  }
+  function setSvc(name, moveDate) {
+    svc = name;
+    [].forEach.call(document.querySelectorAll(".seg button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-svc") === name)); });
+    if (moveDate) $("date").value = mostRecent(name);
+    dateNote();
+  }
+
+  /* ---------- form ---------- */
+  function nums() { var o = {}; FIELDS.forEach(function (id) { o[id] = $(id).value.trim(); }); return o; }
+  function total() { var n = nums(); return FIELDS.reduce(function (s, id) { return s + (/^\d+$/.test(n[id]) ? +n[id] : 0); }, 0); }
+  function paintTotal() { $("total").textContent = total(); }
+  function status(cls, txt) { var s = $("status"); s.className = "st " + cls; s.textContent = txt; s.hidden = false; }
+  function post(fields) {
+    return fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(fields) })
+      .then(function (r) { return r.json().catch(function () { return { success: "false", message: "HTTP " + r.status }; }); })
+      .then(function (j) { var ok = j && (j.success === true || j.success === "true"); return { ok: ok, pending: !ok && /activat/i.test(String(j && j.message || "")), msg: String(j && j.message || "").slice(0, 160) }; },
+            function () { return { ok: false, pending: false, msg: "no connection" }; });
+  }
+  function send(payload) {
+    if (busy) return;
+    busy = true; $("send").disabled = true; $("retry").hidden = true; status("wait", "Sending to Jake…");
+    post(payload).then(function (r) {
+      busy = false; $("send").disabled = false; window.__last = r;
+      if (r.ok) {
+        status("ok", "✓ Sent to Jake: " + payload._summary);
+        FIELDS.forEach(function (id) { $(id).value = ""; $(id).classList.remove("bad"); }); paintTotal(); pendingPayload = null;
+      } else if (r.pending) {
+        status("wait", "Not sent yet: Jake's email still needs its one-time FormSubmit activation. Text Jake your numbers for now, then try again later.");
+        pendingPayload = payload; $("retry").hidden = false;
+      } else {
+        status("bad", "✕ Didn't send" + (r.msg ? " (" + r.msg + ")" : "") + ". Check your signal and try again.");
+        pendingPayload = payload; $("retry").hidden = false;
+      }
+    });
+  }
+  $("f").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("name").value.trim(), n = nums(), bad = [];
+    $("name").classList.toggle("bad", !name); if (!name) bad.push("your name");
+    FIELDS.forEach(function (id) { var ok = /^\d{1,3}$/.test(n[id]); $(id).classList.toggle("bad", !ok); if (!ok) bad.push(LABELS[id]); });
+    if (!$("date").value) bad.push("the date");
+    if (bad.length) { status("bad", "Please fill in " + bad.join(", ") + " (whole numbers, 0 or more)."); $("retry").hidden = true; return; }
+    var campus = $("campus").value, date = pretty($("date").value), t = total();
+    var payload = {
+      _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _template: "table", _captcha: "false",
+      "Campus": campus, "Service": svc, "Date": date, "Name": name,
+      "MS students": +n.ms_s, "MS leaders": +n.ms_l, "HS students": +n.hs_s, "HS leaders": +n.hs_l, "Total": t, "Submitted at": nyTime()
+    };
+    Object.defineProperty(payload, "_summary", { value: campus + " " + svc + " " + date + ", total " + t + ".", enumerable: false });
+    send(payload);
+  });
+  $("retry").addEventListener("click", function () { if (pendingPayload) send(pendingPayload); });
+  document.querySelector(".seg").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setSvc(b.getAttribute("data-svc"), true); });
+  $("date").addEventListener("change", dateNote);
+  FIELDS.forEach(function (id) { $(id).addEventListener("input", function () { $(id).classList.remove("bad"); paintTotal(); }); });
+  $("name").addEventListener("input", function () { $("name").classList.remove("bad"); try { localStorage.setItem("numbers:name", $("name").value.trim()); } catch (e) {} });
+  $("campus").addEventListener("change", function () { try { localStorage.setItem("numbers:campus", $("campus").value); } catch (e) {} });
+
+  try { $("name").value = localStorage.getItem("numbers:name") || ""; var c = localStorage.getItem("numbers:campus"); if (c === "Windermere" || c === "Lakeside") $("campus").value = c; } catch (e) {}
+  $("date").max = iso(nyToday());
+  setSvc(defaultSvc(), true); paintTotal();
+  window.__numbers = { svc: function () { return svc; }, mostRecent: mostRecent, defaultSvc: defaultSvc };   // for tests
+})();
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
    Network-first for everything (HTML, JSON data, JS, CSS, icons) so Monday/Thursday refreshes
    and new deploys show up immediately; the cache is only an offline fallback.
    Bump CACHE_VERSION on every deploy that changes app files. */
-const CACHE_VERSION = "stage-ready-v2026-10-02b";
+const CACHE_VERSION = "stage-ready-v2026-10-02c";
 const SHELL = [
   "./",
   "./index.html",
@@ -55,6 +55,7 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
   if (url.pathname.includes("/games/")) return;   // games (e.g. Sword Drills) are web-only: never cached, always live
   if (url.pathname.includes("/sunday-setup/")) return;   // Sunday setup checklist: web-only, never cached, always live
+  if (url.pathname.includes("/numbers/")) return;   // weekly numbers form: web-only, never cached, always live
 
   // Cache key ignores cache-busting query strings (?v=, ?cb=) so offline fallback still works.
   const key = url.origin + url.pathname;

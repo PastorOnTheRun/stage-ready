@@ -45,6 +45,12 @@
           "note": "Team captain / leader run-of-show for Sunday morning. Check every step (Jake gets an email when it's all done), then send attendance numbers from the form at the bottom."
         },
         {
+          "title": "Weekly numbers",
+          "type": "link",
+          "url": "https://pastorontherun.github.io/stage-ready/numbers/",
+          "note": "Sunday and Wednesday headcounts for each campus (MS/HS students and leaders). Numbers only, emailed to Jake."
+        },
+        {
           "title": "Be Class",
           "type": "link",
           "url": "https://pastorontherun.github.io/stage-ready/be-class/",
