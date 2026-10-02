@@ -1,5 +1,5 @@
 {
-  "updatedAt": "September 29, 2026",
+  "updatedAt": "October 2, 2026",
   "title": "Resources",
   "intro": "Links, forms, PDFs, and the tools the team uses.",
   "groups": [
@@ -62,6 +62,12 @@
           "type": "link",
           "url": "https://www.downloadyouthministry.com/page/paka.html",
           "note": "Free small group toolkit app from Download Youth Ministry: ice-breakers, Would You Rather, low-prep games, a people picker and a scorekeeper. Get it on iOS or Android."
+        },
+        {
+          "title": "Sword Drills (Bible team game)",
+          "type": "link",
+          "url": "https://pastorontherun.github.io/stage-ready/games/sword-drills/",
+          "note": "Open on the TV/projector, then join from your phone with the code or QR on the screen. Tables, Classic/Themed mode and a Wildcard round."
         }
       ]
     }

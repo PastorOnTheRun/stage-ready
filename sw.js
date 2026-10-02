@@ -2,7 +2,7 @@
    Network-first for everything (HTML, JSON data, JS, CSS, icons) so Monday/Thursday refreshes
    and new deploys show up immediately; the cache is only an offline fallback.
    Bump CACHE_VERSION on every deploy that changes app files. */
-const CACHE_VERSION = "stage-ready-v2026-09-28a";
+const CACHE_VERSION = "stage-ready-v2026-10-02a";
 const SHELL = [
   "./",
   "./index.html",
@@ -53,6 +53,7 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.includes("/games/")) return;   // games (e.g. Sword Drills) are web-only: never cached, always live
 
   // Cache key ignores cache-busting query strings (?v=, ?cb=) so offline fallback still works.
   const key = url.origin + url.pathname;
