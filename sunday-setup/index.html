@@ -50,6 +50,23 @@
     .step input:checked + .box { background: var(--orange); border-color: var(--orange); }
     .step input:checked + .box svg { opacity: 1; }
     .step input:checked ~ .t { color: #6f675f; text-decoration: line-through; text-decoration-color: rgba(26,21,18,.4); }
+    ul.steps li { position: relative; }
+    li.has-photos .step { padding-bottom: 62px; }
+    .where { position: absolute; left: 57px; bottom: 10px; display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px 0 11px; border: 1.5px solid var(--black); border-radius: 22px; background: #fff; color: var(--black); font: 800 15px var(--body); cursor: pointer; }
+    .where svg { width: 20px; height: 20px; margin-right: 7px; } .where span { font-weight: 600; color: #5e5750; margin-left: 4px; }
+    .where:active { background: #fff2e8; }
+    .lb { position: fixed; inset: 0; z-index: 50; background: #0c0a09; display: flex; flex-direction: column; color: #fff; touch-action: pan-y pinch-zoom; }
+    .lb-top { display: flex; align-items: center; padding: calc(8px + env(safe-area-inset-top, 0px)) 10px 8px 16px; }
+    .lb-top .n { font-family: var(--mono); font-weight: 800; font-size: 13px; letter-spacing: .08em; color: var(--orange); }
+    .lb-x { margin-left: auto; width: 48px; height: 48px; border: 0; border-radius: 24px; background: #2a2420; color: #fff; font: 700 26px/1 var(--body); cursor: pointer; }
+    .lb-stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .lb-stage img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; user-select: none; -webkit-user-drag: none; transition: transform .2s ease; }
+    .lb-stage .ld { position: absolute; font-family: var(--mono); font-size: 13px; color: #9b928a; }
+    .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 64px; border: 0; background: rgba(20,17,16,.65); color: #fff; font: 700 30px/1 var(--body); cursor: pointer; }
+    .lb-prev { left: 0; border-radius: 0 10px 10px 0; } .lb-next { right: 0; border-radius: 10px 0 0 10px; }
+    .lb-cap { padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px)); font-family: var(--heading); font-weight: 850; font-size: 18px; line-height: 1.25; text-align: center; }
+    .lb-cap small { display: block; margin-top: 4px; font: 600 13px var(--body); color: #b9b0a8; }
+    body.lb-open { overflow: hidden; }
     .step input:focus-visible + .box { outline: 3px solid var(--black); outline-offset: 2px; }
     .done { margin-top: 22px; padding: 16px; border-radius: 6px; background: var(--black); color: #fff; }
     .done h3 { margin: 0; font-family: var(--heading); font-weight: 900; font-size: 19px; color: var(--orange); }
@@ -119,6 +136,12 @@
   <button class="btn ghost" id="reset" type="button">Reset this Sunday’s checklist</button>
   <div class="small">Checks save on this phone and start fresh each Sunday.</div>
 </div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photos" hidden>
+  <div class="lb-top"><span class="n" id="lb-n">1 / 1</span><button type="button" class="lb-x" id="lb-x" aria-label="Close">×</button></div>
+  <div class="lb-stage" id="lb-stage"><span class="ld" id="lb-ld">Loading…</span><img id="lb-img" alt="">
+    <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="Previous photo">‹</button><button type="button" class="lb-nav lb-next" id="lb-next" aria-label="Next photo">›</button></div>
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
 <script>
 (function () {
   "use strict";
@@ -133,12 +156,14 @@
     { title: "Room", steps: [
       "Set up at least 6 tables (7 if you can) with enough chairs for the students coming.",
       "Get the printed papers from Pastor Brian\u2019s office: cubbies, bottom left, second from the top, in the folder for that Sunday.",
-      "Give Miss Cindy and Mr. Bill their papers." ] },
+      "Give Miss Cindy and Mr. Bill their papers.",
+      "Put the student papers out on the tables.",
+      "Put one leader guide on each table." ] },
     { title: "Power and tech", steps: [
-      "Flip on the labeled switches (speakers, TV, lights) on the back wall behind the tech booth.",
-      "Turn on the soundboard.",
+      { t: "Flip on the labeled switches (speakers, TV, lights) on the back wall behind the tech booth.", photos: [["back-wall-switches", "Back wall behind the tech booth"]] },
+      { t: "Turn on the soundboard.", photos: [["x32-soundboard", "The soundboard (Behringer X32)"], ["x32-back-power", "X32 power switch is on the back, left"], ["power-switch", "Power switch (flip to ON)"], ["x32-main-fader", "MAIN fader"]] },
       "Turn on the TVs with the remote.",
-      "Log into the iMac, press Cmd+Space, open Chrome, and click the Sidekick bookmark.",
+      { t: "Log into the iMac, press Cmd+Space, open Chrome, and click the Sidekick bookmark.", photos: [["imac-back", "iMac power button is on the back"]] },
       "Open that Sunday\u2019s Sidekick plan and drag the presentation view onto the TV screen.",
       "Play the FC Students pre-youth playlist on Spotify on the iMac." ] },
     { title: "Check-in", steps: [
@@ -149,7 +174,12 @@
       "Submit attendance numbers (form below)." ] }
   ];
   var IDS = [];
+  // Step ids are "<section>-<index>" and are what's saved in localStorage. Only ADD steps at the END of a section
+  // (as with the two Room steps added Oct 2), never insert in the middle or reorder, or saved checks would shift.
+  SECTIONS.forEach(function (s) { s.steps = s.steps.map(function (x) { return typeof x === "string" ? { t: x } : x; }); });
   SECTIONS.forEach(function (s, si) { s.steps.forEach(function (_, i) { IDS.push(si + "-" + i); }); });
+  // Drop saved checks for ids that no longer exist (keeps "all checked" honest if a step is ever removed).
+  function cleanChecks(c) { var o = {}; IDS.forEach(function (id) { if (c && c[id]) o[id] = true; }); return o; }
   var $ = function (id) { return document.getElementById(id); };
 
   /* ---------- dates (America/New_York) ---------- */
@@ -176,7 +206,7 @@
     key = sundayKey();
     try { S = JSON.parse(localStorage.getItem(KEY_PREFIX + key)); } catch (e) { S = null; }
     if (!S || typeof S !== "object") S = blank();
-    if (!S.checks) S.checks = {};
+    S.checks = cleanChecks(S.checks);
     // keep storage small: drop other Sundays' checklists
     try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(KEY_PREFIX + "20") === 0 && k !== KEY_PREFIX + key) localStorage.removeItem(k); }); } catch (e) {}
   }
@@ -186,13 +216,18 @@
 
   /* ---------- render ---------- */
   var tick = '<svg viewBox="0 0 24 24" fill="none" stroke="#141110" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function checklistText() {
+    return SECTIONS.map(function (sec, si) { return sec.title + ": " + sec.steps.map(function (st, i) { return (S.checks[si + "-" + i] ? "\u2713 " : "\u2717 ") + st.t; }).join("  "); }).join(" \u2014 ");
+  }
+  var camIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg>';
   function build() {
     var h = "";
     SECTIONS.forEach(function (s, si) {
       h += '<section><h2>' + s.title + '<span class="ct" id="ct-' + si + '"></span></h2><ul class="steps">';
-      s.steps.forEach(function (t, i) {
+      s.steps.forEach(function (st, i) {
         var id = si + "-" + i;
-        h += '<li><label class="step"><input type="checkbox" data-id="' + id + '"><span class="box">' + tick + '</span><span class="t">' + t + '</span></label></li>';
+        var ph = st.photos ? '<button type="button" class="where" data-photos="' + si + '-' + i + '" aria-label="Show me where: ' + st.photos.length + ' photo' + (st.photos.length > 1 ? 's' : '') + '">' + camIcon + 'Show me where' + (st.photos.length > 1 ? ' <span>(' + st.photos.length + ')</span>' : '') + '</button>' : '';
+        h += '<li' + (ph ? ' class="has-photos"' : '') + '><label class="step"><input type="checkbox" data-id="' + id + '"><span class="box">' + tick + '</span><span class="t">' + st.t + '</span></label>' + ph + '</li>';
       });
       h += "</ul></section>";
     });
@@ -237,7 +272,7 @@
     sending = true; paintSend();
     var now = new Date();
     post({ _subject: "Sunday setup complete \u2013 " + prettyDate(key), _cc: "djjalab@gmail.com", _template: "table", _captcha: "false",
-           "Sunday": prettyDate(key), "Setup by": who(), "Completed at": nyTime(now), "Steps checked": IDS.length + " of " + IDS.length, "Page": location.origin + location.pathname })
+           "Sunday": prettyDate(key), "Setup by": who(), "Completed at": nyTime(now), "Steps checked": IDS.length + " of " + IDS.length, "Checklist": checklistText(), "Page": location.origin + location.pathname })
       .then(function (r) {
         sending = false;
         S.sent = { ok: r.ok, pending: r.pending, msg: r.msg, at: now.toISOString() }; save(); paintSend();
@@ -288,6 +323,40 @@
   });
   $("who").addEventListener("input", function () { try { localStorage.setItem(NAME_KEY, $("who").value); } catch (e) {} });
   document.addEventListener("visibilitychange", function () { if (!document.hidden && sundayKey() !== key) { load(); paint(); } });
+
+  /* ---------- "Show me where" lightbox (photos load only when opened) ---------- */
+  var lbSet = [], lbI = 0, lbFrom = null, preload = {};
+  function lbSrc(p) { return "img/" + p[0] + ".jpg"; }
+  function lbShow(i) {
+    lbI = (i + lbSet.length) % lbSet.length;
+    var p = lbSet[lbI], img = $("lb-img");
+    $("lb-ld").hidden = false; img.style.opacity = "0";
+    img.onload = function () { $("lb-ld").hidden = true; img.style.opacity = "1"; };
+    img.src = lbSrc(p); img.alt = p[1];
+    $("lb-cap").innerHTML = p[1].replace(/&/g, "&amp;").replace(/</g, "&lt;") + (lbSet.length > 1 ? "<small>Swipe or tap › for the next photo</small>" : "");
+    $("lb-n").textContent = (lbI + 1) + " / " + lbSet.length;
+    $("lb-prev").hidden = $("lb-next").hidden = lbSet.length < 2;
+    if (lbSet.length > 1) { var nx = lbSet[(lbI + 1) % lbSet.length]; if (!preload[nx[0]]) { preload[nx[0]] = new Image(); preload[nx[0]].src = lbSrc(nx); } }
+  }
+  function lbOpen(stepKey, btn) {
+    var a = stepKey.split("-"), st = SECTIONS[+a[0]].steps[+a[1]];
+    lbSet = st.photos; lbFrom = btn; $("lb").hidden = false; document.body.classList.add("lb-open"); lbShow(0); $("lb-x").focus();
+  }
+  function lbClose() { $("lb").hidden = true; document.body.classList.remove("lb-open"); $("lb-img").removeAttribute("src"); if (lbFrom) lbFrom.focus(); }
+  $("list").addEventListener("click", function (e) { var b = e.target.closest(".where"); if (!b) return; e.preventDefault(); e.stopPropagation(); lbOpen(b.getAttribute("data-photos"), b); });
+  $("lb-x").addEventListener("click", lbClose);
+  $("lb-prev").addEventListener("click", function () { lbShow(lbI - 1); });
+  $("lb-next").addEventListener("click", function () { lbShow(lbI + 1); });
+  document.addEventListener("keydown", function (e) { if ($("lb").hidden) return; if (e.key === "Escape") lbClose(); else if (e.key === "ArrowRight") lbShow(lbI + 1); else if (e.key === "ArrowLeft") lbShow(lbI - 1); });
+  var tx = null, ty = 0;
+  $("lb-stage").addEventListener("touchstart", function (e) { if (e.touches.length === 1) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; } else tx = null; }, { passive: true });
+  $("lb-stage").addEventListener("touchend", function (e) {
+    if (tx === null || lbSet.length < 2) return;
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) lbShow(lbI + (dx < 0 ? 1 : -1));
+    else if (dy > 90 && Math.abs(dy) > Math.abs(dx) * 1.5) lbClose();          // swipe down closes
+  });
+  window.__lb = { open: lbOpen, close: lbClose, index: function () { return lbI; }, count: function () { return lbSet.length; } };
 
   build(); load();
   try { $("who").value = localStorage.getItem(NAME_KEY) || ""; } catch (e) {}
