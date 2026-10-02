@@ -114,9 +114,10 @@
     .wc .win, .wc .cell { height: 8.6rem; }
     .wc .bk { font-size: 2.3rem; margin-bottom: .4rem; } .wc .cv { font-size: 4.4rem; }
     .wc .n { position: absolute; z-index: 2; top: .5rem; left: .7rem; font-weight: 900; font-size: 1.3rem; color: #141110; }
-    .wc .got { position: absolute; z-index: 3; inset: 0; border-radius: .7rem; background: rgba(20,17,16,.86); border: .25rem solid #FF7010; display: none; flex-direction: column; align-items: center; justify-content: center; }
-    .wc.done .got { display: flex; }
-    .wc .got b { font-weight: 900; font-size: 2.6rem; color: #fff; } .wc .got span { font-weight: 800; font-size: 1.5rem; color: #FF7010; letter-spacing: .1em; margin-top: .3rem; }
+    .wc .got { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 3rem; border-radius: 0 0 .7rem .7rem; background: #141110; display: none; align-items: center; justify-content: center; }
+    .wc.done .got { display: flex; } .wc.done .win { background: #8a3d0a; }
+    .wc.done .cell { justify-content: flex-start; padding-top: .9rem; } .wc.done .bk { font-size: 1.8rem !important; margin-bottom: .3rem; } .wc.done .cv { font-size: 2.6rem !important; }
+    .wc .got b { font-weight: 900; font-size: 1.7rem; color: #fff; } .wc .got span { font-weight: 800; font-size: 1.4rem; color: #FF7010; letter-spacing: .08em; margin-left: 1rem; }
     .wc.next .win { box-shadow: 0 0 0 .35rem #fff; }
     .intro { position: absolute; inset: 0; z-index: 20; display: none; align-items: center; justify-content: center; flex-direction: column; background: #141110; }
     .intro.on { display: flex; animation: introbg .6s steps(1) infinite; }   /* under 3 flashes per second */
@@ -506,7 +507,7 @@
   function run(a, m) {
     m = m || {};
     if (a === "spin") spin(); else if (a === "wild") wildcard(); else if (a === "award") award(m.table | 0, m.slot);
-    else if (a === "undo") undo(); else if (a === "reset") reset(); else if (a === "tables") setTables(m.n);
+    else if (a === "undo") undo(); else if (a === "reset") reset(); else if (a === "tables") setTables(m.d ? S.tables + (m.d > 0 ? 1 : -1) : m.n);
     else if (a === "mode") setMode(m.mode); else if (a === "per") setPer(m.n); else if (a === "final") setFinal(m.on);
     else if (a === "rules" || a === "game" || a === "scores") view(a);
   }
