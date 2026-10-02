@@ -39,6 +39,12 @@
       "title": "Tools the team uses",
       "items": [
         {
+          "title": "Sunday Setup checklist (MS & HS, Building 4)",
+          "type": "link",
+          "url": "https://pastorontherun.github.io/stage-ready/sunday-setup/",
+          "note": "Team captain / leader run-of-show for Sunday morning. Check every step (Jake gets an email when it's all done), then send attendance numbers from the form at the bottom."
+        },
+        {
           "title": "Be Class",
           "type": "link",
           "url": "https://pastorontherun.github.io/stage-ready/be-class/",

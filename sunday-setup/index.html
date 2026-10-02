@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Sunday Setup · MS & HS · Building 4</title>
+  <meta name="theme-color" content="#f3f2ef">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+  <!-- Sunday morning team captain / leader setup checklist (Jake via Janine, Oct 2, 2026).
+       Standalone, public-safe: no door codes, passwords, logins or phone numbers. Not cached by the service worker.
+       Checks are stored per Sunday (America/New_York) in localStorage. Emails go to Jake through FormSubmit
+       (FORM_ENDPOINT below; see REFRESH.md to swap in the FormSubmit alias after activation). -->
+  <style>
+    @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+    :root { --orange: #FF7010; --black: #141110; --otext: #a84300; --ink: #1a1512; --ink2: #3b342e; --line: rgba(26,21,18,.18);
+      --heading: "Archivo Wide", "Arial Black", system-ui, sans-serif; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    [hidden] { display: none !important; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: #f3f2ef; }
+    body { margin: 0; color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.4;
+      background-color: #f3f2ef; background-image: radial-gradient(circle, rgba(26,21,18,.16) 1px, transparent 1.3px); background-size: 18px 18px; background-position: 9px 9px; }
+    .wrap { max-width: 640px; margin: 0 auto; padding: calc(14px + env(safe-area-inset-top, 0px)) 14px calc(40px + env(safe-area-inset-bottom, 0px)); }
+    .mast img { display: block; width: 62%; max-width: 300px; height: auto; margin-top: 6px; }
+    .corners { display: flex; justify-content: space-between; margin-top: 7px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--otext); white-space: nowrap; }
+    .corners span + span { color: var(--ink); font-weight: 800; }
+    h1 { margin: 16px 0 0; font-family: var(--heading); font-weight: 900; font-size: 30px; line-height: 1.05; }
+    .sub { margin: 8px 0 0; display: inline-block; padding: 6px 10px; border-radius: 3px; background: var(--black); color: var(--orange); font-family: var(--heading); font-weight: 850; font-size: 14px; }
+    .bar { position: sticky; top: 0; z-index: 5; margin: 14px -14px 0; padding: 10px 14px; background: rgba(243,242,239,.96); border-bottom: 1px solid var(--line); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .bar .row { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-weight: 800; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+    .bar .row b { color: var(--otext); }
+    .meter { margin-top: 7px; height: 8px; background: rgba(26,21,18,.14); border-radius: 4px; overflow: hidden; }
+    .meter i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .25s; }
+    label.name { display: block; margin-top: 16px; font-weight: 800; font-size: 15px; }
+    input[type=text], input[type=number] { display: block; width: 100%; margin-top: 6px; min-height: 52px; padding: 10px 12px; font: 600 18px var(--body); color: var(--ink); background: #fff; border: 1.5px solid rgba(26,21,18,.35); border-radius: 6px; }
+    input:focus { outline: 3px solid var(--orange); outline-offset: 1px; border-color: var(--black); }
+    section { margin-top: 24px; }
+    h2 { display: flex; align-items: center; margin: 0 0 10px; font-family: var(--heading); font-weight: 900; font-size: 20px; line-height: 1.1; }
+    h2::before { content: ""; width: 14px; height: 14px; background: var(--orange); flex: 0 0 auto; margin-right: 10px; }
+    h2 .ct { margin-left: auto; font-family: var(--mono); font-size: 12px; font-weight: 800; color: var(--otext); letter-spacing: .04em; }
+    ul.steps { list-style: none; margin: 0; padding: 0; }
+    ul.steps li + li { margin-top: 8px; }
+    .step { display: flex; align-items: flex-start; min-height: 60px; padding: 13px 14px; background: #fff; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+    .step input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .box { flex: 0 0 30px; width: 30px; height: 30px; margin-right: 13px; border: 2.5px solid var(--black); border-radius: 6px; background: #fff; display: flex; align-items: center; justify-content: center; }
+    .box svg { width: 20px; height: 20px; opacity: 0; }
+    .step .t { flex: 1 1 auto; min-width: 0; font-size: 17px; line-height: 1.4; padding-top: 2px; overflow-wrap: break-word; }
+    .step input:checked + .box { background: var(--orange); border-color: var(--orange); }
+    .step input:checked + .box svg { opacity: 1; }
+    .step input:checked ~ .t { color: #6f675f; text-decoration: line-through; text-decoration-color: rgba(26,21,18,.4); }
+    .step input:focus-visible + .box { outline: 3px solid var(--black); outline-offset: 2px; }
+    .done { margin-top: 22px; padding: 16px; border-radius: 6px; background: var(--black); color: #fff; }
+    .done h3 { margin: 0; font-family: var(--heading); font-weight: 900; font-size: 19px; color: var(--orange); }
+    .done p { margin: 6px 0 0; font-size: 15px; color: #e6e1db; }
+    .st { margin-top: 10px; padding: 10px 12px; border-radius: 5px; font-weight: 700; font-size: 15px; line-height: 1.35; }
+    .st.ok { background: #e3f6e8; color: #14532d; border: 1px solid #86c99a; }
+    .st.bad { background: #fde8de; color: #8a2a00; border: 1px solid #f0a37f; }
+    .st.wait { background: #fff2e8; color: var(--otext); border: 1px solid #f6b98d; }
+    .st.info { background: #fff; color: var(--ink2); border: 1px solid var(--line); }
+    .done .st.info { background: #2a2420; color: #e6e1db; border-color: #3a322c; }
+    .btn { display: block; width: 100%; min-height: 56px; margin-top: 10px; border: 0; border-radius: 8px; background: var(--orange); color: var(--black); font: 900 17px var(--heading); cursor: pointer; }
+    .btn.dark { background: var(--black); color: #fff; }
+    .btn.ghost { background: #fff; color: var(--black); border: 1.5px solid rgba(26,21,18,.35); font: 800 16px var(--body); }
+    .btn:disabled { opacity: .45; cursor: default; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 14px; }
+    .card p { margin: 0 0 4px; color: var(--ink2); font-size: 15px; }
+    .grid { display: flex; flex-wrap: wrap; margin: 4px -5px 0; }
+    .grid label { flex: 1 1 calc(50% - 10px); margin: 6px 5px 0; font-weight: 800; font-size: 15px; }
+    .grid input { font: 900 24px var(--heading); text-align: center; }
+    .foot { margin-top: 26px; padding: 14px; border-radius: 6px; border: 1.5px dashed rgba(26,21,18,.35); font-weight: 700; font-size: 16px; line-height: 1.45; text-align: center; }
+    .small { margin-top: 14px; font-family: var(--mono); font-size: 12px; color: #5e5750; text-align: center; letter-spacing: .03em; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <img src="../assets/logos/students-internal-color.svg" alt="Students" width="1693" height="493">
+    <div class="corners"><span>Family Church</span><span>Stage Ready</span></div>
+  </header>
+  <h1>Sunday Setup</h1>
+  <div class="sub">MS &amp; HS · Building 4</div>
+
+  <div class="bar" aria-live="polite">
+    <div class="row"><span id="sunday">Sunday</span><b id="count">0 of 0</b></div>
+    <div class="meter"><i id="meter"></i></div>
+  </div>
+
+  <label class="name" for="who">Who’s running setup? <span style="font-weight:600;color:#5e5750">(optional)</span>
+    <input type="text" id="who" autocomplete="name" placeholder="Your name" maxlength="60">
+  </label>
+
+  <div id="list"></div>
+
+  <div class="done" id="done">
+    <h3>Setup complete email</h3>
+    <p>When every box is checked, this page emails Jake once with your name and the time.</p>
+    <div class="st info" id="cstatus">Not sent yet. Check every box above.</div>
+    <button class="btn" id="csend" type="button" hidden>Send</button>
+  </div>
+
+  <section id="attendance">
+    <h2>Attendance</h2>
+    <form class="card" id="af" novalidate>
+      <p>Numbers only. Never names.</p>
+      <div class="grid">
+        <label>MS students<input type="number" inputmode="numeric" min="0" max="999" step="1" id="ms_s" name="ms_students"></label>
+        <label>MS leaders<input type="number" inputmode="numeric" min="0" max="999" step="1" id="ms_l" name="ms_leaders"></label>
+        <label>HS students<input type="number" inputmode="numeric" min="0" max="999" step="1" id="hs_s" name="hs_students"></label>
+        <label>HS leaders<input type="number" inputmode="numeric" min="0" max="999" step="1" id="hs_l" name="hs_leaders"></label>
+      </div>
+      <button class="btn dark" id="asend" type="submit">Send attendance to Jake</button>
+      <div class="st info" id="astatus" hidden></div>
+    </form>
+  </section>
+
+  <div class="foot">If you’re stuck: text Jake.<br>If you can’t get into the room, find Pastor Ray.</div>
+  <button class="btn ghost" id="reset" type="button">Reset this Sunday’s checklist</button>
+  <div class="small">Checks save on this phone and start fresh each Sunday.</div>
+</div>
+<script>
+(function () {
+  "use strict";
+  // FormSubmit endpoint. After Jake clicks FormSubmit's activation email, replace the address with the random alias
+  // FormSubmit gives him (https://formsubmit.co/ajax/<alias>), so his address isn't in the page source. See REFRESH.md.
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
+  var TZ = "America/New_York";
+  var SECTIONS = [
+    { title: "Before 9:00 AM", steps: [
+      "Pick up the donut order at Dunkin\u2019 Donuts, 535 West Orange Country Club Drive.",
+      "Arrive by 9:00. Students will be there to help set up." ] },
+    { title: "Room", steps: [
+      "Set up at least 6 tables (7 if you can) with enough chairs for the students coming.",
+      "Get the printed papers from Pastor Brian\u2019s office: cubbies, bottom left, second from the top, in the folder for that Sunday.",
+      "Give Miss Cindy and Mr. Bill their papers." ] },
+    { title: "Power and tech", steps: [
+      "Flip on the labeled switches (speakers, TV, lights) on the back wall behind the tech booth.",
+      "Turn on the soundboard.",
+      "Turn on the TVs with the remote.",
+      "Log into the iMac, press Cmd+Space, open Chrome, and click the Sidekick bookmark.",
+      "Open that Sunday\u2019s Sidekick plan and drag the presentation view onto the TV screen.",
+      "Play the FC Students pre-youth playlist on Spotify on the iMac." ] },
+    { title: "Check-in", steps: [
+      "Get the iPads from the white fob bag under the tech desk (or the kids\u2019 office).",
+      "Unlock the iPads and open the check-in app." ] },
+    { title: "After service", steps: [
+      "Put away the iPads and gear.",
+      "Submit attendance numbers (form below)." ] }
+  ];
+  var IDS = [];
+  SECTIONS.forEach(function (s, si) { s.steps.forEach(function (_, i) { IDS.push(si + "-" + i); }); });
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- dates (America/New_York) ---------- */
+  function nyParts(d) {
+    var p = {}; new Intl.DateTimeFormat("en-US", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", weekday: "short" })
+      .formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
+    return p;
+  }
+  // The Sunday this checklist is for: today if it's Sunday in New York, otherwise the coming Sunday.
+  function sundayKey(now) {
+    var p = nyParts(now || new Date()), wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p.weekday);
+    var d = new Date(Date.UTC(+p.year, +p.month - 1, +p.day + (7 - wd) % 7));
+    return d.toISOString().slice(0, 10);
+  }
+  function prettyDate(key) { var a = key.split("-"); return new Date(Date.UTC(+a[0], +a[1] - 1, +a[2], 12)).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric", year: "numeric" }); }
+  function nyTime(d) { return new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" }).format(d) + " ET"; }
+  function shortTime(iso) { return new Intl.DateTimeFormat("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit" }).format(new Date(iso)) + " ET"; }
+
+  /* ---------- state per Sunday ---------- */
+  var KEY_PREFIX = "sunday-setup:", NAME_KEY = "sunday-setup:name";
+  var key, S;
+  function blank() { return { checks: {}, sent: null, attendance: null }; }
+  function load() {
+    key = sundayKey();
+    try { S = JSON.parse(localStorage.getItem(KEY_PREFIX + key)); } catch (e) { S = null; }
+    if (!S || typeof S !== "object") S = blank();
+    if (!S.checks) S.checks = {};
+    // keep storage small: drop other Sundays' checklists
+    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(KEY_PREFIX + "20") === 0 && k !== KEY_PREFIX + key) localStorage.removeItem(k); }); } catch (e) {}
+  }
+  function save() { try { localStorage.setItem(KEY_PREFIX + key, JSON.stringify(S)); } catch (e) {} }
+  function checkedCount() { return IDS.filter(function (id) { return S.checks[id]; }).length; }
+  function allChecked() { return checkedCount() === IDS.length; }
+
+  /* ---------- render ---------- */
+  var tick = '<svg viewBox="0 0 24 24" fill="none" stroke="#141110" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function build() {
+    var h = "";
+    SECTIONS.forEach(function (s, si) {
+      h += '<section><h2>' + s.title + '<span class="ct" id="ct-' + si + '"></span></h2><ul class="steps">';
+      s.steps.forEach(function (t, i) {
+        var id = si + "-" + i;
+        h += '<li><label class="step"><input type="checkbox" data-id="' + id + '"><span class="box">' + tick + '</span><span class="t">' + t + '</span></label></li>';
+      });
+      h += "</ul></section>";
+    });
+    $("list").innerHTML = h;
+  }
+  function paint() {
+    [].forEach.call(document.querySelectorAll("#list input[type=checkbox]"), function (c) { c.checked = !!S.checks[c.getAttribute("data-id")]; });
+    var n = checkedCount();
+    $("count").textContent = n + " of " + IDS.length + " done";
+    $("meter").style.width = (100 * n / IDS.length) + "%";
+    $("sunday").textContent = "For " + prettyDate(key);
+    SECTIONS.forEach(function (s, si) { var c = s.steps.filter(function (_, i) { return S.checks[si + "-" + i]; }).length; $("ct-" + si).textContent = c + "/" + s.steps.length; });
+    paintSend();
+    paintAttendance();
+  }
+  function setStatus(el, cls, txt) { el.className = "st " + cls; el.textContent = txt; el.hidden = false; }
+  var sending = false;
+  function paintSend() {
+    var st = $("cstatus"), b = $("csend"), sent = S.sent;
+    b.hidden = true;
+    if (sending) { setStatus(st, "wait", "Sending to Jake…"); return; }
+    if (sent && sent.ok) { setStatus(st, "ok", "✓ Sent to Jake at " + shortTime(sent.at) + "."); return; }
+    if (sent && sent.pending) { setStatus(st, "wait", "Received, but Jake's email isn't activated yet (one-time FormSubmit step). Text Jake that setup is done."); b.hidden = false; b.textContent = "Send again"; return; }
+    if (sent && !sent.ok) { setStatus(st, "bad", "✕ Didn't send" + (sent.msg ? " (" + sent.msg + ")" : "") + ". Check your signal and tap Send, or text Jake."); b.hidden = false; b.textContent = "Send"; return; }
+    if (allChecked()) { setStatus(st, "info", "All done. Ready to send."); b.hidden = false; b.textContent = "Send"; return; }
+    setStatus(st, "info", "Not sent yet. " + (IDS.length - checkedCount()) + " step" + (IDS.length - checkedCount() === 1 ? "" : "s") + " left.");
+  }
+
+  /* ---------- email (FormSubmit) ---------- */
+  function post(fields) {
+    return fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(fields) })
+      .then(function (r) { return r.json().catch(function () { return { success: "false", message: "HTTP " + r.status }; }); })
+      .then(function (j) {
+        var ok = j && (j.success === true || j.success === "true");
+        var pending = !ok && /activat/i.test(String(j && j.message || ""));
+        return { ok: ok, pending: pending, msg: String(j && j.message || "").slice(0, 160), raw: j };
+      }, function (e) { return { ok: false, pending: false, msg: "no connection" }; });
+  }
+  function who() { return ($("who").value || "").trim().slice(0, 60) || "(no name given)"; }
+  function sendComplete() {
+    if (sending) return;
+    sending = true; paintSend();
+    var now = new Date();
+    post({ _subject: "Sunday setup complete \u2013 " + prettyDate(key), _template: "table", _captcha: "false",
+           "Sunday": prettyDate(key), "Setup by": who(), "Completed at": nyTime(now), "Steps checked": IDS.length + " of " + IDS.length, "Page": location.origin + location.pathname })
+      .then(function (r) {
+        sending = false;
+        S.sent = { ok: r.ok, pending: r.pending, msg: r.msg, at: now.toISOString() }; save(); paintSend();
+        window.__lastComplete = r;
+      });
+  }
+  // Fires once per Sunday: only on the change to "all checked", and only if nothing was sent (or attempted) yet.
+  function maybeAutoSend() { if (allChecked() && !S.sent && !sending) sendComplete(); }
+
+  function paintAttendance() {
+    var a = S.attendance, st = $("astatus");
+    if (!a) { st.hidden = true; $("asend").textContent = "Send attendance to Jake"; return; }
+    if (a.ok) setStatus(st, "ok", "✓ Sent at " + shortTime(a.at) + ": MS " + a.n.ms_s + " students / " + a.n.ms_l + " leaders, HS " + a.n.hs_s + " / " + a.n.hs_l + ".");
+    else if (a.pending) setStatus(st, "wait", "Received, but Jake's email isn't activated yet (one-time FormSubmit step). Text Jake the numbers.");
+    else setStatus(st, "bad", "✕ Didn't send" + (a.msg ? " (" + a.msg + ")" : "") + ". Tap the button to try again, or text Jake the numbers.");
+    $("asend").textContent = a.ok ? "Send corrected numbers" : "Send attendance to Jake";
+  }
+  var aBusy = false;
+  $("af").addEventListener("submit", function (e) {
+    e.preventDefault(); if (aBusy) return;
+    var n = {}, bad = false;
+    ["ms_s", "ms_l", "hs_s", "hs_l"].forEach(function (id) { var v = $(id).value.trim(); if (!/^\d{1,3}$/.test(v)) bad = true; n[id] = +v; });
+    if (bad) { setStatus($("astatus"), "bad", "Enter a whole number (0 or more) in all four boxes."); return; }
+    aBusy = true; $("asend").disabled = true; setStatus($("astatus"), "wait", "Sending to Jake…");
+    var now = new Date();
+    post({ _subject: "Sunday attendance \u2013 " + prettyDate(key), _template: "table", _captcha: "false",
+           "Sunday": prettyDate(key), "Submitted by": who(), "Submitted at": nyTime(now),
+           "MS students": n.ms_s, "MS leaders": n.ms_l, "HS students": n.hs_s, "HS leaders": n.hs_l, "Total": n.ms_s + n.ms_l + n.hs_s + n.hs_l })
+      .then(function (r) {
+        aBusy = false; $("asend").disabled = false;
+        S.attendance = { ok: r.ok, pending: r.pending, msg: r.msg, at: now.toISOString(), n: n }; save(); paintAttendance();
+        window.__lastAttendance = r;
+      });
+  });
+
+  /* ---------- events ---------- */
+  $("list").addEventListener("change", function (e) {
+    var c = e.target; if (!c.matches("input[type=checkbox]")) return;
+    if (sundayKey() !== key) { load(); }          // page left open into a new week: start that week clean
+    S.checks[c.getAttribute("data-id")] = c.checked; save(); paint(); maybeAutoSend();
+  });
+  $("csend").addEventListener("click", function () { sendComplete(); });
+  $("reset").addEventListener("click", function () {
+    var b = this;
+    if (!b.classList.contains("arm")) { b.classList.add("arm"); b.textContent = "Tap again to clear all checks"; setTimeout(function () { b.classList.remove("arm"); b.textContent = "Reset this Sunday\u2019s checklist"; }, 3500); return; }
+    b.classList.remove("arm"); b.textContent = "Reset this Sunday\u2019s checklist";
+    S = blank(); save(); ["ms_s", "ms_l", "hs_s", "hs_l"].forEach(function (id) { $(id).value = ""; }); paint(); window.scrollTo(0, 0);
+  });
+  $("who").addEventListener("input", function () { try { localStorage.setItem(NAME_KEY, $("who").value); } catch (e) {} });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && sundayKey() !== key) { load(); paint(); } });
+
+  build(); load();
+  try { $("who").value = localStorage.getItem(NAME_KEY) || ""; } catch (e) {}
+  if (S.attendance && S.attendance.n) { $("ms_s").value = S.attendance.n.ms_s; $("ms_l").value = S.attendance.n.ms_l; $("hs_s").value = S.attendance.n.hs_s; $("hs_l").value = S.attendance.n.hs_l; }
+  paint();
+  window.__setup = { sundayKey: sundayKey, state: function () { return S; }, key: function () { return key; }, steps: IDS.length };   // for tests
+})();
+</script>
+</body>
+</html>
