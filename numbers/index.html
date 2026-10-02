@@ -89,7 +89,7 @@
 
     <div class="card">
       <span class="lbl" id="who-k">Who’s submitting? <span class="req">*</span></span>
-      <div class="pick" id="who" role="group" aria-labelledby="who-k"><button type="button" data-who="Luke" aria-pressed="false">Luke</button><button type="button" data-who="Jacob" aria-pressed="false">Jacob</button><button type="button" data-who="Other" aria-pressed="false">Other</button></div>
+      <div class="pick" id="who" role="group" aria-labelledby="who-k"><button type="button" data-who="Luke" aria-pressed="false">Luke</button><button type="button" data-who="Jacob" aria-pressed="false">Jacob</button><button type="button" data-who="Jake" aria-pressed="false">Jake</button><button type="button" data-who="Other" aria-pressed="false">Other</button></div>
       <label for="name" id="name-wrap" hidden>Your name <span class="req">*</span><input type="text" id="name" autocomplete="name" maxlength="60" placeholder="First name"></label>
       <h2>Middle school</h2>
       <div class="grid">
@@ -117,9 +117,9 @@
   var TZ = "America/New_York", FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders" };
   var $ = function (id) { return document.getElementById(id); };
   var svc = "Sunday", who = "", pendingPayload = null, busy = false;
-  var JAKE_CC = "KTrimbee@ourfamily.church,djjalab@gmail.com", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" } };
+  var JAKE_CC = "KTrimbee@ourfamily.church,djjalab@gmail.com", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" }, Jake: { cc: "", campus: "Windermere" } };
   var CAMPUSES = ["Windermere", "Lakeside", "Oakland"];
-  function ccFor(w) { return [JAKE_CC].concat(WHO[w] ? [WHO[w].cc] : []).join(","); }
+  function ccFor(w) { return [JAKE_CC].concat(WHO[w] && WHO[w].cc ? [WHO[w].cc] : []).join(","); }
   function setWho(w, fromUser) {
     who = w;
     [].forEach.call(document.querySelectorAll("#who button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-who") === w)); });
@@ -210,7 +210,7 @@
   try {
     $("name").value = localStorage.getItem("numbers:name") || "";
     var c = localStorage.getItem("numbers:campus"); if (CAMPUSES.indexOf(c) >= 0) $("campus").value = c;
-    var w = localStorage.getItem("numbers:who"); if (w === "Luke" || w === "Jacob" || w === "Other") setWho(w, false);
+    var w = localStorage.getItem("numbers:who"); if (w === "Luke" || w === "Jacob" || w === "Jake" || w === "Other") setWho(w, false);
   } catch (e) {}
   $("date").max = iso(nyToday());
   setSvc(defaultSvc(), true); paintTotal();
