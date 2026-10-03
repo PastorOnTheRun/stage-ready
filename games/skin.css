@@ -1,6 +1,8 @@
 /* Family Church Students skin for the Charge! Games pages under /games/ (loaded last by charge-embed.js).
    Stage Ready colors: orange #FF7010, near-black #141110, white. Headings: Archivo Expanded (self-hosted, SIL OFL).
    Logos: Grayson's Students artwork (assets/logos), Internal White on dark screens, Internal Color on light ones. */
+/* Inter for body text, as the games used before Charge moved to Public Sans */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 @font-face {
   font-family: "Archivo Wide";
   src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2");
@@ -16,7 +18,13 @@ html[data-cg-skin="fcs"] {
   --cg-mute: #9B928A; --cg-mute2: #B9B0A8; --cg-mute3: #6B625B; --cg-soft: #D8D0C8; --cg-slate: #5E5750; --cg-text: #FFFFFF;
   --cg-paper: #F3F2EF; --cg-paper2: #E6E2DC; --cg-danger-bg: #3A1A10;
   --cg-disp: "Archivo Wide", "Arial Black", sans-serif;
+  /* keep Stage Ready's own text faces and soft corners (Charge's default is Public Sans + near-square) */
+  --cg-font: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cg-label: ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
+  --cg-round: 1;
+  --cg-lead-bg: var(--cg-gold); --cg-lead-ink: var(--cg-ink);
 }
+html[data-cg-skin="fcs"] .cg-banner { transform: none; }
 /* light pages (leader remote): white "leading" tiles would vanish on white, so leading = a pale orange */
 html[data-cg-skin="fcs"][data-cg-page$="/controller/"] { --cg-gold: #FFD3B3; --cg-gold-rgb: 255,211,179; --cg-gold-dk: #A84300; }
 html[data-cg-skin="fcs"] .wide, html[data-cg-skin="fcs"] .wide * { letter-spacing: 0; }

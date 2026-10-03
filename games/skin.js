@@ -6,7 +6,7 @@
     id: "fcs",
     ns: "fcsgames",                     // own rooms + saved scores: never shares a room or a save with the public Charge site
     brand: "Family Church Students",
-    css: games + "skin.css?v=1",
+    css: games + "skin.css?v=2",
     logo: { dark: site + "assets/logos/students-internal-white.svg", light: site + "assets/logos/students-internal-color.svg" },
     home: { href: site, label: "← Stage Ready" }
   };
