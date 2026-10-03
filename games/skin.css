@@ -1,0 +1,32 @@
+/* Family Church Students skin for the Charge! Games pages under /games/ (loaded last by charge-embed.js).
+   Stage Ready colors: orange #FF7010, near-black #141110, white. Headings: Archivo Expanded (self-hosted, SIL OFL).
+   Logos: Grayson's Students artwork (assets/logos), Internal White on dark screens, Internal Color on light ones. */
+@font-face {
+  font-family: "Archivo Wide";
+  src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2");
+  font-weight: 800 900;              /* every display weight the games ask for renders heavy, like the rest of Stage Ready */
+  font-style: normal;
+  font-display: swap;
+}
+html[data-cg-skin="fcs"] {
+  --cg-ink: #141110; --cg-ink-rgb: 20,17,16; --cg-deep: #0C0A09; --cg-deep-rgb: 12,10,9;
+  --cg-panel: #1F1A17; --cg-panel2: #2A2420; --cg-line: #3A322C; --cg-line2: #3B342E;
+  --cg-acc: #FF7010; --cg-acc-rgb: 255,112,16; --cg-acc-dk: #A84300; --cg-acc-dk2: #8A3D0A; --cg-on-acc: #141110;
+  --cg-gold: #FFFFFF; --cg-gold-rgb: 255,255,255; --cg-gold-dk: #B9B0A8; --cg-gold-lt: #FFFFFF;
+  --cg-mute: #9B928A; --cg-mute2: #B9B0A8; --cg-mute3: #6B625B; --cg-soft: #D8D0C8; --cg-slate: #5E5750; --cg-text: #FFFFFF;
+  --cg-paper: #F3F2EF; --cg-paper2: #E6E2DC; --cg-danger-bg: #3A1A10;
+  --cg-disp: "Archivo Wide", "Arial Black", sans-serif;
+}
+/* light pages (leader remote): white "leading" tiles would vanish on white, so leading = a pale orange */
+html[data-cg-skin="fcs"][data-cg-page$="/controller/"] { --cg-gold: #FFD3B3; --cg-gold-rgb: 255,211,179; --cg-gold-dk: #A84300; }
+html[data-cg-skin="fcs"] .wide, html[data-cg-skin="fcs"] .wide * { letter-spacing: 0; }
+
+/* Students wordmark instead of the square Charge mark (the artwork is 1693 x 493) */
+html[data-cg-skin="fcs"] img.cg-skin-logo { width: auto !important; display: block; flex: 0 0 auto; }
+html[data-cg-skin="fcs"] .top img.cg-skin-logo { height: 5.2rem !important; }
+html[data-cg-skin="fcs"] .hd img.cg-skin-logo { height: 30px !important; }
+/* leader remote header: the wordmark + wide heading + Names + status pill share 402 px */
+html[data-cg-skin="fcs"] .hd img.cg-skin-logo { height: 22px !important; }
+html[data-cg-skin="fcs"] .hd h1 { font-size: 12px; }
+@media (max-width: 380px) { html[data-cg-skin="fcs"] .hd img.cg-skin-logo { display: none; } html[data-cg-skin="fcs"] .hd .t { margin-left: 0; padding-left: 0; border-left: 0; } }
+html[data-cg-skin="fcs"] .hd .t { margin-left: 8px; padding-left: 8px; }
