@@ -80,6 +80,12 @@
           "type": "link",
           "url": "https://pastorontherun.github.io/stage-ready/games/sword-drills/",
           "note": "Open on the TV/projector, then join from your phone with the code or QR on the screen. 2 to 50 tables, buzz-in with automatic scoring, Classic/Themed mode and a Wildcard round. Optional: each table can buzz in and send a team name from a phone (you approve names first)."
+        },
+        {
+          "title": "Who Am I? (Bible character game)",
+          "type": "link",
+          "url": "https://pastorontherun.github.io/stage-ready/games/who-am-i/",
+          "note": "Open on the TV/projector, then join from your phone with the code or QR on the screen. Clues about a Bible character appear one at a time; fewer clues means more points (50/40/30/20/10). Same table buzzers, name approval and Undo as Sword Drills. The first leader phone to join becomes host; a co-leader needs the passcode from the host's Settings."
         }
       ]
     }
