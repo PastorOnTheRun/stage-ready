@@ -1,28 +1,97 @@
 (() => {
-  const encouragementMessages = {
-    opening: {
-      title: "Opening Charge",
-      passage: "Psalm 95:1–3",
-      setup: "Welcome students and help them turn their attention to God before worship begins.",
-      beats: [
-        ["Welcome", "We are glad you are here. Take a breath and be fully present."],
-        ["Scripture", "Psalm 95 calls us to sing with joy because the Lord is great and worthy of praise."],
-        ["Invitation", "Whatever kind of week you had, bring your honest self to Jesus today."],
-        ["Transition", "Invite the room to stand and worship together."]
-      ]
+  // Sunday run of show (Opening Charge, Worship Lean-In, Dismissal from Worship).
+  // One entry per Sunday (YYYY-MM-DD). The app shows the entry for today if it is Sunday,
+  // otherwise the coming Sunday (America/New_York); after the last entry it keeps the latest one.
+  // Weekly swap: add the next Sunday's entry (Jake-approved wording, word for word). See REFRESH.md.
+  const runOfShow = [
+    {
+      sunday: "2026-10-04",
+      moments: {
+        opening: {
+          title: "Opening Charge",
+          passage: "Psalm 95:1–3",
+          setup: "Welcome students and help them turn their attention to God before worship begins.",
+          beats: [
+            ["Welcome", "We are glad you are here. Take a breath and be fully present."],
+            ["Scripture", "Psalm 95 calls us to sing with joy because the Lord is great and worthy of praise."],
+            ["Invitation", "Whatever kind of week you had, bring your honest self to Jesus today."],
+            ["Transition", "Invite the room to stand and worship together."]
+          ]
+        },
+        worship: {
+          title: "Worship Lean-In",
+          passage: "Romans 12:1",
+          setup: "Give the room one clear invitation to respond to Jesus as worship begins.",
+          beats: [
+            ["Name the moment", "It is easy to sing while our attention is somewhere else."],
+            ["Scripture", "Romans 12 calls us to offer our whole lives to God as worship."],
+            ["Physical response", "Cue the room: “Choose a posture of surrender. Lift your hands, hold your hands open, or close your eyes and pray.” Then say: “Tell Jesus, ‘You have my attention.’”"],
+            ["Transition", "Encourage students to sing honestly and respond to God together."]
+          ]
+        }
+      }
     },
-    worship: {
-      title: "Worship Lean-In",
-      passage: "Romans 12:1",
-      setup: "Give the room one clear invitation to respond to Jesus as worship begins.",
-      beats: [
-        ["Name the moment", "It is easy to sing while our attention is somewhere else."],
-        ["Scripture", "Romans 12 calls us to offer our whole lives to God as worship."],
-        ["Physical response", "Cue the room: “Choose a posture of surrender. Lift your hands, hold your hands open, or close your eyes and pray.” Then say: “Tell Jesus, ‘You have my attention.’”"],
-        ["Transition", "Encourage students to sing honestly and respond to God together."]
-      ]
+    {
+      // Prayer & Worship (Week 1) · Redirection · Psalm 63:3–4 CSB · approved by Jake via Janine
+      sunday: "2026-10-11",
+      moments: {
+        opening: {
+          title: "Opening Charge",
+          passage: "Psalm 63:3–4",
+          setup: "Welcome students and help them turn their attention to God before worship begins.",
+          beats: [
+            ["Welcome", "\"Good morning! We're so glad you're here. Wherever you just came from, take a breath and be fully here.\""],
+            ["Scripture", "\"We're starting a new series called Prayer & Worship, and this week's message is called Redirection. David wrote Psalm 63 in the wilderness, and he said this: 'My lips will glorify you because your faithful love is better than life. So I will bless you as long as I live; at your name, I will lift up my hands.'\""],
+            ["Invitation", "\"Better than life. Better than your phone, your grades, your friends, your plans. Worship isn't a performance. It's a conversation with a God who loves you. So whatever kind of week you had, bring it to him.\""],
+            ["Transition", "\"Let's stand and tell him he's worth it. Let's worship together.\""]
+          ]
+        },
+        worship: {
+          title: "Worship Lean-In",
+          passage: "Psalm 63:3–4",
+          setup: "Build on the opening charge and give the room one clear invitation to respond to Jesus in worship.",
+          beats: [
+            ["Name the moment", "\"It's easy to sing the words while our minds are somewhere else. That happens to all of us.\""],
+            ["Scripture", "\"Remember what David said: 'your faithful love is better than life… at your name, I will lift up my hands.' David didn't lift his hands because everything was going great. He was in the wilderness. He worshiped because he needed God, and because he loved him.\""],
+            ["Physical response", "Cue the room: \"So let's do what David did. Lift your hands, hold your hands open, or close your eyes and pray.\" Then say: \"Tell God, 'I need you, and your love is better than anything else I'm chasing.'\""],
+            ["Transition", "\"Let's sing this next one like it's a prayer, honestly and together.\""]
+          ]
+        },
+        dismissal: {
+          title: "Dismissal from Worship",
+          passage: "Psalm 63:3–4",
+          setup: "Close the worship set and set the stage for the teaching that comes next.",
+          beats: [
+            ["Land it", "\"You can go ahead and have a seat. What we just did, singing, praying, lifting our hands, wasn't just the warm-up. That was us talking to God.\""],
+            ["Scripture", "\"David said, 'I will bless you as long as I live.' That means worship doesn't stop when the music does. Prayer and worship are an ongoing conversation with a God who actually wants to hear from you.\""],
+            ["Set the stage", "\"This week's message is called Redirection, and it's about turning our attention back to God and what it looks like to depend on him.\""],
+            ["Transition", "\"So open your heart, open your Bible, and let's lean in to what God has for us next.\""]
+          ]
+        }
+      }
     }
-  };
+  ];
+
+  const STAGE_MOMENTS = ["opening", "worship", "dismissal"];
+
+  function runOfShowEntry() {
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" })
+      .formatToParts(new Date()).map(part => [part.type, part.value]));
+    const today = `${p.year}-${p.month}-${p.day}`;
+    const sorted = [...runOfShow].sort((a, b) => a.sunday.localeCompare(b.sunday));
+    return sorted.find(entry => entry.sunday >= today) || sorted[sorted.length - 1];
+  }
+
+  const currentRunOfShow = runOfShowEntry();
+  const encouragementMessages = currentRunOfShow.moments;
+
+  // Show a stage-moment tile only when this Sunday's entry has that moment.
+  document.querySelectorAll(".mode-card[data-mode]").forEach(card => {
+    if (STAGE_MOMENTS.includes(card.dataset.mode) && !encouragementMessages[card.dataset.mode]) {
+      card.hidden = true;
+      card.dataset.off = "true";
+    }
+  });
 
   let announcementPrompts = [];
   let announcementUpdatedAt = "";
@@ -33,6 +102,12 @@
       ["0:15", "Share the Scripture truth"],
       ["0:35", "Invite a response"],
       ["0:50", "Transition into worship"]
+    ],
+    dismissal: [
+      ["0:00", "Land the worship moment"],
+      ["0:15", "Share the Scripture truth"],
+      ["0:30", "Set the stage for the message"],
+      ["0:45", "Transition into the teaching"]
     ]
   };
 
@@ -239,6 +314,8 @@
         ? "Opening Charge"
         : state.mode === "worship"
         ? "Worship Lean-In"
+        : state.mode === "dismissal"
+        ? "Dismissal from Worship"
         : "Stage Ready";
     }
     showScreen("workspace");
@@ -266,7 +343,9 @@
     const card = $("#prompt-card");
     $("#open-pacing").hidden = false;
     const isEncouragement = state.mode !== "announcements";
-    const type = isEncouragement
+    const type = state.mode === "dismissal"
+      ? "Closing encouragement"
+      : isEncouragement
       ? "Opening encouragement"
       : state.isLiveUse
       ? `${liveCampus()} · Wed + Sun`
@@ -308,8 +387,8 @@
     }
 
     card.innerHTML = body;
-    const runOfShow = isEncouragement ? pacing.encouragement : announcementPacing(state.prompt.events.length);
-    $("#run-list").innerHTML = runOfShow.map(item => `<li><span class="run-time">${item[0]}</span><span class="run-copy">${item[1]}</span></li>`).join("");
+    const runList = isEncouragement ? (pacing[state.mode] || pacing.encouragement) : announcementPacing(state.prompt.events.length);
+    $("#run-list").innerHTML = runList.map(item => `<li><span class="run-time">${item[0]}</span><span class="run-copy">${item[1]}</span></li>`).join("");
   }
 
   function startReview() {
@@ -493,18 +572,18 @@
       Promise.resolve(document.modelContext.registerTool({
         name: "start_ministry_segment",
         title: "Start ministry segment",
-        description: "Start an opening charge, worship lean-in, Sunday AM announcements, or campus announcements for Windermere or Lakeside, beginning with a 60-second preparation period.",
+        description: "Start an opening charge, worship lean-in, dismissal from worship, Sunday AM announcements, or campus announcements for Windermere or Lakeside, beginning with a 60-second preparation period.",
         inputSchema: {
           type: "object",
-          properties: { mode: { type: "string", enum: ["opening", "worship", "campus-windermere", "campus-lakeside"] } },
+          properties: { mode: { type: "string", enum: ["opening", "worship", "dismissal", "campus-windermere", "campus-lakeside"] } },
           required: ["mode"],
           additionalProperties: false
         },
         annotations: { readOnlyHint: false, untrustedContentHint: false },
         execute(input) {
-          const validModes = ["opening", "worship", "campus-windermere", "campus-lakeside", ...Object.keys(MODE_ALIASES)];
-          if (!input || !validModes.includes(input.mode)) throw new Error("Choose opening, worship, campus-windermere, or campus-lakeside.");
-          if (input.mode !== "opening" && input.mode !== "worship" && !announcementPrompts.length) throw new Error("Announcements are not available yet.");
+          const validModes = [...STAGE_MOMENTS.filter(m => encouragementMessages[m]), "campus-windermere", "campus-lakeside", ...Object.keys(MODE_ALIASES)];
+          if (!input || !validModes.includes(input.mode)) throw new Error("Choose opening, worship, dismissal (when this Sunday has one), campus-windermere, or campus-lakeside.");
+          if (!STAGE_MOMENTS.includes(input.mode) && !announcementPrompts.length) throw new Error("Announcements are not available yet.");
           selectMode(input.mode);
           return { mode: input.mode, phase: state.phase, reviewSeconds: 60 };
         }
@@ -513,7 +592,7 @@
   }
 
   // Expose for node-less browser checks
-  window.__stageReady = { state, startDelivery, updateTimer, runTimer, clearTimer, announcementPacing };
+  window.__stageReady = { state, startDelivery, updateTimer, runTimer, clearTimer, announcementPacing, runOfShowSunday: currentRunOfShow.sunday };
 
   loadAnnouncements();
 })();

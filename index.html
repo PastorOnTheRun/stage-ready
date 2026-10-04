@@ -12,34 +12,34 @@
   <meta name="application-name" content="Stage Ready">
   <meta name="description" content="Leader and stage team hub for Family Church Students: guides, announcements, order of service, calendar and resources.">
   <title>Stage Ready</title>
-  <link rel="manifest" href="manifest.webmanifest?v=20260928a">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png?v=20260928a">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=20260928a">
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=20260928a">
-  <link rel="shortcut icon" href="icons/favicon.ico?v=20260928a">
+  <link rel="manifest" href="manifest.webmanifest?v=20261004b">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png?v=20261004b">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=20261004b">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=20261004b">
+  <link rel="shortcut icon" href="icons/favicon.ico?v=20261004b">
   <link rel="preload" href="assets/fonts/archivo-wide-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20260928a">
+  <link rel="stylesheet" href="styles.css?v=20261004b">
 </head>
 <body data-phase="choose">
   <main class="app tab-panel active" id="tab-announcements" data-tab="announcements" aria-label="Announcements &amp; Stage Stuff">
     <section class="screen active" id="chooser" aria-labelledby="chooser-title">
       <!-- Landing (Jake, Sep 26, 2026): STUDENTS wordmark, corner labels, boxed filter row, colour-block tiles -->
       <header class="brand-bar" aria-label="Family Church Students">
-        <img class="brand-logo brand-logo-color" src="assets/logos/students-internal-color.svg?v=20260928a" alt="" width="137" height="40">
-        <img class="brand-logo brand-logo-on-dark" src="assets/logos/students-internal-white.svg?v=20260928a" alt="" width="137" height="40">
+        <img class="brand-logo brand-logo-color" src="assets/logos/students-internal-color.svg?v=20261004b" alt="" width="137" height="40">
+        <img class="brand-logo brand-logo-on-dark" src="assets/logos/students-internal-white.svg?v=20261004b" alt="" width="137" height="40">
         <div class="brand-text">
           <strong>Stage Ready</strong>
           <span>Family Church Students</span>
         </div>
       </header>
       <div class="lp-mast" role="img" aria-label="Students">
-        <img class="lp-logo" src="assets/logos/students-internal-color.svg?v=20260928a" alt="Students" width="1693" height="493">
+        <img class="lp-logo" src="assets/logos/students-internal-color.svg?v=20261004b" alt="Students" width="1693" height="493">
       </div>
       <div class="lp-corners"><span class="lp-corner-l">Family Church</span><span class="lp-corner-c">Stage Ready</span><span class="lp-corner-r" aria-hidden="true"></span></div>
       <h1 id="chooser-title" class="page-title lp-title">Announcements &amp; Stage Stuff</h1>
       <div class="lp-seg" role="tablist" aria-label="Filter tiles">
         <button type="button" role="tab" class="lp-seg-btn" data-filter="all" aria-selected="true"><span>All</span><small id="lp-count-all">9</small></button>
-        <button type="button" role="tab" class="lp-seg-btn" data-filter="stage" aria-selected="false"><span>Stage</span><small>4</small></button>
+        <button type="button" role="tab" class="lp-seg-btn" data-filter="stage" aria-selected="false"><span>Stage</span><small id="lp-count-stage">4</small></button>
         <button type="button" role="tab" class="lp-seg-btn" data-filter="leaders" aria-selected="false"><span>Leaders</span><small id="lp-count-leaders">5</small></button>
       </div>
       <div class="mode-grid lp-grid" id="lp-grid">
@@ -59,6 +59,10 @@
           <span class="lp-block" aria-hidden="true"><span class="lp-big">1:00</span></span>
           <span class="lp-panel"><span class="lp-label"><span class="tag">1 min</span> · Stage</span><span class="mode-title">Worship Lean-In</span><span class="lp-detail">Prep&nbsp;1:00 · Live&nbsp;1:00</span></span>
         </button>
+        <button class="mode-card lp-tile lp-wide tone-black" type="button" data-mode="dismissal" data-group="stage">
+          <span class="lp-block" aria-hidden="true"><span class="lp-big">1:00</span></span>
+          <span class="lp-panel"><span class="lp-label"><span class="tag">1 min</span> · Stage</span><span class="mode-title">Dismissal from Worship</span><span class="lp-detail">Prep&nbsp;1:00 · Live&nbsp;1:00</span></span>
+        </button>
       </div>
       <p class="home-meta" id="home-ann-meta">Loading…</p>
     </section>
@@ -66,7 +70,7 @@
     <section class="screen" id="workspace" aria-labelledby="status-title">
       <div class="mode-chrome">
         <button class="btn ghost small" type="button" data-home>← Back</button>
-        <img class="mode-chrome-logo" src="assets/logos/students-internal-white.svg?v=20260928a" alt="" width="137" height="40">
+        <img class="mode-chrome-logo" src="assets/logos/students-internal-white.svg?v=20261004b" alt="" width="137" height="40">
         <p class="mode-chrome-label" id="mode-chrome-label">Stage Ready</p>
       </div>
       <div class="status-strip" id="status-strip">
@@ -97,7 +101,7 @@
     <section class="screen" id="finish" aria-labelledby="finish-title">
       <div class="mode-chrome">
         <button class="btn ghost small" type="button" data-home>← Back</button>
-        <img class="mode-chrome-logo mode-chrome-logo-on-light" src="assets/logos/students-internal-color.svg?v=20260928a" alt="" width="137" height="40">
+        <img class="mode-chrome-logo mode-chrome-logo-on-light" src="assets/logos/students-internal-color.svg?v=20261004b" alt="" width="137" height="40">
         <p class="mode-chrome-label">Stage Ready</p>
       </div>
       <div class="finish-card">
@@ -115,7 +119,7 @@
 
   <main class="app tab-panel" id="tab-guides" data-tab="guides" aria-label="Small Group Leader Guides" hidden>
     <header class="lp-head" aria-label="Family Church Students · Stage Ready">
-      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20260928a" alt="" width="1693" height="493">
+      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20261004b" alt="" width="1693" height="493">
       <div class="lp-head-labels" aria-hidden="true"><span>Family Church</span><span>Stage Ready</span></div>
     </header>
     <h1 class="page-title">Small Group Leader Guides</h1>
@@ -123,7 +127,7 @@
   </main>
   <main class="app tab-panel" id="tab-service" data-tab="service" aria-label="Order of Service" hidden>
     <header class="lp-head" aria-label="Family Church Students · Stage Ready">
-      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20260928a" alt="" width="1693" height="493">
+      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20261004b" alt="" width="1693" height="493">
       <div class="lp-head-labels" aria-hidden="true"><span>Family Church</span><span>Stage Ready</span></div>
     </header>
     <h1 class="page-title">Order of Service</h1>
@@ -131,7 +135,7 @@
   </main>
   <main class="app tab-panel" id="tab-calendar" data-tab="calendar" aria-label="Calendar" hidden>
     <header class="lp-head" aria-label="Family Church Students · Stage Ready">
-      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20260928a" alt="" width="1693" height="493">
+      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20261004b" alt="" width="1693" height="493">
       <div class="lp-head-labels" aria-hidden="true"><span>Family Church</span><span>Stage Ready</span></div>
     </header>
     <h1 class="page-title">Calendar</h1>
@@ -139,7 +143,7 @@
   </main>
   <main class="app tab-panel" id="tab-resources" data-tab="resources" aria-label="Resources" hidden>
     <header class="lp-head" aria-label="Family Church Students · Stage Ready">
-      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20260928a" alt="" width="1693" height="493">
+      <img class="lp-head-logo" src="assets/logos/students-internal-color.svg?v=20261004b" alt="" width="1693" height="493">
       <div class="lp-head-labels" aria-hidden="true"><span>Family Church</span><span>Stage Ready</span></div>
     </header>
     <h1 class="page-title">Resources</h1>
@@ -176,8 +180,8 @@
   </aside>
 
   <p class="sr-only" id="announcer" aria-live="polite"></p>
-  <script src="app.js?v=20260928a"></script>
-  <script src="tabs.js?v=20260928a"></script>
-  <script src="landing.js?v=20260928a"></script>
+  <script src="app.js?v=20261004b"></script>
+  <script src="tabs.js?v=20261004b"></script>
+  <script src="landing.js?v=20261004b"></script>
 </body>
 </html>

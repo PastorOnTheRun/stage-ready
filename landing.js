@@ -53,8 +53,9 @@
     }
     grid.insertAdjacentHTML("beforeend", tiles.join(""));
     const lead = grid.querySelectorAll('[data-group="leaders"]').length;
-    const stage = grid.querySelectorAll('[data-group="stage"]').length;
+    const stage = grid.querySelectorAll('[data-group="stage"]:not([data-off])').length;
     $("#lp-count-leaders").textContent = lead; $("#lp-count-all").textContent = lead + stage;
+    const stageCount = $("#lp-count-stage"); if (stageCount) stageCount.textContent = stage;
     grid.querySelectorAll("a.lp-link").forEach(a => a.addEventListener("click", (e) => {
       e.preventDefault();
       $(`.tabbar .tab[data-tab="${a.dataset.go}"]`)?.click();
@@ -69,7 +70,7 @@
   document.querySelectorAll(".lp-seg-btn").forEach(btn => btn.addEventListener("click", () => {
     const f = btn.dataset.filter;
     document.querySelectorAll(".lp-seg-btn").forEach(b => b.setAttribute("aria-selected", String(b === btn)));
-    document.querySelectorAll("#lp-grid .lp-tile").forEach(t => { t.hidden = !(f === "all" || t.dataset.group === f); });
+    document.querySelectorAll("#lp-grid .lp-tile").forEach(t => { t.hidden = Boolean(t.dataset.off) || !(f === "all" || t.dataset.group === f); });   // data-off: stage moment not in this Sunday's run of show
   }));
   build().catch(() => { /* leader tiles are optional; the stage tiles still work */ });
 })();

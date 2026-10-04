@@ -10,7 +10,7 @@ Live artifact: single self-contained `index.html` (CSS + JS inlined). Weekly dat
    - Brand: “Stage Ready” mark (▲) + campus-neutral note “Family Church Students” (changed from “Family Church Students · Windermere” on Sep 25, 2026; the header is the same on every tab)
    - Eyebrow + H1 “Announcements team”
    - Intro copy about prepare / green speak / red overtime
-   - Four mode cards in 2×2 grid
+   - Stage mode cards in a 2-column grid (campus dashboards, Opening Charge, Worship Lean-In, and Dismissal from Worship when this Sunday has one)
 
 2. **Workspace (prep + speaking)**
    - Status strip with phase label, title, help text, large clock
@@ -26,8 +26,9 @@ Live artifact: single self-contained `index.html` (CSS + JS inlined). Weekly dat
 
 | Mode | Prep | Speak | Purpose |
 |------|------|-------|---------|
-| Opening Charge | 60s skippable | 60s | Welcome, Scripture, invite, transition |
-| Worship Lean-In | 60s skippable | 60s | Romans 12:1 lean-in + physical posture cue |
+| Opening Charge | 60s skippable | 60s | Welcome, Scripture, invite, transition (this Sunday's run of show) |
+| Worship Lean-In | 60s skippable | 60s | Lean-in + physical posture cue (this Sunday's run of show) |
+| Dismissal from Worship | 60s skippable | 60s | Land worship, Scripture, set the stage for the message, transition (added Oct 11, 2026) |
 | Sunday AM Announcements | 60s skippable | 180s | Lead Sunday morning announcements with the sunday-tagged list |
 | Live Announcements | 60s skippable | 180s | Lead live/midweek announcements with the live-tagged list |
 
@@ -45,13 +46,37 @@ Live Announcements uses the same content mode as Practice but `isLiveUse` change
 
 ## Coaching copy (exact)
 
-### Opening Charge — Psalm 95:1–3
-- Setup: Welcome students and help them turn their attention to God before worship begins.
-- Beats: Welcome / Scripture / Invitation / Transition (see live source)
+### Sunday run of show (dated, swapped weekly; Oct 4, 2026)
+The three Sunday stage moments live in `app.js` → `runOfShow`, **one entry per Sunday date**:
 
-### Worship Lean-In — Romans 12:1
+```js
+{ sunday: "2026-10-11", moments: { opening: {…}, worship: {…}, dismissal: {…} } }
+```
+
+Each moment has `title`, `passage` (CSB reference, shown as the accent chip), `setup` (the Setup line) and `beats` (four `[label, copy]` pairs, shown as the numbered steps). The app picks the entry for **today if it is Sunday, otherwise the coming Sunday** (America/New_York); after the last entry it keeps showing the latest one. So Sunday's wording stays up all day Sunday and the next Sunday's wording appears Monday morning.
+- Mode keys: `opening` = Opening Charge, `worship` = Worship Lean-In, `dismissal` = Dismissal from Worship. All three are Stage tiles on home (Dismissal is the full-width tile under the other two) and open the same dark prep/live/overtime screen.
+- If an entry has no moment for a key, that tile is hidden for that week and the Stage/All counts drop to match (the Oct 4 entry has only Opening Charge and Worship Lean-In, exactly as before).
+- Kicker chip: "Opening encouragement" for Opening Charge and Worship Lean-In, "Closing encouragement" for Dismissal. Pacing sheet: Opening/Worship use the 0:00/0:15/0:35/0:50 encouragement pacing; Dismissal uses 0:00 Land the worship moment / 0:15 Share the Scripture truth / 0:30 Set the stage for the message / 0:45 Transition into the teaching.
+- **Wording is Jake-approved and used word for word** (quotes, apostrophes and ellipses as written). Weekly process: see `REFRESH.md` → "Sunday run of show".
+
+| Sunday | Series / message | Scripture (CSB) | Moments |
+|---|---|---|---|
+| 2026-10-04 | (original copy) | Opening: Psalm 95:1–3 · Worship: Romans 12:1 | Opening Charge, Worship Lean-In |
+| 2026-10-11 | Prayer & Worship (Week 1) · Redirection | Psalm 63:3–4 (all three) | Opening Charge, Worship Lean-In, Dismissal from Worship |
+
+### Opening Charge — Oct 4, 2026 entry (Psalm 95:1–3)
+- Setup: Welcome students and help them turn their attention to God before worship begins.
+- Beats: Welcome / Scripture / Invitation / Transition (see `app.js`)
+
+### Worship Lean-In — Oct 4, 2026 entry (Romans 12:1)
 - Setup: Give the room one clear invitation to respond to Jesus as worship begins.
 - Beats include physical-response cue: “Choose a posture of surrender…” / “You have my attention.”
+
+### Oct 11, 2026 entry (Psalm 63:3–4)
+- Opening Charge setup: Welcome students and help them turn their attention to God before worship begins.
+- Worship Lean-In setup: Build on the opening charge and give the room one clear invitation to respond to Jesus in worship.
+- Dismissal from Worship setup: Close the worship set and set the stage for the teaching that comes next.
+- Beats: exactly as in the approved run of show (`/workspace/run-of-show/2026-10-11.md`).
 
 ### Announcements framework (always shown)
 1. Introduce yourself
