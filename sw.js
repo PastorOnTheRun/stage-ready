@@ -2,7 +2,7 @@
    Network-first for everything (HTML, JSON data, JS, CSS, icons) so Monday/Thursday refreshes
    and new deploys show up immediately; the cache is only an offline fallback.
    Bump CACHE_VERSION on every deploy that changes app files. */
-const CACHE_VERSION = "stage-ready-v2026-10-04b";
+const CACHE_VERSION = "stage-ready-v2026-10-11a";
 const SHELL = [
   "./",
   "./index.html",
@@ -16,6 +16,7 @@ const SHELL = [
   "./service.json",
   "./calendar.json",
   "./resources.json",
+  "./bus-roster/",   // bus roster page (contacts live in localStorage on the phone, not in this cache)
   "./assets/fc-logo-clean.png",
   "./assets/logos/students-internal-color.svg",
   "./assets/logos/students-internal-white.svg",
