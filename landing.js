@@ -12,11 +12,10 @@
   const getJSON = async (name) => { const r = await fetch(`${name}.json`, { cache: "no-store" }); if (!r.ok) throw new Error(name); return r.json(); };
   const ICON = {
     service: '<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.5"/><circle cx="4.5" cy="12" r="1.5"/><circle cx="4.5" cy="18" r="1.5"/></svg>',
-    bus: '<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2.5"/><path d="M4 11h16M8 17v3M16 17v3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/></svg>',
     resources: '<svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg>'
   };
-  const tile = ({ tone, go, href, level, big, icon, label, title, detail, wide }) =>
-    `<a class="lp-tile${href ? "" : " lp-link"} tone-${tone}${wide ? " lp-wide" : ""}" href="${href ? esc(href) : `#${go}`}"${href ? "" : ` data-go="${go}"`}${level ? ` data-level="${level}"` : ""} data-group="leaders">
+  const tile = ({ tone, go, level, big, icon, label, title, detail, wide }) =>
+    `<a class="lp-tile lp-link tone-${tone}${wide ? " lp-wide" : ""}" href="#${go}" data-go="${go}"${level ? ` data-level="${level}"` : ""} data-group="leaders">
       <span class="lp-block" aria-hidden="true">${icon ? `<span class="lp-icon">${ICON[icon]}</span>` : ""}${big ? (Array.isArray(big) ? `<span class="lp-big lp-date"><small>${esc(big[0])}</small>${esc(big[1])}</span>` : `<span class="lp-big">${esc(big)}</span>`) : ""}</span>
       <span class="lp-panel"><span class="lp-label">${esc(label)}</span><strong class="lp-ttl">${esc(title)}</strong>${detail ? `<span class="lp-detail">${esc(detail)}</span>` : ""}</span>
     </a>`;
@@ -52,8 +51,6 @@
       tiles.push(tile({ tone: "orange", go: "resources", icon: "resources", wide: true, label: "Resources",
         title: band ? band.title : (r.value.title || "Resources"), detail: band ? `Code ${band.inviteCode}` : `${items.length} links and tools` }));
     }
-    // Bus roster (Oct 11, 2026): its own page; contacts live only in localStorage on the phone
-    tiles.push(tile({ tone: "black", href: "bus-roster/", icon: "bus", wide: true, label: "Trip tool", title: "Bus roster", detail: "Contacts · WhatsApp · daily talk-to" }));
     grid.insertAdjacentHTML("beforeend", tiles.join(""));
     const lead = grid.querySelectorAll('[data-group="leaders"]').length;
     const stage = grid.querySelectorAll('[data-group="stage"]:not([data-off])').length;

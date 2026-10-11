@@ -1,5 +1,5 @@
 {
-  "updatedAt": "October 11, 2026",
+  "updatedAt": "October 3, 2026",
   "title": "Resources",
   "intro": "Links, forms, PDFs, and the tools the team uses.",
   "groups": [
@@ -49,13 +49,6 @@
           "type": "link",
           "url": "https://pastorontherun.github.io/stage-ready/numbers/",
           "note": "Sunday and Wednesday headcounts for each campus (MS/HS students and leaders). Numbers only, emailed to Jake."
-        },
-        {
-          "title": "Bus roster",
-          "type": "link",
-          "url": "https://pastorontherun.github.io/stage-ready/bus-roster/",
-          "note": "Bus roster — contacts, WhatsApp, daily talk-to. Add or paste names and phones (saved only on your phone), tap to WhatsApp, call or copy a number, and get one person a day to talk to so you meet everyone on the trip. Export or import CSV.",
-          "source": "Jake (Oct 11, 2026)"
         },
         {
           "title": "Be Class",
