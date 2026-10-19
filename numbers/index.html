@@ -91,6 +91,7 @@
       <span class="lbl" id="who-k">Who’s submitting? <span class="req">*</span></span>
       <div class="pick" id="who" role="group" aria-labelledby="who-k"><button type="button" data-who="Luke" aria-pressed="false">Luke</button><button type="button" data-who="Jacob" aria-pressed="false">Jacob</button><button type="button" data-who="Jake" aria-pressed="false">Jake</button><button type="button" data-who="Other" aria-pressed="false">Other</button></div>
       <label for="name" id="name-wrap" hidden>Your name <span class="req">*</span><input type="text" id="name" autocomplete="name" maxlength="60" placeholder="First name"></label>
+      <div id="std">
       <h2>Middle school</h2>
       <div class="grid">
         <label>MS students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="ms_s"></label>
@@ -101,7 +102,17 @@
         <label>HS students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="hs_s"></label>
         <label>HS leaders<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="hs_l"></label>
       </div>
-      <div class="total"><span>Total</span><b id="total">0</b></div>
+      </div>
+      <div id="lk" hidden>
+      <h2>Lakeside Sunday</h2>
+      <div class="grid">
+        <label>1st service students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="lk_s1"></label>
+        <label>2nd service students<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="lk_s2"></label>
+        <label>Leaders<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="999" id="lk_l"></label>
+      </div>
+      <div class="total"><span>Students (1st + 2nd)</span><b id="lk_st">0</b></div>
+      </div>
+      <div class="total"><span id="total-k">Total</span><b id="total">0</b></div>
       <button class="btn" id="send" type="submit">Send numbers to Jake</button>
       <div class="st" id="status" hidden></div>
       <button class="btn dark" id="retry" type="button" hidden>Try again</button>
@@ -114,7 +125,12 @@
   "use strict";
   // SAME endpoint as /sunday-setup/ (keep them in sync; one FormSubmit activation covers both). See REFRESH.md.
   var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
-  var TZ = "America/New_York", FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders" };
+  var TZ = "America/New_York", STD_FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LK_FIELDS = ["lk_s1", "lk_s2", "lk_l"], FIELDS = STD_FIELDS,
+    ALL_FIELDS = STD_FIELDS.concat(LK_FIELDS),
+    LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders", lk_s1: "1st service students", lk_s2: "2nd service students", lk_l: "Leaders" };
+  // Luke (Lakeside) Sunday has two services: 1st/2nd service students + one Leaders number. Wednesday and other campuses unchanged.
+  function isSplit() { return who === "Luke" && svc === "Sunday"; }
+  function applyMode() { var sp = isSplit(); FIELDS = sp ? LK_FIELDS : STD_FIELDS; $("std").hidden = sp; $("lk").hidden = !sp; $("total-k").textContent = sp ? "Grand total (with leaders)" : "Total"; if (typeof paintTotal === "function") paintTotal(); }
   var $ = function (id) { return document.getElementById(id); };
   var svc = "Sunday", who = "", pendingPayload = null, busy = false;
   var JAKE_CC = "KTrimbee@ourfamily.church,djjalab@gmail.com", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" }, Jake: { cc: "", campus: "Windermere" } };
@@ -125,6 +141,7 @@
     [].forEach.call(document.querySelectorAll("#who button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-who") === w)); });
     $("who").classList.remove("bad");
     $("name-wrap").hidden = w !== "Other";
+    applyMode();
     if (fromUser && WHO[w]) $("campus").value = WHO[w].campus;     // default campus for Luke / Jacob (still changeable)
     try { localStorage.setItem("numbers:who", w); if (fromUser && WHO[w]) localStorage.setItem("numbers:campus", WHO[w].campus); } catch (e) {}
   }
@@ -151,13 +168,14 @@
     svc = name;
     [].forEach.call(document.querySelectorAll(".seg button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-svc") === name)); });
     if (moveDate) $("date").value = mostRecent(name);
-    dateNote();
+    dateNote(); applyMode();
   }
 
   /* ---------- form ---------- */
   function nums() { var o = {}; FIELDS.forEach(function (id) { o[id] = $(id).value.trim(); }); return o; }
   function total() { var n = nums(); return FIELDS.reduce(function (s, id) { return s + (/^\d+$/.test(n[id]) ? +n[id] : 0); }, 0); }
-  function paintTotal() { $("total").textContent = total(); }
+  function n0(v) { return /^\d+$/.test(v) ? +v : 0; }
+  function paintTotal() { $("total").textContent = total(); $("lk_st").textContent = n0($("lk_s1").value.trim()) + n0($("lk_s2").value.trim()); }
   function status(cls, txt) { var s = $("status"); s.className = "st " + cls; s.textContent = txt; s.hidden = false; }
   function post(fields) {
     return fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(fields) })
@@ -172,7 +190,7 @@
       busy = false; $("send").disabled = false; window.__last = r;
       if (r.ok) {
         status("ok", "✓ Sent to Jake: " + payload._summary);
-        FIELDS.forEach(function (id) { $(id).value = ""; $(id).classList.remove("bad"); }); paintTotal(); pendingPayload = null;
+        ALL_FIELDS.forEach(function (id) { $(id).value = ""; $(id).classList.remove("bad"); }); paintTotal(); pendingPayload = null;
       } else if (r.pending) {
         status("wait", "Not sent yet: Jake's email still needs its one-time FormSubmit activation. Text Jake your numbers for now, then try again later.");
         pendingPayload = payload; $("retry").hidden = false;
@@ -191,18 +209,24 @@
     if (!$("date").value) bad.push("the date");
     if (bad.length) { status("bad", "Please fill in " + bad.join(", ") + " (whole numbers, 0 or more)."); $("retry").hidden = true; return; }
     var campus = $("campus").value, date = pretty($("date").value), t = total();
-    var payload = {
-      _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _cc: ccFor(who), _template: "table", _captcha: "false",
-      "Campus": campus, "Service": svc, "Date": date, "Submitted by": name,
-      "MS students": +n.ms_s, "MS leaders": +n.ms_l, "HS students": +n.hs_s, "HS leaders": +n.hs_l, "Total": t, "Submitted at": nyTime()
-    };
+    var head = { _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _cc: ccFor(who), _template: "table", _captcha: "false",
+      "Campus": campus, "Service": svc, "Date": date, "Submitted by": name }, payload = head;
+    if (isSplit()) {
+      var pre = campus === "Lakeside" ? "Lakeside " : campus + " ";
+      payload[pre + "1st service students"] = +n.lk_s1; payload[pre + "2nd service students"] = +n.lk_s2;
+      payload[pre + "students total (1st + 2nd)"] = +n.lk_s1 + +n.lk_s2; payload[pre + "leaders"] = +n.lk_l;
+      payload[pre + "grand total (students + leaders)"] = t;
+    } else {
+      payload["MS students"] = +n.ms_s; payload["MS leaders"] = +n.ms_l; payload["HS students"] = +n.hs_s; payload["HS leaders"] = +n.hs_l; payload["Total"] = t;
+    }
+    payload["Submitted at"] = nyTime();
     Object.defineProperty(payload, "_summary", { value: campus + " " + svc + " " + date + ", total " + t + ".", enumerable: false });
     send(payload);
   });
   $("retry").addEventListener("click", function () { if (pendingPayload) send(pendingPayload); });
   document.querySelector(".seg").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setSvc(b.getAttribute("data-svc"), true); });
   $("date").addEventListener("change", dateNote);
-  FIELDS.forEach(function (id) { $(id).addEventListener("input", function () { $(id).classList.remove("bad"); paintTotal(); }); });
+  ALL_FIELDS.forEach(function (id) { $(id).addEventListener("input", function () { $(id).classList.remove("bad"); paintTotal(); }); });
   $("name").addEventListener("input", function () { $("name").classList.remove("bad"); try { localStorage.setItem("numbers:name", $("name").value.trim()); } catch (e) {} });
   $("campus").addEventListener("change", function () { try { localStorage.setItem("numbers:campus", $("campus").value); } catch (e) {} });
 
