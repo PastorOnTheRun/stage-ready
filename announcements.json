@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "October 15, 2026",
+  "updatedAt": "October 19, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -14,16 +14,6 @@
           "detail": "Come hang out with us from 6 to 8 PM. If you want to come early for dinner, we start at 5, and there's pizza every week for just a dollar. Wednesday is the best place to get to know people and find your small group.",
           "action": "Bring a friend this Wednesday.",
           "endDate": "2026-10-21",
-          "campus": "windermere",
-          "service": "sun"
-        },
-        {
-          "name": "Student Be Class and Baptism Interest",
-          "when": "Next class: Sunday, October 18, 2026",
-          "where": "Family Church Students",
-          "detail": "Students who want to learn about following Jesus, baptism, and belonging at Family Church can take our next Be Class on October 18.",
-          "action": "Talk with a student pastor to get the class time and sign up.",
-          "endDate": "2026-10-18",
           "campus": "windermere",
           "service": "sun"
         },
