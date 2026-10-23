@@ -103,7 +103,9 @@ def static_block(d):
     return "\n".join(out)
 
 def replace_between(text, begin, end, body, fname):
-    pat = re.compile(re.escape(begin) + r".*?" + re.escape(end), re.S)
+    # Accept the short BEGIN marker too ("<!-- BEGIN students:content -->"), and normalise it to the full one.
+    bpat = re.escape(begin) if not begin.startswith("<!-- BEGIN students:content") else r"<!-- BEGIN students:content[^>]*-->"
+    pat = re.compile(bpat + r".*?" + re.escape(end), re.S)
     if not pat.search(text): problems.append(f"{fname}: markers not found"); return text
     return pat.sub(lambda m: begin + "\n" + body + "\n" + end, text, count=1)
 
