@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "October 22, 2026",
+  "updatedAt": "October 23, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -41,6 +41,26 @@
           "detail": "Our whole church is praying for 24 hours straight, from Friday at noon to Saturday at noon in the Windermere Chapel. Each hour has four prayer stations. Middle schoolers can take an hour any time Friday until 10 PM, and the best way to do it is with your family. Sign-ups are open now.",
           "action": "Ask your parents which hour you can take together, then sign up.",
           "endDate": "2026-10-31",
+          "campus": "windermere",
+          "service": "sun"
+        },
+        {
+          "name": "Upward Basketball (6th\u20138th grade)",
+          "when": "Registration open \u00b7 early pricing ends Friday, October 30 \u00b7 final deadline Friday, November 13, 2026",
+          "where": "Family Church Upward Basketball",
+          "detail": "Family Church Upward Basketball now has a league for 6th through 8th grade. Player evaluations are November 3 or November 5, first practice is December 7, and first games are January 8 and 9.",
+          "action": "Tell your parents today so they can register before early pricing ends October 30.",
+          "endDate": "2026-11-13",
+          "campus": "windermere",
+          "service": "sun"
+        },
+        {
+          "name": "Student Friendsgiving",
+          "when": "Wednesday, November 18, 2026 \u00b7 6:00\u20138:00 PM",
+          "where": "Family Church Windermere",
+          "detail": "Student Friendsgiving takes the place of our regular Wednesday that night. We'll eat together, share what we're thankful for, and hear a short message. Your friends don't need to bring anything.",
+          "action": "Save November 18 and think of one friend who should be at your table.",
+          "endDate": "2026-11-18",
           "campus": "windermere",
           "service": "sun"
         },
