@@ -21,8 +21,11 @@ function render(){
  document.querySelectorAll(".toggle button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===cam));
  const C=Cap(cam);
  // This week at home
- const e=(Array.isArray(D.home)?D.home:[]).filter(x=>x&&x.weekOf&&x.weekOf<=today&&today<addDays(x.weekOf,7)).sort((a,b)=>b.weekOf<a.weekOf?-1:1)[0];
- put("home",e?`<a class="card" href="guide/?week=${esc(e.weekOf)}&campus=${cam}"><span class="date">Week of ${esc(nice(e.weekOf))}</span>
+ const H=(Array.isArray(D.home)?D.home:[]).filter(x=>x&&x.weekOf);
+ const cur=H.filter(x=>x.weekOf<=today&&today<addDays(x.weekOf,7)).sort((a,b)=>b.weekOf<a.weekOf?-1:1)[0];
+ const nxt=cur?null:H.filter(x=>x.weekOf>today).sort((a,b)=>a.weekOf<b.weekOf?-1:1)[0];
+ const e=cur||nxt;
+ put("home",e?`<a class="card" href="guide/?week=${esc(e.weekOf)}&campus=${cam}"><span class="date">${cur?`This week · ${esc(nice(e.weekOf))}`:`Coming ${esc(nice(e.weekOf))}`}</span>
   <h3>${esc(e.sermonTitle)}</h3>${e.scripture?`<p class="where">${esc(e.scripture)}</p>`:""}
   ${(e.questions||[]).length?`<div class="ask"><b>Ask at dinner</b>${esc(e.questions[0])}</div>`:""}
   <span class="go">Open the parent guide →</span></a>`:empty(`This week's at-home guide for ${C} isn't posted yet. Check back soon!`));
