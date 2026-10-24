@@ -9,10 +9,14 @@ Usage: python3 build_students.py          (validate + regenerate both pages)
                                           also prints a WARNING and fails if the page looks stale: every dated
                                           'This Week' item is in the past, or `updated` is more than 7 days old.
                                           Read-only: it never edits the JSON or the pages (wording stays Jake's).
+       Both modes also fail if any published JSON file contains an email address or phone-number
+                                          pattern (privacy_guard.py).
        Optional: --today YYYY-MM-DD to test the staleness check against another date."""
 import json, re, sys, datetime, html
 from pathlib import Path
 here = Path(__file__).resolve().parent
+sys.path.insert(0, str(here))
+import privacy_guard
 DATA = here / "students" / "announcements.json"
 PAGE = here / "students" / "index.html"
 LOBBY = here / "students" / "lobby" / "index.html"
@@ -111,6 +115,7 @@ def replace_between(text, begin, end, body, fname):
 
 d = json.loads(DATA.read_text(encoding="utf-8"))
 validate(d)
+problems += privacy_guard.scan()  # no emails / phone numbers in any published JSON
 CHECK = "--check" in sys.argv
 stale_warnings = []
 if CHECK:

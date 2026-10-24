@@ -3,11 +3,17 @@
 
 Usage: python3 validate_announcements.py [path] [--allow-expired]
 Exit code 0 = valid, 1 = errors. Prints a per-campus summary.
+Also fails if the file (or any other published JSON in the repo) contains an email address or
+phone-number pattern (privacy_guard.py).
 """
 import datetime as dt
 import json
 import sys
+from pathlib import Path
 from zoneinfo import ZoneInfo
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import privacy_guard  # noqa: E402  (fails on emails / phone numbers in any published JSON)
 
 CAMPUSES = {"windermere", "lakeside"}
 SERVICES = {"wed", "sun"}
@@ -82,6 +88,9 @@ def main():
                 for s in services:
                     if c in summary and s in summary[c]:
                         summary[c][s].append(ev.get("name", "?"))
+
+    # Privacy guard: the file being validated plus every published JSON file in the repo.
+    errors.extend(privacy_guard.scan([Path(path)] + privacy_guard.published_files()))
 
     for c in sorted(CAMPUSES):
         print(f"{c}: wed={summary[c]['wed'] or '[]'} sun={summary[c]['sun'] or '[]'}")

@@ -5,10 +5,13 @@ malformed dates, non-https links, weeks with neither Scripture/big idea nor a no
 that breaks the parent-question rules (REFRESH.md section 7: one open question, ends with "?", <= 25 words,
 no quotation marks, not "how was the message", only on weeks with Scripture + big idea, same question
 in both rooms when both rooms have the same message).
+Also fails if any published JSON file contains an email address or phone-number pattern (privacy_guard.py).
 Usage: python3 validate_content.py   (prints VALID or the problems, exit 1 on problems)"""
 import json, re, sys, datetime
 from pathlib import Path
 here = Path(__file__).resolve().parent
+sys.path.insert(0, str(here))
+import privacy_guard
 problems = []
 DATE_KEYS = {"date", "start", "end"}
 SHORT_OK_KEYS = set()  # no field may legitimately be 1–2 characters today
@@ -73,6 +76,9 @@ try:
            and ws[0].get("parentQuestion") != ws[1].get("parentQuestion"):
             problems.append(f"guides.json {d}: same message in both rooms but parentQuestion differs")
 except Exception: pass
+
+# Privacy guard: no emails or phone numbers in any published JSON (public site, no sign-in)
+problems += privacy_guard.scan()
 
 if problems:
     print("INVALID"); [print(" -", p) for p in problems]; sys.exit(1)
