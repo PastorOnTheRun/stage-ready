@@ -21,7 +21,7 @@ function render(){
  document.querySelectorAll(".toggle button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===cam));
  const C=Cap(cam);
  // This week at home
- const e=(Array.isArray(D.home)?D.home:[]).filter(x=>x&&x.weekOf&&camOk(x.campus,cam)&&x.weekOf<=today&&today<addDays(x.weekOf,7)).sort((a,b)=>b.weekOf<a.weekOf?-1:1)[0];
+ const e=(Array.isArray(D.home)?D.home:[]).filter(x=>x&&x.weekOf&&x.weekOf<=today&&today<addDays(x.weekOf,7)).sort((a,b)=>b.weekOf<a.weekOf?-1:1)[0];
  put("home",e?`<a class="card" href="guide/?week=${esc(e.weekOf)}&campus=${cam}"><span class="date">Week of ${esc(nice(e.weekOf))}</span>
   <h3>${esc(e.sermonTitle)}</h3>${e.scripture?`<p class="where">${esc(e.scripture)}</p>`:""}
   ${(e.questions||[]).length?`<div class="ask"><b>Ask at dinner</b>${esc(e.questions[0])}</div>`:""}
@@ -33,9 +33,9 @@ function render(){
   ev.push({sort:x.date,title:x.title,when:nice(x.date)+(x.time?" · "+x.time:""),detail:x.detail});});
  ev.sort((a,b)=>a.sort<b.sort?-1:1);
  put("events",ev.length?ev.map(x=>`<div class="card"><div class="when">${esc(x.when)}</div><h3>${esc(x.title)}</h3>${x.where?`<p class="where">${esc(x.where)}</p>`:""}${x.detail?`<p>${esc(x.detail)}</p>`:""}</div>`).join(""):empty(`No upcoming ${C} events are posted yet. We'll add them here as soon as they're set.`));
- // Messages (Wednesday preaching calendar = Windermere rooms)
+ // Messages (sermons are shared: Lakeside shows the same as Windermere)
  let msg="";
- if(cam==="windermere"&&D.gd){const by={};D.gd.guides.forEach(g=>g.weeks.forEach(w=>{if(w.date>=today){(by[w.date]=by[w.date]||[]).push([g.label,w]);}}));
+ if(D.gd){const by={};D.gd.guides.forEach(g=>g.weeks.forEach(w=>{if(w.date>=today){(by[w.date]=by[w.date]||[]).push([g.label,w]);}}));
   const ds=Object.keys(by).sort().slice(0,6);
   msg=ds.map(d=>{const L=by[d],w=L[0][1];
    if(w.noService)return `<div class="card"><span class="date">${esc(nice(d))}</span><h3>${esc(w.title)}</h3>${w.note?`<p>${esc(w.note)}</p>`:""}</div>`;
@@ -44,7 +44,7 @@ function render(){
     ${w.scripture?`<p class="where">${esc(w.scripture)}</p>`:""}${w.bigIdea?`<p>${esc(w.bigIdea)}</p>`:w.note?`<p>${esc(w.note)}</p>`:""}
     ${w.parentQuestion?`<div class="ask"><b>Ask your student</b>${esc(w.parentQuestion)}</div>`:""}`;
    return `<div class="card"><span class="date">${esc(nice(d))}</span> <span class="when">${esc(w.series)}${w.week?" · "+esc(w.week):""}</span>${same?block("",w):L.map(([l,x])=>block(l,x)).join("")}</div>`;}).join("");}
- put("messages",msg||empty(cam==="windermere"?"No upcoming messages are posted yet.":"Lakeside's message calendar isn't posted here yet. Check back soon!"));
+ put("messages",msg||empty("No upcoming messages are posted yet."));
  // Times
  const sv=((D.svc&&D.svc.services)||[]).filter(s=>s.title.toLowerCase().includes(cam));
  put("times",sv.length?sv.map(s=>`<div class="card"><h3>${esc(s.title.replace(/ · (Windermere|Lakeside)$/,""))}</h3><div class="when">${esc(s.when||"")}</div><p class="where">${esc(s.where||"")}</p></div>`).join(""):empty(`${C} service times aren't posted yet.`));
