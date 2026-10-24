@@ -10,8 +10,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
   <!-- Weekly attendance numbers (Jake, Oct 2, 2026), filled in by the campus leads each Sunday/Wednesday.
        Public-safe (no codes, logins or contact details). Not cached by the service worker.
-       Routing: posts to the Stage Ready relay Worker (relay/); recipients and CCs (Jake, Jake backup, KTrimbee; Luke adds BVereb, Jacob adds Ngoelz)
-       are Worker secrets, so no email addresses appear in this page. See REFRESH.md. -->
+       Routing: always to Jake (FORM_ENDPOINT) + CC KTrimbee + djjalab@gmail.com (Jake personal backup); Luke also CCs BVereb, Jacob also CCs Ngoelz (FormSubmit _cc).
+       Emails Jake through the SAME FormSubmit endpoint as /sunday-setup/ (one activation covers both; see REFRESH.md). -->
   <style>
     @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
     :root { --orange: #FF7010; --black: #141110; --otext: #a84300; --ink: #1a1512; --ink2: #3b342e; --line: rgba(26,21,18,.18);
@@ -124,7 +124,7 @@
 (function () {
   "use strict";
   // SAME endpoint as /sunday-setup/ (keep them in sync; one FormSubmit activation covers both). See REFRESH.md.
-  var FORM_ENDPOINT = "https://stage-ready-relay.bigroomgames.workers.dev";
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
   var TZ = "America/New_York", STD_FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LK_FIELDS = ["lk_s1", "lk_s2", "lk_l"], FIELDS = STD_FIELDS,
     ALL_FIELDS = STD_FIELDS.concat(LK_FIELDS),
     LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders", lk_s1: "1st service students", lk_s2: "2nd service students", lk_l: "Leaders" };
@@ -133,8 +133,9 @@
   function applyMode() { var sp = isSplit(); FIELDS = sp ? LK_FIELDS : STD_FIELDS; $("std").hidden = sp; $("lk").hidden = !sp; $("total-k").textContent = sp ? "Grand total (with leaders)" : "Total"; if (typeof paintTotal === "function") paintTotal(); }
   var $ = function (id) { return document.getElementById(id); };
   var svc = "Sunday", who = "", pendingPayload = null, busy = false;
-  var WHO = { Luke: { campus: "Lakeside" }, Jacob: { campus: "Oakland" }, Jake: { campus: "Windermere" } };  // recipients/CCs live in the relay Worker secrets, not here
+  var JAKE_CC = "KTrimbee@ourfamily.church,djjalab@gmail.com", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" }, Jake: { cc: "", campus: "Windermere" } };
   var CAMPUSES = ["Windermere", "Lakeside", "Oakland"];
+  function ccFor(w) { return [JAKE_CC].concat(WHO[w] && WHO[w].cc ? [WHO[w].cc] : []).join(","); }
   function setWho(w, fromUser) {
     who = w;
     [].forEach.call(document.querySelectorAll("#who button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-who") === w)); });
@@ -208,7 +209,7 @@
     if (!$("date").value) bad.push("the date");
     if (bad.length) { status("bad", "Please fill in " + bad.join(", ") + " (whole numbers, 0 or more)."); $("retry").hidden = true; return; }
     var campus = $("campus").value, date = pretty($("date").value), t = total();
-    var head = { _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _form: "numbers", _who: who, _template: "table", _captcha: "false",
+    var head = { _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _cc: ccFor(who), _template: "table", _captcha: "false",
       "Campus": campus, "Service": svc, "Date": date, "Submitted by": name }, payload = head;
     if (isSplit()) {
       var pre = campus === "Lakeside" ? "Lakeside " : campus + " ";

@@ -11,7 +11,7 @@
   <!-- Sunday morning team captain / leader setup checklist (Jake via Janine, Oct 2, 2026).
        Standalone, public-safe: no door codes, passwords, logins or phone numbers. Not cached by the service worker.
        Checks are stored per Sunday (America/New_York) in localStorage. Emails go to Jake through FormSubmit
-       (FORM_ENDPOINT below = the relay Worker; recipients are Worker secrets, see REFRESH.md). -->
+       (FORM_ENDPOINT below; see REFRESH.md to swap in the FormSubmit alias after activation). -->
   <style>
     @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
     :root { --orange: #FF7010; --black: #141110; --otext: #a84300; --ink: #1a1512; --ink2: #3b342e; --line: rgba(26,21,18,.18);
@@ -147,7 +147,7 @@
   "use strict";
   // FormSubmit endpoint. After Jake clicks FormSubmit's activation email, replace the address with the random alias
   // FormSubmit gives him (https://formsubmit.co/ajax/<alias>), so his address isn't in the page source. See REFRESH.md.
-  var FORM_ENDPOINT = "https://stage-ready-relay.bigroomgames.workers.dev";
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
   var TZ = "America/New_York";
   var SECTIONS = [
     { title: "Before 9:00 AM", steps: [
@@ -271,7 +271,7 @@
     if (sending) return;
     sending = true; paintSend();
     var now = new Date();
-    post({ _subject: "Sunday setup complete \u2013 " + prettyDate(key), _form: "setup", _template: "table", _captcha: "false",
+    post({ _subject: "Sunday setup complete \u2013 " + prettyDate(key), _cc: "djjalab@gmail.com", _template: "table", _captcha: "false",
            "Sunday": prettyDate(key), "Setup by": who(), "Completed at": nyTime(now), "Steps checked": IDS.length + " of " + IDS.length, "Checklist": checklistText(), "Page": location.origin + location.pathname })
       .then(function (r) {
         sending = false;
@@ -298,7 +298,7 @@
     if (bad) { setStatus($("astatus"), "bad", "Enter a whole number (0 or more) in all four boxes."); return; }
     aBusy = true; $("asend").disabled = true; setStatus($("astatus"), "wait", "Sending to Jake…");
     var now = new Date();
-    post({ _subject: "Sunday attendance \u2013 " + prettyDate(key), _form: "setup", _template: "table", _captcha: "false",
+    post({ _subject: "Sunday attendance \u2013 " + prettyDate(key), _cc: "djjalab@gmail.com", _template: "table", _captcha: "false",
            "Sunday": prettyDate(key), "Submitted by": who(), "Submitted at": nyTime(now),
            "MS students": n.ms_s, "MS leaders": n.ms_l, "HS students": n.hs_s, "HS leaders": n.hs_l, "Total": n.ms_s + n.ms_l + n.hs_s + n.hs_l })
       .then(function (r) {
