@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Parent Guide · Family Church Students</title>
+<meta name="theme-color" content="#141110">
+<link rel="apple-touch-icon" sizes="180x180" href="../../icons/apple-touch-icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png">
+<link rel="stylesheet" href="../parents.css?v=1">
+<style>@font-face{font-family:"Archivo Wide";src:url("../../assets/fonts/archivo-wide-latin.woff2") format("woff2");font-weight:100 900;font-display:swap}h1{font-size:clamp(34px,10vw,64px)}</style>
+</head><body><main class="wrap">
+<a class="back" href="../">← Parents home</a>
+<header class="mast"><img src="../../assets/logos/students-internal-white.svg" alt="Family Church Students"><div><div class="lab">Family Church Students</div><div class="lab">Parent guide</div></div></header>
+<div id="g"></div>
+</main><script src="../parents.js?v=1"></script><script>
+(function(){const P=window.PARENTS,e=P.esc,s=new URLSearchParams(location.search),wk=s.get("week")||"",cam=(s.get("campus")||"").toLowerCase();
+const el=document.getElementById("g");
+P.get("../at-home.json").then(list=>{list=Array.isArray(list)?list:[];
+ const m=list.filter(x=>x&&x.weekOf===wk);const x=m.find(y=>cam&&P.camOk(y.campus,cam))||m[0];
+ if(!x){el.innerHTML=`<h1>Parent <span>guide</span></h1>`+P.empty("This parent guide isn't posted yet. Check back soon, or head back to the parents page for what's coming up.");return;}
+ const g=x.guide||{},sec=(t,h)=>h?`<section><h2>${t}</h2>${h}</section>`:"";
+ const qs=[...(x.questions||[]),...(g.talkAboutIt||[])].filter((v,i,a)=>v&&a.indexOf(v)===i);
+ const tr=g.tryThisAtHome||x.tryThisAtHome;
+ el.innerHTML=`<span class="date">Week of ${e(P.nice(x.weekOf))}</span><h1 style="margin-top:12px">${e(x.sermonTitle||"This week's message")}</h1>
+ ${x.scripture?`<p class="intro">${e(x.scripture)}</p>`:""}
+ ${sec("The big idea",g.summary?`<div class="card"><p>${e(g.summary)}</p></div>`:"")}
+ ${sec("Key verse",g.keyVerse?`<div class="card"><p>${e(g.keyVerse)}</p></div>`:"")}
+ ${sec("Talk about it",qs.length?`<div class="card"><ol>${qs.map(q=>`<li>${e(q)}</li>`).join("")}</ol></div>`:"")}
+ ${sec("Try this at home",tr?`<div class="card"><p>${e(tr)}</p></div>`:"")}
+ ${sec("Pray together",g.prayer?`<div class="card"><p>${e(g.prayer)}</p></div>`:"")}
+ ${!g.summary&&!qs.length&&!tr&&!g.prayer&&!g.keyVerse?P.empty("The rest of this week's guide is still being written. Check back soon!"):""}`;
+ document.title=(x.sermonTitle||"Parent Guide")+" · Family Church Students";});})();
+</script></body></html>

@@ -204,9 +204,10 @@
     (d.groups || []).forEach(g => {
       html += `<section class="tab-section"><h2>${esc(g.title)}</h2>`;
       html += g.items?.length ? g.items.map(it => {
-        const label = it.type === "pdf" ? "PDF" : it.type === "form" ? "Form" : it.type === "link" ? "Link" : "Tool";
+        const label = it.type === "pdf" ? "PDF" : it.type === "form" ? "Form" : it.type === "link" ? "Link" : it.type === "page" ? "Page" : "Tool";
         const invite = (it.groupName || it.inviteCode) ? `<span class="res-invite">${it.groupName ? `<span class="res-invite-row"><span class="res-invite-k">Group</span><span class="res-invite-name">${esc(it.groupName)}</span></span>` : ""}${it.inviteCode ? `<span class="res-invite-row"><span class="res-invite-k">Invite code</span><span class="res-invite-code">${esc(it.inviteCode)}</span></span>` : ""}</span>` : "";
         const inner = `<span class="res-type">${label}</span><span class="res-body"><strong>${esc(it.title)}</strong>${it.note ? `<span>${esc(it.note)}</span>` : ""}</span>`;
+        if (it.type === "page" && /^\.\/[a-z0-9-]+\/$/.test(it.url || "")) return `<a class="res" href="${esc(it.url)}">${inner}<span class="res-go" aria-hidden="true">→</span></a>`;
         return it.url && /^https:\/\//.test(it.url)
           ? `<a class="res${invite ? " has-invite" : ""}" href="${esc(it.url)}" target="_blank" rel="noopener">${inner}<span class="res-go" aria-hidden="true">↗</span>${invite}</a>`
           : `<div class="res${invite ? " has-invite" : ""}">${inner}${invite}</div>`;

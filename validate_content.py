@@ -23,7 +23,7 @@ def walk(obj, path, fname):
             if k in DATE_KEYS and isinstance(v, str):
                 try: datetime.date.fromisoformat(v)
                 except ValueError: problems.append(f"{fname}{path}.{k}: bad date {v!r}")
-            if k == "url" and isinstance(v, str) and not re.match(r"^https://\S+$", v):
+            if k == "url" and isinstance(v, str) and not re.match(r"^https://\S+$", v) and not (obj.get("type") == "page" and re.match(r"^\./[a-z0-9-]+/$", v)):
                 problems.append(f"{fname}{path}.url: not an https URL {v!r}")
     elif isinstance(obj, list):
         for i, v in enumerate(obj): walk(v, f"{path}[{i}]", fname)
