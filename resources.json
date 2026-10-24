@@ -4,6 +4,18 @@
   "intro": "Links, forms, PDFs, and the tools the team uses.",
   "groups": [
     {
+      "title": "For families",
+      "items": [
+        {
+          "title": "Parents page",
+          "type": "page",
+          "url": "./parents/",
+          "note": "Upcoming events, messages and weekly at-home guides for families.",
+          "source": "Jake (Oct 24, 2026)"
+        }
+      ]
+    },
+    {
       "title": "Public links",
       "items": [
         {

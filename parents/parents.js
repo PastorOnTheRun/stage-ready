@@ -49,7 +49,7 @@ function render(){
  const sv=((D.svc&&D.svc.services)||[]).filter(s=>s.title.toLowerCase().includes(cam));
  put("times",sv.length?sv.map(s=>`<div class="card"><h3>${esc(s.title.replace(/ · (Windermere|Lakeside)$/,""))}</h3><div class="when">${esc(s.when||"")}</div><p class="where">${esc(s.where||"")}</p></div>`).join(""):empty(`${C} service times aren't posted yet.`));
  // Connect
- const items=[];((D.res&&D.res.groups)||[]).forEach(g=>g.items.forEach(i=>{
+ const items=[];((D.res&&D.res.groups)||[]).forEach(g=>g.items.forEach(i=>{if(i.type==="page")return;
   if(i.title==="BAND invite"&&cam==="windermere")items.push(`<a class="card" href="${esc(i.url)}" rel="noopener"><h3>Join us on BAND</h3><p>BAND is where we share updates and keep families in the loop all week. Join "${esc(i.groupName||"")}"; an admin approves each request.</p><span class="go">Open BAND →</span></a>`);
   if(g.title==="Public links"&&(cam==="windermere"||/website/i.test(i.title)))items.push(`<a class="card" href="${esc(i.url)}" rel="noopener"><h3>${esc(i.title)}</h3><span class="go">Visit →</span></a>`);}));
  put("connect",items.join("")||empty("Connection links are coming soon."));
