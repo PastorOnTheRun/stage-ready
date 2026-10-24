@@ -1803,3 +1803,11 @@ html:has(body[data-phase="choose"]), html:has(body[data-phase="done"]) { backgro
 .pq-k { font-family: var(--font-mono); font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #a84300; line-height: 1.3; }
 .pq-q { margin: 0; font-size: 1.14rem; font-weight: 650; line-height: 1.38; color: #1a1512; overflow-wrap: break-word; text-wrap: pretty; }
 @media (max-width: 340px) { .pq-q { font-size: 1.04rem; } .pq { padding: 10px 11px 11px; } }
+
+/* Cover: standalone Parents link */
+.lp-parents{display:flex;align-items:center;gap:12px;margin:4px 0 14px;padding:14px 18px;min-height:56px;border:2px solid currentColor;color:inherit;text-decoration:none;box-sizing:border-box;width:100%;max-width:100%}
+.lp-parents-k{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.7;white-space:nowrap}
+.lp-parents-t{flex:1;font-size:22px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;min-width:0}
+.lp-parents-a{font-size:24px;font-weight:800;color:var(--accent)}
+.lp-parents:active,.lp-parents:hover{background:var(--accent);border-color:var(--accent)}
+.lp-parents:active span,.lp-parents:hover span{color:var(--accent-ink,#1c0d03);opacity:1}
