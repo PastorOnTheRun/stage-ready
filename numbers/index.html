@@ -10,8 +10,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
   <!-- Weekly attendance numbers (Jake, Oct 2, 2026), filled in by the campus leads each Sunday/Wednesday.
        Public-safe (no codes, logins or contact details). Not cached by the service worker.
-       Routing: always to Jake (FORM_ENDPOINT) + CC KTrimbee + djjalab@gmail.com (Jake personal backup); Luke also CCs BVereb, Jacob also CCs Ngoelz (FormSubmit _cc).
-       Emails Jake through the SAME FormSubmit endpoint as /sunday-setup/ (one activation covers both; see REFRESH.md). -->
+       Routing: posts to the Stage Ready Google Apps Script relay (FORM_ENDPOINT, same as /sunday-setup/), which adds all
+       recipients server-side from script properties (Luke / Jacob get their extra CC via _who). No addresses in this page. -->
   <style>
     @font-face { font-family: "Archivo Wide"; src: url("../assets/fonts/archivo-wide-latin.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
     :root { --orange: #FF7010; --black: #141110; --otext: #a84300; --ink: #1a1512; --ink2: #3b342e; --line: rgba(26,21,18,.18);
@@ -123,8 +123,8 @@
 <script>
 (function () {
   "use strict";
-  // SAME endpoint as /sunday-setup/ (keep them in sync; one FormSubmit activation covers both). See REFRESH.md.
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/jlabrador@ourfamily.church";
+  // SAME relay as /sunday-setup/ (keep them in sync). Recipients live in the relay's script properties. See REFRESH.md.
+  var FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbxLvI3C6sn-hF8pQftAPcYlVcrGAzRyXOd0uCWjGF_9rNDmwIMOtDzbOYlI5XYjuW3lNg/exec";
   var TZ = "America/New_York", STD_FIELDS = ["ms_s", "ms_l", "hs_s", "hs_l"], LK_FIELDS = ["lk_s1", "lk_s2", "lk_l"], FIELDS = STD_FIELDS,
     ALL_FIELDS = STD_FIELDS.concat(LK_FIELDS),
     LABELS = { ms_s: "MS students", ms_l: "MS leaders", hs_s: "HS students", hs_l: "HS leaders", lk_s1: "1st service students", lk_s2: "2nd service students", lk_l: "Leaders" };
@@ -133,9 +133,8 @@
   function applyMode() { var sp = isSplit(); FIELDS = sp ? LK_FIELDS : STD_FIELDS; $("std").hidden = sp; $("lk").hidden = !sp; $("total-k").textContent = sp ? "Grand total (with leaders)" : "Total"; if (typeof paintTotal === "function") paintTotal(); }
   var $ = function (id) { return document.getElementById(id); };
   var svc = "Sunday", who = "", pendingPayload = null, busy = false;
-  var JAKE_CC = "KTrimbee@ourfamily.church,djjalab@gmail.com", WHO = { Luke: { cc: "BVereb@ourfamily.church", campus: "Lakeside" }, Jacob: { cc: "Ngoelz@ourfamily.church", campus: "Oakland" }, Jake: { cc: "", campus: "Windermere" } };
+  var WHO = { Luke: { campus: "Lakeside" }, Jacob: { campus: "Oakland" }, Jake: { campus: "Windermere" } };
   var CAMPUSES = ["Windermere", "Lakeside", "Oakland"];
-  function ccFor(w) { return [JAKE_CC].concat(WHO[w] && WHO[w].cc ? [WHO[w].cc] : []).join(","); }
   function setWho(w, fromUser) {
     who = w;
     [].forEach.call(document.querySelectorAll("#who button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-who") === w)); });
@@ -178,7 +177,7 @@
   function paintTotal() { $("total").textContent = total(); $("lk_st").textContent = n0($("lk_s1").value.trim()) + n0($("lk_s2").value.trim()); }
   function status(cls, txt) { var s = $("status"); s.className = "st " + cls; s.textContent = txt; s.hidden = false; }
   function post(fields) {
-    return fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(fields) })
+    return fetch(FORM_ENDPOINT, { method: "POST", body: JSON.stringify(fields) })
       .then(function (r) { return r.json().catch(function () { return { success: "false", message: "HTTP " + r.status }; }); })
       .then(function (j) { var ok = j && (j.success === true || j.success === "true"); return { ok: ok, pending: !ok && /activat/i.test(String(j && j.message || "")), msg: String(j && j.message || "").slice(0, 160) }; },
             function () { return { ok: false, pending: false, msg: "no connection" }; });
@@ -192,7 +191,7 @@
         status("ok", "✓ Sent to Jake: " + payload._summary);
         ALL_FIELDS.forEach(function (id) { $(id).value = ""; $(id).classList.remove("bad"); }); paintTotal(); pendingPayload = null;
       } else if (r.pending) {
-        status("wait", "Not sent yet: Jake's email still needs its one-time FormSubmit activation. Text Jake your numbers for now, then try again later.");
+        status("wait", "Not sent yet. Text Jake your numbers for now, then try again later.");
         pendingPayload = payload; $("retry").hidden = false;
       } else {
         status("bad", "✕ Didn't send" + (r.msg ? " (" + r.msg + ")" : "") + ". Check your signal and try again.");
@@ -209,7 +208,7 @@
     if (!$("date").value) bad.push("the date");
     if (bad.length) { status("bad", "Please fill in " + bad.join(", ") + " (whole numbers, 0 or more)."); $("retry").hidden = true; return; }
     var campus = $("campus").value, date = pretty($("date").value), t = total();
-    var head = { _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _cc: ccFor(who), _template: "table", _captcha: "false",
+    var head = { _subject: campus + " " + svc + " numbers \u2013 " + date + " (" + name + ")", _form: "numbers", _who: who,
       "Campus": campus, "Service": svc, "Date": date, "Submitted by": name }, payload = head;
     if (isSplit()) {
       var pre = campus === "Lakeside" ? "Lakeside " : campus + " ";
