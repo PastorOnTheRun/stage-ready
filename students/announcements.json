@@ -1,1 +1,89 @@
-PLACEHOLDER
+{
+  "schemaVersion": 1,
+  "updated": "2026-11-02",
+  "source": "Updated from Student Ministry Dashboard and Ministry Memory (Nov 2, 2026). Student-facing only.",
+  "title": "Family Church Students — Announcements",
+  "org": "Family Church",
+  "campus": "Windermere",
+  "vision": "Belong. Believe. Beyond.",
+  "detailsUrl": "https://pastorontherun.github.io/stage-ready/students/",
+  "sections": [
+    {
+      "id": "this-week",
+      "title": "This Week",
+      "items": [
+        {
+          "title": "Wednesday Night",
+          "when": "Every Wednesday · 6:00–8:00 PM · Building 5",
+          "details": [
+            "Hangout at 6:00, service about 6:30, pickup through 8:15."
+          ],
+          "recurring": true
+        },
+        {
+          "title": "Sunday Middle School",
+          "when": "Sundays · 9:45–10:45 AM · Building 4",
+          "details": [
+            "Come ready to connect."
+          ],
+          "recurring": true
+        }
+      ]
+    },
+    {
+      "id": "upcoming",
+      "title": "Upcoming Events",
+      "items": [
+        {
+          "title": "Upward Basketball (6th–8th grade)",
+          "when": "Registration open · deadline Nov 13",
+          "details": [
+            "Player evaluations Nov 3 or Nov 5. First practice Dec 7. First games Jan 8 and 9. Ask your parents to register."
+          ],
+          "date": "2026-11-13"
+        },
+        {
+          "title": "Student Friendsgiving",
+          "when": "Wednesday, Nov 18 · Windermere",
+          "details": [
+            "Dessert night (students bring desserts). Takes the place of regular Wednesday. Bring a friend — guests don't need to bring anything. Short message, then high school open gym after middle school pickup at 8:00."
+          ],
+          "date": "2026-11-18"
+        },
+        {
+          "title": "Christmas Party",
+          "when": "Friday, Dec 18 · Windermere",
+          "details": [
+            "Big invite night. All students (middle and high school) combined. Details still being finalized."
+          ],
+          "date": "2026-12-18"
+        },
+        {
+          "title": "Camp Realife",
+          "when": "June 21–25, 2027 · Vero Beach",
+          "details": [
+            "Summer camp week is on the calendar. Registration details are not open yet."
+          ],
+          "date": "2027-06-21",
+          "endDate": "2027-06-25"
+        }
+      ]
+    },
+    {
+      "id": "reminders",
+      "title": "Reminders",
+      "kind": "reminders",
+      "items": [
+        {
+          "text": "Bring a friend."
+        },
+        {
+          "text": "Use the designated student door."
+        },
+        {
+          "text": "Pickup through 8:15 on Wednesday nights."
+        }
+      ]
+    }
+  ]
+}
