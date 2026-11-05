@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "October 23, 2026",
+  "updatedAt": "November 5, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -8,8 +8,8 @@
       "events": [
         {
           "name": "Middle School Sundays",
-          "when": "Sundays \u00b7 9:45\u201310:45 AM",
-          "where": "Building 4 \u00b7 Windermere",
+          "when": "Sundays · 9:45–10:45 AM",
+          "where": "Building 4 · Windermere",
           "detail": "Middle school students gather for teaching and connection, with worship service options at 8:30 or 11:00 AM.",
           "action": "Invite a middle school friend this Sunday and connect with a leader at check-in.",
           "campus": "windermere",
@@ -17,7 +17,7 @@
         },
         {
           "name": "Join our BAND app",
-          "when": "Ongoing \u00b7 get the current ministry updates",
+          "when": "Ongoing · get the current ministry updates",
           "where": "BAND group: Family Students (WN)",
           "detail": "BAND is where our student ministry shares announcements and keeps families connected across the week. Join at band.us/n/aaafbdF364s34. An admin approves each join request.",
           "action": "Join Family Students (WN) on BAND at band.us/n/aaafbdF364s34.",
@@ -25,49 +25,40 @@
           "service": "wed"
         },
         {
-          "name": "Pumpkin Party",
-          "when": "Wednesday, October 28, 2026 \u00b7 6:00\u20138:00 PM",
+          "name": "Student Night this Wednesday",
+          "when": "Wednesday, November 11, 2026 · 6:00–8:00 PM",
           "where": "Family Church Windermere",
-          "detail": "Pumpkin Party is this Wednesday, October 28, from 6 to 8 PM. Build a team of five and bring a pumpkin that weighs 10 pounds or more. It's also costume night, so come dressed up.",
-          "action": "Get your team of five together and pick out a 10+ lb pumpkin.",
-          "endDate": "2026-10-28",
-          "campus": "windermere",
-          "service": "sun"
-        },
-        {
-          "name": "24-Hour Prayer",
-          "when": "Friday, October 30, 12:00 PM \u2013 Saturday, October 31, 12:00 PM",
-          "where": "Windermere Chapel \u00b7 Family Church Windermere",
-          "detail": "Our whole church is praying for 24 hours straight, from Friday at noon to Saturday at noon in the Windermere Chapel. Each hour has four prayer stations. Middle schoolers can take an hour any time Friday until 10 PM, and the best way to do it is with your family. Sign-ups are open now.",
-          "action": "Ask your parents which hour you can take together, then sign up.",
-          "endDate": "2026-10-31",
-          "campus": "windermere",
-          "service": "sun"
-        },
-        {
-          "name": "Upward Basketball (6th\u20138th grade)",
-          "when": "Registration open \u00b7 early pricing ends Friday, October 30 \u00b7 final deadline Friday, November 13, 2026",
-          "where": "Family Church Upward Basketball",
-          "detail": "Family Church Upward Basketball now has a league for 6th through 8th grade. Player evaluations are November 3 or November 5, first practice is December 7, and first games are January 8 and 9.",
-          "action": "Tell your parents today so they can register before early pricing ends October 30.",
-          "endDate": "2026-11-13",
+          "cost": "$1 pizza at early dinner",
+          "detail": "Hangout starts at 6, service at 6:30, and we wrap up at 8. Early dinner starts at 5, and pizza is $1. We're in week two of our series about what goes on inside us—the heavy days that don't just go away. You are not alone.",
+          "action": "Text one friend and invite them to come with you Wednesday.",
+          "endDate": "2026-11-11",
           "campus": "windermere",
           "service": "sun"
         },
         {
           "name": "Student Friendsgiving",
-          "when": "Wednesday, November 18, 2026 \u00b7 6:00\u20138:00 PM",
+          "when": "Wednesday, November 18, 2026 · dessert at 7:30 PM · middle school pickup at 8:00 PM",
           "where": "Family Church Windermere",
-          "detail": "Student Friendsgiving takes the place of our regular Wednesday that night. We'll eat together, share what we're thankful for, and hear a short message. Your friends don't need to bring anything.",
-          "action": "Save November 18 and think of one friend who should be at your table.",
+          "detail": "Student Friendsgiving takes the place of our regular Wednesday that night. This year it's dessert only—bring a dessert to share if you can. Guests never need to bring anything. We'll eat together, hear a short message, and high schoolers can stay for open gym after middle school pickup.",
+          "action": "Save November 18, invite a dessert if you can, and invite one friend who has never been.",
           "endDate": "2026-11-18",
+          "campus": "windermere",
+          "service": "sun"
+        },
+        {
+          "name": "Upward Basketball (6th–8th grade)",
+          "when": "Registration open · final deadline Friday, November 13, 2026",
+          "where": "Family Church Upward Basketball",
+          "detail": "Family Church Upward Basketball has a league for 6th through 8th grade. First practice is December 7, and first games are January 8 and 9. Registration closes Friday, November 13.",
+          "action": "Tell your parents today so they can register before the November 13 deadline.",
+          "endDate": "2026-11-13",
           "campus": "windermere",
           "service": "sun"
         },
         {
           "name": "Wednesday Nights at Lakeside",
           "when": "Every Wednesday night",
-          "where": "Family Church Students \u00b7 Lakeside",
+          "where": "Family Church Students · Lakeside",
           "detail": "Wednesday nights are where we hang out, worship together, and get into small groups. If you haven't been in a while, this is your week to come back, and bring a friend with you.",
           "action": "Come this Wednesday and bring a friend.",
           "campus": "lakeside",

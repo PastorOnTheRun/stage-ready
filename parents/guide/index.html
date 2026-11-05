@@ -11,7 +11,7 @@
 <a class="back" href="../">← Parents home</a>
 <header class="mast"><img src="../../assets/logos/students-internal-white.svg" alt="Family Church Students"><div><div class="lab">Family Church Students</div><div class="lab">Parent guide</div></div></header>
 <div id="g"></div>
-</main><script src="../parents.js?v=3"></script><script>
+</main><script src="../parents.js?v=4"></script><script>
 (function(){const P=window.PARENTS,e=P.esc,s=new URLSearchParams(location.search),wk=s.get("week")||"",cam=(s.get("campus")||"").toLowerCase();
 const el=document.getElementById("g");
 P.get("../at-home.json").then(list=>{list=Array.isArray(list)?list:[];
@@ -26,7 +26,8 @@ P.get("../at-home.json").then(list=>{list=Array.isArray(list)?list:[];
  ${sec("Key verse",g.keyVerse?`<div class="card"><p>${e(g.keyVerse)}</p></div>`:"")}
  ${sec("Talk about it",qs.length?`<div class="card"><ol>${qs.map(q=>`<li>${e(q)}</li>`).join("")}</ol></div>`:"")}
  ${sec("Try this at home",tr?`<div class="card"><p>${e(tr)}</p></div>`:"")}
+ ${sec("Pray this week",x.prayForStudents?`<div class="card"><p>${e(x.prayForStudents)}</p></div>`:"")}
  ${sec("Pray together",g.prayer?`<div class="card"><p>${e(g.prayer)}</p></div>`:"")}
- ${!g.summary&&!qs.length&&!tr&&!g.prayer&&!g.keyVerse?P.empty("The rest of this week's guide is still being written. Check back soon!"):""}`;
+ ${!g.summary&&!qs.length&&!tr&&!g.prayer&&!g.keyVerse&&!x.prayForStudents?P.empty("The rest of this week's guide is still being written. Check back soon!"):""}`;
  document.title=(x.sermonTitle||"Parent Guide")+" · Family Church Students";});})();
 </script><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2ba3e53e6c464e439f6fb34dd7d688bc"}'></script></body></html>

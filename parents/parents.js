@@ -28,6 +28,7 @@ function render(){
  put("home",e?`<a class="card" href="guide/?week=${esc(e.weekOf)}&campus=${cam}"><span class="date">${cur?`This week · ${esc(nice(e.weekOf))}`:`Coming ${esc(nice(e.weekOf))}`}</span>
   <h3>${esc(e.sermonTitle)}</h3>${e.scripture?`<p class="where">${esc(e.scripture)}</p>`:""}
   ${(e.questions||[]).length?`<div class="ask"><b>Ask at dinner</b>${esc(e.questions[0])}</div>`:""}
+  ${e.prayForStudents?`<div class="ask"><b>Pray this week</b>${esc(e.prayForStudents)}</div>`:""}
   <span class="go">Open the parent guide →</span></a>`:empty(`This week's at-home guide for ${C} isn't posted yet. Check back soon!`));
  // Events
  let ev=[];
