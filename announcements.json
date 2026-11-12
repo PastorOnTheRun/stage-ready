@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "November 9, 2026",
+  "updatedAt": "November 12, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -23,17 +23,6 @@
           "action": "Join Family Students (WN) on BAND at band.us/n/aaafbdF364s34.",
           "campus": "windermere",
           "service": "wed"
-        },
-        {
-          "name": "Student Night this Wednesday",
-          "when": "Wednesday, November 11, 2026 · 6:00–8:00 PM",
-          "where": "Family Church Windermere",
-          "cost": "$1 pizza at early dinner",
-          "detail": "Hangout starts at 6, service at 6:30, and we wrap up at 8. Early dinner starts at 5, and pizza is $1. We're in week two of our series about what goes on inside us—the heavy days that don't just go away. You are not alone.",
-          "action": "Text one friend and invite them to come with you Wednesday.",
-          "endDate": "2026-11-11",
-          "campus": "windermere",
-          "service": "sun"
         },
         {
           "name": "Student Friendsgiving",
