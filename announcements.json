@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "November 12, 2026",
+  "updatedAt": "November 16, 2026",
   "prompts": [
     {
       "title": "Upcoming at Family Church Students",
@@ -31,16 +31,6 @@
           "detail": "Student Friendsgiving takes the place of our regular Wednesday that night. This year it's dessert only—bring a dessert to share if you can. Guests never need to bring anything. We'll eat together, hear a short message, and high schoolers can stay for open gym after middle school pickup.",
           "action": "Save November 18, invite a dessert if you can, and invite one friend who has never been.",
           "endDate": "2026-11-18",
-          "campus": "windermere",
-          "service": "sun"
-        },
-        {
-          "name": "Upward Basketball (6th–8th grade)",
-          "when": "Registration open · final deadline Friday, November 13, 2026",
-          "where": "Family Church Upward Basketball",
-          "detail": "Family Church Upward Basketball has a league for 6th through 8th grade. First practice is December 7, and first games are January 8 and 9. Registration closes Friday, November 13.",
-          "action": "Tell your parents today so they can register before the November 13 deadline.",
-          "endDate": "2026-11-13",
           "campus": "windermere",
           "service": "sun"
         },
