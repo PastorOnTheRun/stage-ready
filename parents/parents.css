@@ -29,5 +29,9 @@ a.card{border-color:rgba(255,112,16,.5)}a.card:active{background:var(--card2)}
 ul,ol{padding-left:22px;margin:6px 0}li{margin:6px 0}
 .back{display:inline-block;min-height:44px;padding:10px 0;font:800 16px var(--h);font-stretch:118%;text-transform:uppercase;text-decoration:none}
 footer{color:var(--ink2);font-size:15px;border-top:1px solid var(--line);padding-top:16px}
+.card.notice{border-color:rgba(255,112,16,.55);padding:20px 18px}
+.card.notice h3{font:900 clamp(26px,7.4vw,34px)/1.15 var(--h);font-stretch:118%;margin:10px 0 12px;overflow-wrap:break-word}
+.notice-msg{font-size:20px;line-height:1.45;color:var(--ink);margin:0;overflow-wrap:break-word}
+.notice-msg .nobr{white-space:nowrap}
 @media(min-width:900px){.wrap{padding-top:40px}}
 section{scroll-margin-top:84px}
