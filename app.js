@@ -69,6 +69,45 @@
           ]
         }
       }
+    },
+    {
+      // Attachment (built on Nov 18 message; no midweek Thanksgiving week) · Romans 8:38–39 CSB · approved by Jake via Janine on Nov 26
+      sunday: "2026-11-29",
+      moments: {
+        opening: {
+          title: "Opening Charge",
+          passage: "Romans 8:38–39",
+          setup: "Welcome students and help them turn their attention to God before worship begins.",
+          beats: [
+            ["Welcome", "A couple weeks ago we talked about attachment. Everybody is attached to something: a friend group, a phone, a team, what people think of us. But a lot of those things can let us down or let go."],
+            ["Scripture", "Romans 8 tells us about a love that never lets go. Paul writes, \"For I am persuaded that neither death nor life, nor angels nor rulers, nor things present nor things to come, nor powers, nor height nor depth, nor any other created thing will be able to separate us from the love of God that is in Christ Jesus our Lord.\" (Romans 8:38-39)."],
+            ["Invitation", "Nothing on that list can pull you away from Him. Not your worst day, not your biggest mistake, not what anyone says about you."],
+            ["Transition", "So this morning, let's worship the God who holds on to us. Let's stand and sing to Him together."]
+          ]
+        },
+        worship: {
+          title: "Worship Lean-In",
+          passage: "Romans 8:38–39",
+          setup: "Build on the opening charge and give the room one clear invitation to respond to Jesus in worship.",
+          beats: [
+            ["Name the moment", "If nothing can separate us from His love, then we don't have to hold anything back right now. You don't have to perform, and you don't have to have it all together."],
+            ["Scripture", "You can come as you are, because in Christ you are already loved and already secure."],
+            ["Physical response", "So right where you are, lean in. Maybe that looks like lifting your hands, closing your eyes, or just quietly telling God, \"I trust You.\""],
+            ["Transition", "Let's put our hope in the One who is for us, and give Him our whole hearts."]
+          ]
+        },
+        dismissal: {
+          title: "Dismissal from Worship",
+          passage: "Romans 8:38–39",
+          setup: "Close the worship set and set the stage for what's next.",
+          beats: [
+            ["Land it", "That security in God's love is where who we are starts."],
+            ["Scripture", "And when we know who we are in Him, it changes how we treat the people around us."],
+            ["Set the stage", "So as we head into small groups, bring that with you. Look for someone who might need to be included, and go build the kind of friendships that point each other back to Jesus."],
+            ["Transition", "Let's head to groups."]
+          ]
+        }
+      }
     }
   ];
 
