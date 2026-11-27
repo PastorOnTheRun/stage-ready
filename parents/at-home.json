@@ -52,5 +52,27 @@
     "title": "No Midweek This Wednesday",
     "message": "There is no student Midweek on Wednesday, Nov 25, for Thanksgiving week. Enjoy the time together as a family! We'll be back on Wednesday, Dec 2, with \"The Hype vs. The Hope\" (Luke 2:8-14).",
     "showUntil": "2026-11-26"
+  },
+  {
+    "weekOf": "2026-12-02",
+    "campus": "Windermere",
+    "sermonTitle": "The Hype vs. The Hope",
+    "scripture": "Luke 2:8-14",
+    "questions": [
+      "What part of Christmas makes you feel the most stressed or pressured, and what part brings you the most real joy?",
+      "God chose ordinary, overlooked shepherds to hear the good news first. What does that tell you about how God sees you, even when you feel left out of the \"perfect\" Christmas picture?"
+    ],
+    "tryThisAtHome": "Before the holiday rush picks up, pick one night this week to slow down as a family. Read Luke 2:8-14 out loud together, then have each person name one Christmas pressure they would like to let go of this year and one simple thing that actually brings them joy. Choose one of those simple joys to do together this month, and give each other grace if the season doesn't look picture-perfect.",
+    "guide": {
+      "summary": "Christmas can feel heavy with pressure: perfect gifts, picture-perfect moments, and expectations that leave us exhausted. This week students looked at Luke 2:8-14, where God announced the birth of Jesus first to shepherds, ordinary people who were often overlooked. The angel told them not to be afraid and brought good news of great joy for all the people: a Savior has been born. The big idea: we often get caught up in the hype of Christmas, but its true meaning offers lasting hope. Jesus came for everyone, God sees the ones who feel unseen, and that is a reason to celebrate.",
+      "keyVerse": "But the angel said to them, “Don’t be afraid, for look, I proclaim to you good news of great joy that will be for all the people: Today in the city of David a Savior was born for you, who is the Messiah, the Lord.” Luke 2:10-11 (CSB)",
+      "talkAboutIt": [
+        "What part of Christmas makes you feel the most stressed or pressured, and what part brings you the most real joy?",
+        "God chose ordinary, overlooked shepherds to hear the good news first. What does that tell you about how God sees you, even when you feel left out of the \"perfect\" Christmas picture?",
+        "The angel said, \"Don't be afraid.\" Where could our family use that reminder right now, and what would it look like to trust that God is with us?"
+      ],
+      "tryThisAtHome": "Before the holiday rush picks up, pick one night this week to slow down as a family. Read Luke 2:8-14 out loud together, then have each person name one Christmas pressure they would like to let go of this year and one simple thing that actually brings them joy. Choose one of those simple joys to do together this month, and give each other grace if the season doesn't look picture-perfect.",
+      "prayer": "God, thank You for sending Jesus, our Savior, as good news of great joy for all people. When this season gets loud and busy, help our family slow down and remember the hope we have in Him. Thank You that You see every one of us. Give us peace, take away our fear, and fill our home with real joy. Amen."
+    }
   }
 ]
